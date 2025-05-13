@@ -1,0 +1,60 @@
+services:
+  web:
+    build: .
+    # comando para ejecutar uvinicorn no porto 8001 esperando a que a bd esté lista usando o script waitforit
+    command:
+      [
+        "./wait-for-it.sh",
+        "db:5432",
+        "--",
+        "uvicorn",
+        "UpLife.asgi:application",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8001",
+        "--lifespan",
+        "off",
+      ]
+    volumes:
+      - .:/code
+      - static_volume:/app/staticfiles
+      - ./media:/app/media
+    ports:
+      - "8001:8001"
+    environment:
+      - DEBUG=True
+    env_file:
+      - .env
+    networks:
+      - redeUpLife
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    networks:
+      - redeUpLife
+
+  # redis:
+  #   image: redis:latest
+  #   container_name: redis
+  #   ports:
+  #     - "6379:6379"
+  #   networks:
+  #     - redeUpLife
+
+volumes:
+  postgres_data:
+  static_volume:
+
+networks:
+  redeUpLife:

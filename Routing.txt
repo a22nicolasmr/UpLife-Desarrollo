@@ -1,0 +1,3 @@
+En el archivo views creamos las vistas, una por pantalla como django
+Luego en routing indicamos la vista y los componentes que tendra, los cuales estaran en componentes
+Cada vista y componentes tienen sus cosas

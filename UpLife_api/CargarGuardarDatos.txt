@@ -1,0 +1,11 @@
+Guardar datos:
+docker compose run --rm web sh -c "python manage.py dumpdata --exclude contenttypes --exclude auth.Permission --indent 2" > backup.json
+
+Cargar datos:
+docker compose run --rm web python manage.py migrate
+
+Para borrar datos existentes:
+docker compose run --rm web python manage.py flush 
+
+Para cargar los datos:
+docker compose run --rm web python manage.py loaddata backup.json
