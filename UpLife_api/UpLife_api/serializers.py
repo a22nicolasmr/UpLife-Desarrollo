@@ -42,18 +42,22 @@ class ExerciciosSerializer(serializers.ModelSerializer):
 
 # necesario para que ao facer PATCH nas plantillas acepte unha lista de ids de exercicios
 class PlantillasSerializer(serializers.ModelSerializer):
+    datas = serializers.ListField(
+        child=serializers.CharField(),
+        required=False,
+        default=list
+    )
     exercicios = serializers.PrimaryKeyRelatedField(
         many=True,
         queryset=Exercicios.objects.all(),
-        required=False,  # Esto asegura que no sea obligatorio
-        allow_null=True,  # Esto permite que pueda ser null
-        default=[]  # Esto asigna un array vacío si no se envía ningún valor
+        required=False,
+        allow_null=True,
+        default=[]
     )
 
     class Meta:
         model = Plantillas
         fields = '__all__'
-
 
 # necesario para listar os exercicios
 class PlantillasDetailSerializer(serializers.ModelSerializer):

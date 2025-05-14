@@ -16,6 +16,7 @@ export default {
     comprobarError() {
       if (!this.plantillaSeleccionada) {
         this.error = "Completa todos os campos";
+        return false;
       }
       return true;
     },
@@ -31,6 +32,7 @@ export default {
         const plantillasFiltradas = plantillas
           .filter((p) => p.usuario === idUsuario)
           .map((p2) => ({
+            id_plantilla: p2.id_plantilla,
             nome: p2.nome,
           }));
         this.plantillas = plantillasFiltradas;
@@ -40,14 +42,53 @@ export default {
     },
     async engadirPlantilla() {
       this.error = "";
-      if (this.comprobarError()) {
+      if (!this.comprobarError()) return;
+
+      try {
+        const plantilla = this.plantillas.find(
+          (p) => p.nome === this.plantillaSeleccionada
+        );
+
+        if (!plantilla) {
+          this.error = "Plantilla non atopada.";
+          return;
+        }
+
+        // Obter plantilla completa para acceder ao campo datas
+        const res = await fetch(
+          `http://localhost:8001/api/plantillas/${plantilla.id_plantilla}/`
+        );
+        const data = await res.json();
+
+        const datas = data.datas || [];
+        const dataHoxe = new Date().toISOString().split("T")[0];
+
+        // Se non existe, engadila
+        if (!datas.includes(dataHoxe)) {
+          datas.push(dataHoxe);
+        }
+
+        // PATCH actualizado
+        await fetch(
+          `http://localhost:8001/api/plantillas/${plantilla.id_plantilla}/`,
+          {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ datas }),
+          }
+        );
+
         this.$emit("engadirPlantilla", this.plantillaSeleccionada);
         this.$emit("cargarPlantillasHoxe");
+      } catch (error) {
+        console.error("Erro ao engadir plantilla:", error);
+        this.error = "Erro ao engadir plantilla.";
       }
     },
   },
 };
 </script>
+
 <template>
   <div class="engadir-container">
     <form>

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.hashers import make_password
 from django.dispatch import receiver
 import os
+from django.contrib.postgres.fields import ArrayField
 # opcions modo_aplicacion
 MODO_CHOICES = [
     ('C', 'Claro'),
@@ -109,7 +110,11 @@ class Plantillas(models.Model):
     id_plantilla=models.BigAutoField(primary_key=True)
     nome=models.CharField(max_length=255,unique=True)
     icona = models.CharField(max_length=255)
-    data=models.DateField(null=True, blank=True)
+    datas = ArrayField(
+        base_field=models.CharField(max_length=20),
+        default=list,
+        blank=True
+    )
     usuario = models.ForeignKey(Usuarios, on_delete=models.CASCADE, null=True, blank=True)
     exercicios = models.ManyToManyField(Exercicios, blank=True)
 
