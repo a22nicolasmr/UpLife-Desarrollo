@@ -113,8 +113,8 @@ export default {
             };
           })
         );
-
         this.plantillasHoxe = plantillasCompletas;
+
         this.$refs.historialRef?.cargarExercicios();
       } catch (error) {
         console.error("Erro cargando plantillas hoxe:", error);
