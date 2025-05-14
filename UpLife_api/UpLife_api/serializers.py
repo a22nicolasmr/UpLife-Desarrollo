@@ -127,6 +127,6 @@ class UsoPlantillaSerializer(serializers.ModelSerializer):
         return {
             'id_plantilla': obj.plantilla.id_plantilla,
             'nome': obj.plantilla.nome,
-            'icona': obj.plantilla.icona.url if obj.plantilla.icona else None
+            'icona': obj.plantilla.icona
         }
 
