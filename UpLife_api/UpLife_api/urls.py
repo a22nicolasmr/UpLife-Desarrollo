@@ -12,6 +12,7 @@ router.register(r'exercicios', views.ExerciciosViewSet)
 router.register(r'plantillas', views.PlantillasViewSet)
 router.register(r'comidas', views.ComidasViewSet)
 router.register(r'grupos', views.GruposViewSet)
+router.register(r'plantillas-uso', views.UsoPlantillaViewSet)
 
 urlpatterns = [
     path('api/', include(router.urls)),

@@ -1,6 +1,6 @@
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
-from .models import Usuarios, Auga, Medallas, Tarefas, Categorias, Exercicios, Plantillas, Comidas, Grupos
+from .models import Usuarios, Auga, Medallas, Tarefas, Categorias, Exercicios, Plantillas, Comidas, Grupos,UsoPlantilla
 
 # facer apis con todos os campos de todos os modelos
 class UsuariosSerializer(serializers.ModelSerializer):
@@ -61,7 +61,7 @@ class PlantillasDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Plantillas
-        fields = '__all__'
+        fields = ['id_plantilla','usuario', 'nome', 'icona', 'exercicios']
 
 
 class ComidasSerializer(serializers.ModelSerializer):
@@ -89,5 +89,44 @@ class GruposDetailSerializer(serializers.ModelSerializer):
     comidas = ComidasSerializer(many=True, read_only=True)
     class Meta:
         model = Grupos
-        fields = '__all__'
+        fields='__all__'
+
+class PlantillasMiniSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Plantillas
+        fields = ['id_plantilla','usuario', 'nome', 'icona']
+
+# class UsoPlantillaSerializer(serializers.ModelSerializer):
+#     plantilla = PlantillasDetailSerializer(read_only=True)
+#     plantilla_id = serializers.PrimaryKeyRelatedField(
+#         queryset=Plantillas.objects.all(), source='plantilla', write_only=True
+#     )
+#     usuario = serializers.PrimaryKeyRelatedField(queryset=Usuarios.objects.all())
+#     usuario_nome = serializers.CharField(source='usuario.nome_usuario', read_only=True)
+
+#     class Meta:
+#         model = UsoPlantilla
+#         fields = ['id', 'plantilla', 'plantilla_id', 'usuario', 'usuario_nome', 'data']
+
+# class UsoPlantillaSerializer(serializers.ModelSerializer):
+#     usuario_nome = serializers.CharField(source='usuario.nome_usuario', read_only=True)
+
+#     class Meta:
+#         model = UsoPlantilla
+#         fields = ['id', 'plantilla', 'usuario', 'usuario_nome', 'data']
+
+class UsoPlantillaSerializer(serializers.ModelSerializer):
+    usuario_nome = serializers.CharField(source='usuario.nome_usuario', read_only=True)
+    plantilla = serializers.SerializerMethodField()
+
+    class Meta:
+        model = UsoPlantilla
+        fields = ['id', 'plantilla', 'usuario', 'usuario_nome', 'data']
+
+    def get_plantilla(self, obj):
+        return {
+            'id_plantilla': obj.plantilla.id_plantilla,
+            'nome': obj.plantilla.nome,
+            'icona': obj.plantilla.icona.url if obj.plantilla.icona else None
+        }
 

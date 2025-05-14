@@ -89,25 +89,40 @@ export default {
       });
 
       // Medalla 11 - Plantillas: 3 plantillas creadas e usadas polo menos 2 veces cada unha
+      // Medalla 11 - Plantillas: 3 plantillas creadas e usadas polo menos 2 veces cada unha
       try {
-        const plantillaRes = await fetch(
-          "http://localhost:8001/api/plantillas/"
-        );
-        const plantillas = await plantillaRes.json();
+        const [plantillasRes, usosRes] = await Promise.all([
+          fetch("http://localhost:8001/api/plantillas/"),
+          fetch("http://localhost:8001/api/plantillas-uso/"),
+        ]);
 
-        // Filtra só as do usuario actual
-        const usuarioStore = useUsuarioStore();
-        const idUsuario = usuarioStore.id;
+        const [plantillas, usos] = await Promise.all([
+          plantillasRes.json(),
+          usosRes.json(),
+        ]);
 
+        const idUsuario = useUsuarioStore().id;
+
+        // Filtrar plantillas do usuario
         const plantillasUsuario = plantillas.filter(
           (p) => p.usuario === idUsuario
         );
 
-        // Contar cantas plantillas teñen polo menos 2 usos (2 datas diferentes)
+        // Agrupar usos por id_plantilla
+        const usosPorPlantilla = {};
+        usos.forEach((u) => {
+          if (u.usuario !== idUsuario) return;
+          const id = u.plantilla?.id_plantilla;
+          if (!id) return;
+
+          if (!usosPorPlantilla[id]) usosPorPlantilla[id] = new Set();
+          usosPorPlantilla[id].add(u.data);
+        });
+
+        // Ver cantas plantillas teñen 2 ou máis usos distintos
         const usadasSuficiente = plantillasUsuario.filter((p) => {
-          if (!p.usos || !Array.isArray(p.usos)) return false;
-          const datasUsadas = p.usos.filter((u) => !!u.data);
-          return datasUsadas.length >= 2;
+          const usosSet = usosPorPlantilla[p.id_plantilla];
+          return usosSet && usosSet.size >= 2;
         });
 
         const completado = usadasSuficiente.length >= 3;
@@ -120,7 +135,7 @@ export default {
         console.error("Erro ao comprobar medalla de plantillas:", error);
         valorMedallas.push({
           id_medalla: 11,
-          completado: false, // fallback se falla a consulta
+          completado: false,
         });
       }
 
@@ -220,18 +235,19 @@ export default {
       }
 
       // ✅ Calcular rExercicios usando ejercicios + plantillas
+      // ✅ Calcular rExercicios usando ejercicios + plantillas
       try {
-        const [resEx, resPl] = await Promise.all([
+        const [resEx, resUso] = await Promise.all([
           fetch("http://localhost:8001/api/exercicios/"),
-          fetch("http://localhost:8001/api/plantillas/"),
+          fetch("http://localhost:8001/api/plantillas-uso/"),
         ]);
 
-        const [exercicios, plantillas] = await Promise.all([
+        const [exercicios, usos] = await Promise.all([
           resEx.json(),
-          resPl.json(),
+          resUso.json(),
         ]);
 
-        const ejerciciosValidos = exercicios
+        const exerciciosValidos = exercicios
           .filter(
             (e) =>
               e.usuario === idUsuario &&
@@ -240,28 +256,23 @@ export default {
           )
           .map((e) => e.data);
 
-        const plantillasValidas = plantillas
+        const usosValidos = usos
           .filter(
-            (p) =>
-              p.usuario === idUsuario &&
-              p.data &&
-              p.data <= new Date().toISOString().split("T")[0]
+            (u) =>
+              u.usuario === idUsuario &&
+              u.data &&
+              u.data <= new Date().toISOString().split("T")[0]
           )
-          .map((p) => p.data);
+          .map((u) => u.data);
 
-        const todasFechas = new Set([
-          ...ejerciciosValidos,
-          ...plantillasValidas,
-        ]);
-        const fechasUnicasOrdenadas = [...todasFechas].sort().reverse(); // más reciente a más antigua
+        const todasFechas = new Set([...exerciciosValidos, ...usosValidos]);
+        const fechasUnicasOrdenadas = [...todasFechas].sort().reverse();
 
         // Calcular racha consecutiva
         let rachaEx = 0;
         let hoy = new Date().toISOString().split("T")[0];
 
-        const hayHoy = [...ejerciciosValidos, ...plantillasValidas].includes(
-          new Date().toISOString().split("T")[0]
-        );
+        const hayHoy = [...exerciciosValidos, ...usosValidos].includes(hoy);
         this.advertencias.exercicios = !hayHoy;
 
         for (const fecha of fechasUnicasOrdenadas) {
@@ -277,7 +288,10 @@ export default {
 
         this.rExercicios = rachaEx;
       } catch (error) {
-        console.error("Erro ao comprobar exercicios e plantillas:", error);
+        console.error(
+          "Erro ao comprobar exercicios e usos de plantillas:",
+          error
+        );
       }
     },
     //comprobar se hai tarefas para unha data

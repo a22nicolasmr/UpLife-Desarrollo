@@ -12,42 +12,70 @@ export default {
   mounted() {
     this.cargarPlantillas();
   },
-  methods: {
-    comprobarError() {
-      if (!this.plantillaSeleccionada) {
-        this.error = "Completa todos os campos";
-      }
-      return true;
+  computed: {
+    idUsuario() {
+      return useUsuarioStore().id;
     },
+  },
+  methods: {
     async cargarPlantillas() {
-      const usuarioStore = useUsuarioStore();
-      const idUsuario = usuarioStore.id;
+      const idUsuario = useUsuarioStore().id;
 
       try {
         const response = await fetch("http://localhost:8001/api/plantillas/");
         if (!response.ok) throw new Error("Erro ao cargar plantillas");
 
-        const plantillas = await response.json();
-        const plantillasFiltradas = plantillas
-          .filter((p) => p.usuario === idUsuario)
-          .map((p2) => ({
-            nome: p2.nome,
-          }));
-        this.plantillas = plantillasFiltradas;
+        const data = await response.json();
+
+        // Mostrar solo plantillas del usuario actual
+        this.plantillas = data.filter((p) => p.usuario === idUsuario);
+        console.log("plantillas", data);
+
+        console.log("plantillas cargadas", this.plantillas);
       } catch (error) {
-        console.error("Erro cargando exercicios:", error);
+        console.error("Erro cargando plantillas:", error);
       }
     },
+
     async engadirPlantilla() {
       this.error = "";
-      if (this.comprobarError()) {
-        this.$emit("engadirPlantilla", this.plantillaSeleccionada);
+      if (!this.plantillaSeleccionada) {
+        this.error = "Completa todos os campos";
+        return;
+      }
+
+      const idUsuario = useUsuarioStore().id;
+      const hoxe = new Date().toISOString().split("T")[0];
+
+      try {
+        const response = await fetch(
+          "http://localhost:8001/api/plantillas-uso/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              usuario: idUsuario,
+              plantilla: parseInt(this.plantillaSeleccionada),
+              data: hoxe,
+            }),
+          }
+        );
+
+        if (!response.ok) throw new Error("Erro ao engadir uso da plantilla");
+
         this.$emit("cargarPlantillasHoxe");
+        this.plantillaSeleccionada = "";
+      } catch (error) {
+        console.error("Erro engadindo uso de plantilla:", error);
+        this.error = "Produciuse un erro ao engadir a plantilla.";
       }
     },
   },
 };
 </script>
+
 <template>
   <div class="engadir-container">
     <form>
@@ -57,9 +85,9 @@ export default {
       <select id="select" v-model="plantillaSeleccionada">
         <option value="">Selecciona plantilla</option>
         <option
-          :value="plantilla.nome"
           v-for="plantilla in plantillas"
-          :key="plantilla"
+          :value="plantilla.id_plantilla"
+          :key="plantilla.id_plantilla"
         >
           {{ plantilla.nome }}
         </option>
@@ -70,6 +98,7 @@ export default {
     </form>
   </div>
 </template>
+
 <style scoped>
 button {
   margin-top: 3%;
@@ -83,18 +112,6 @@ button {
   transition: background-color 0.3s ease;
   width: 20%;
   height: 20%;
-}
-.formulario button {
-  margin-bottom: 4%;
-  width: 100%;
-}
-.formulario label {
-  width: 100%;
-}
-.formulario {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
 }
 .engadir-container {
   height: 100%;

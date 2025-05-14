@@ -5,14 +5,12 @@ export default {
   data() {
     return {
       exerciciosPorDia: {},
-      plantillasPorDia: [],
       actividadesPorDia: {},
     };
   },
   computed: {
     idUsuario() {
-      const store = useUsuarioStore();
-      return store.id;
+      return useUsuarioStore().id;
     },
     dataHoxeISO() {
       return new Date().toISOString().split("T")[0];
@@ -24,15 +22,17 @@ export default {
   methods: {
     async cargarExercicios() {
       try {
-        const [resEx, resPl] = await Promise.all([
+        const [resEx, resUsoPl] = await Promise.all([
           fetch("http://localhost:8001/api/exercicios/"),
-          fetch("http://localhost:8001/api/plantillas/"),
+          fetch("http://localhost:8001/api/plantillas-uso/"),
         ]);
 
-        if (!resEx.ok || !resPl.ok) throw new Error("Erro ao cargar datos");
+        if (!resEx.ok || !resUsoPl.ok) {
+          throw new Error("Erro ao cargar datos");
+        }
 
         const exercicios = await resEx.json();
-        const plantillas = await resPl.json();
+        const usosPlantilla = await resUsoPl.json();
 
         const seteDiasAtras = new Date();
         seteDiasAtras.setDate(seteDiasAtras.getDate() - 7);
@@ -44,13 +44,39 @@ export default {
           (e) => e.usuario === userId && e.data >= seteDiasAtrasISO
         );
 
-        const plantillasFiltradas = plantillas.filter(
-          (p) => p.usuario === userId && p.data >= seteDiasAtrasISO
+        const usosFiltrados = await Promise.all(
+          usosPlantilla
+            .filter((u) => u.usuario === userId && u.data >= seteDiasAtrasISO)
+            .map(async (uso) => {
+              try {
+                const plantillaResponse = await fetch(
+                  `http://localhost:8001/api/plantillas/${uso.plantilla}/`
+                );
+                if (!plantillaResponse.ok)
+                  throw new Error("Non se puido cargar a plantilla");
+
+                const plantillaData = await plantillaResponse.json();
+
+                return {
+                  ...uso,
+                  nome: plantillaData.nome,
+                  id_plantilla: plantillaData.id_plantilla,
+                  icona: plantillaData.icona,
+                };
+              } catch (error) {
+                console.error(
+                  `Erro cargando plantilla con id ${uso.plantilla}:`,
+                  error
+                );
+                return null;
+              }
+            })
         );
+
+        const usosFiltradosLimpios = usosFiltrados.filter(Boolean);
 
         const actividades = {};
 
-        // Agrupar exercicios
         exerciciosFiltrados.forEach((ex) => {
           if (!actividades[ex.data]) {
             actividades[ex.data] = { exercicios: [], plantillas: [] };
@@ -58,15 +84,13 @@ export default {
           actividades[ex.data].exercicios.push(ex);
         });
 
-        // Agrupar plantillas
-        plantillasFiltradas.forEach((p) => {
+        usosFiltradosLimpios.forEach((p) => {
           if (!actividades[p.data]) {
             actividades[p.data] = { exercicios: [], plantillas: [] };
           }
           actividades[p.data].plantillas.push(p);
         });
 
-        // Ordenar por fecha descendente
         this.actividadesPorDia = Object.fromEntries(
           Object.entries(actividades).sort(
             (a, b) => new Date(b[0]) - new Date(a[0])
@@ -104,21 +128,29 @@ export default {
       }
     },
     async engadirPlantilla(plantilla) {
-      const response = await fetch(
-        `http://localhost:8001/api/plantillas/${plantilla.id_plantilla}/`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ data: this.dataHoxeISO }),
-        }
-      );
+      const payload = {
+        plantilla: plantilla.id_plantilla,
+        usuario: this.idUsuario,
+        data: this.dataHoxeISO,
+      };
 
-      if (!response.ok) {
-        console.error("Erro ao actualizar plantilla");
-      } else {
+      try {
+        const response = await fetch(
+          "http://localhost:8001/api/plantillas-uso/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          }
+        );
+
+        if (!response.ok) throw new Error("Erro ao rexistrar uso de plantilla");
+
         this.$emit("cargarPlantillasHoxe");
+      } catch (error) {
+        console.error("❗Erro ao rexistrar plantilla:", error);
       }
     },
     nomeCategoria(idCategoria) {
@@ -130,7 +162,7 @@ export default {
         5: "Peito",
         6: "Todo corpo",
       };
-      return mapa[idCategoria] || "Desco\u00f1ecida";
+      return mapa[idCategoria] || "Descoñecida";
     },
   },
 };

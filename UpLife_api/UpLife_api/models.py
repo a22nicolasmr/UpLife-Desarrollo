@@ -106,15 +106,24 @@ class Exercicios(models.Model):
         return f"nome={self.nome}, repeticions={self.repeticions}, peso={self.peso}, usuario={self.usuario}, categoria={self.categoria}"
 
 class Plantillas(models.Model):
-    id_plantilla=models.BigAutoField(primary_key=True)
-    nome=models.CharField(max_length=255,unique=True)
+    id_plantilla = models.BigAutoField(primary_key=True)
+    nome = models.CharField(max_length=255, unique=True)
     icona = models.CharField(max_length=255)
-    data=models.DateField(null=True, blank=True)
     usuario = models.ForeignKey(Usuarios, on_delete=models.CASCADE, null=True, blank=True)
-    exercicios = models.ManyToManyField(Exercicios, blank=True)
+    exercicios = models.ManyToManyField('Exercicios', blank=True)
 
     def __str__(self):
         return f"nome={self.nome}, icona={self.icona}, exercicios={[e.nome for e in self.exercicios.all()]}"
+    
+class UsoPlantilla(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    plantilla = models.ForeignKey(Plantillas, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
+    data = models.DateField()
+
+    def __str__(self):
+        return f"{self.plantilla.nome} usada o {self.data} por {self.usuario.nome_usuario}"
+
 
 class Comidas(models.Model):
     id_comida=models.BigAutoField(primary_key=True)
@@ -139,5 +148,5 @@ class Grupos(models.Model):
     
 
     def __str__(self):
-        return f"nome={self.nome}, icona={self.icona}, comidas={[c.nome for c in self.comidas.all()]}"
+        return self.nome
 

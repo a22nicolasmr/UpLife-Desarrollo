@@ -1,5 +1,5 @@
-from .models import Usuarios, Auga, Medallas, Tarefas, Categorias, Exercicios, Plantillas, Comidas, Grupos
-from .serializers import UsuariosSerializer, AugaSerializer, MedallasSerializer, TarefasSerializer, CategoriasSerializer, ExerciciosSerializer, PlantillasSerializer, ComidasSerializer, GruposSerializer,PlantillasDetailSerializer,GruposDetailSerializer
+from .models import Usuarios, Auga, Medallas, Tarefas, Categorias, Exercicios, Plantillas, Comidas, Grupos,UsoPlantilla
+from .serializers import UsuariosSerializer, AugaSerializer, MedallasSerializer, TarefasSerializer, CategoriasSerializer, ExerciciosSerializer, PlantillasSerializer, ComidasSerializer, GruposSerializer,PlantillasDetailSerializer,GruposDetailSerializer,UsoPlantillaSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -75,3 +75,18 @@ class GruposViewSet(viewsets.ModelViewSet):
         if self.action == 'retrieve' or self.action == 'list':
             return GruposDetailSerializer
         return GruposSerializer
+
+class UsoPlantillaViewSet(viewsets.ModelViewSet):
+    queryset = UsoPlantilla.objects.all()
+    serializer_class = UsoPlantillaSerializer
+
+    def get_queryset(self):
+        """
+        Permite filtrar por usuario si se pasa como query param.
+        Ej: /api/plantillas-uso/?usuario=3
+        """
+        queryset = super().get_queryset()
+        usuario_id = self.request.query_params.get('usuario')
+        if usuario_id:
+            queryset = queryset.filter(usuario=usuario_id)
+        return queryset

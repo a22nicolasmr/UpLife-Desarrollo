@@ -36,6 +36,39 @@ export default {
     document.removeEventListener("click", this.cancelarEdicionAoFora);
   },
   methods: {
+    activarEdicion(id, campo, valor) {
+      this.editando = { id, campo, valor };
+      // Espera a que se renderice el input y luego lo enfoca
+      this.$nextTick(() => {
+        const input = this.$el.querySelector("input:focus, select:focus");
+        if (input) input.focus();
+      });
+    },
+
+    async guardarCampoEditado(id, campo) {
+      const novoValor = this.editando.valor;
+      this.editando = { id: null, campo: null, valor: "" };
+      try {
+        await fetch(`http://localhost:8001/api/exercicios/${id}/`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ [campo]: novoValor }),
+        });
+        this.cargarExerciciosHoxe(); // recargar lista
+      } catch (error) {
+        console.error("Erro ao actualizar exercicio:", error);
+      }
+    },
+
+    cancelarEdicionAoFora(e) {
+      const path = e.composedPath?.() || e.path || [];
+      const clickedInsideInput = path.some((el) =>
+        el?.classList?.contains("editable")
+      );
+      if (!clickedInsideInput) {
+        this.editando = { id: null, campo: null, valor: "" };
+      }
+    },
     nomeCategoriaPorId(id) {
       return this.categoriasMap[id] || "Descoñecida";
     },
@@ -53,96 +86,66 @@ export default {
         console.error("Erro cargando exercicios:", error);
       }
     },
-    async eliminarExercicio(id) {
-      try {
-        await fetch(`http://localhost:8001/api/exercicios/${id}/`, {
-          method: "DELETE",
-        });
-        this.cargarExerciciosHoxe();
-        this.cargarPlantillasHoxe();
-        this.$refs.historialRef?.cargarExercicios();
-      } catch (error) {
-        console.error("Erro eliminando exercicio:", error);
-      }
-    },
-    // Métodos para edición
-    activarEdicion(id, campo, valor) {
-      this.editando = { id, campo, valor };
-    },
-    cancelarEdicionAoFora(e) {
-      if (!e.target.closest(".editable")) {
-        this.editando = { id: null, campo: null, valor: "" };
-      }
-    },
-    async guardarCampoEditado(id, campo) {
-      const rawValor = this.editando.valor;
-      let valorConvertido;
-
-      // ✅ Convertir solo si el campo necesita tipo numérico
-      if (campo === "peso") {
-        valorConvertido = parseFloat(rawValor);
-        if (isNaN(valorConvertido)) {
-          console.warn(`Valor non válido para ${campo}:`, rawValor);
-          return;
-        }
-      } else if (campo === "categoria") {
-        valorConvertido = parseInt(rawValor, 10);
-        if (isNaN(valorConvertido)) {
-          console.warn(`Valor non válido para categoría:`, rawValor);
-          return;
-        }
-      } else {
-        // ✅ Mantén strings como están (ej: repeticions = "5x10")
-        valorConvertido = String(rawValor);
-      }
-
-      try {
-        const response = await fetch(
-          `http://localhost:8001/api/exercicios/${id}/`,
-          {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ [campo]: valorConvertido }),
-          }
-        );
-
-        if (!response.ok) {
-          const errorData = await response.json().catch(() => ({}));
-          console.warn("Resposta con erro (pero quizais aplicada):", errorData);
-        }
-
-        // Limpar estado de edición
-        this.editando = { id: null, campo: null, valor: "" };
-
-        // Volver cargar datos actualizados
-        this.cargarExerciciosHoxe();
-        this.cargarPlantillasHoxe();
-        this.$refs.historialRef?.cargarExercicios();
-      } catch (error) {
-        console.error("Erro ao actualizar exercicio:", error);
-      }
-    },
     async cargarPlantillasHoxe() {
       const idUsuario = useUsuarioStore().id;
       const hoxe = new Date().toISOString().split("T")[0];
       try {
-        const response = await fetch("http://localhost:8001/api/plantillas/");
-        const plantillas = await response.json();
-        this.plantillasHoxe = plantillas
-          .filter((p) => p.usuario === idUsuario && p.data === hoxe)
-          .map((p) => ({ ...p, exercicios: p.exercicios || [] }));
+        const response = await fetch(
+          "http://localhost:8001/api/plantillas-uso/"
+        );
+        const usos = await response.json();
+
+        const usosFiltrados = usos.filter(
+          (uso) => uso.usuario === idUsuario && uso.data === hoxe
+        );
+
+        // Cargar los detalles de cada plantilla por su ID
+        const plantillasCompletas = await Promise.all(
+          usosFiltrados.map(async (uso) => {
+            const plantillaResponse = await fetch(
+              `http://localhost:8001/api/plantillas/${uso.plantilla}/`
+            );
+            const plantillaData = await plantillaResponse.json();
+            return {
+              id_plantilla: plantillaData.id_plantilla,
+              nome: plantillaData.nome,
+              icona: plantillaData.icona,
+            };
+          })
+        );
+
+        this.plantillasHoxe = plantillasCompletas;
         this.$refs.historialRef?.cargarExercicios();
       } catch (error) {
         console.error("Erro cargando plantillas hoxe:", error);
       }
     },
-    toggleExpandPlantilla(id) {
-      if (this.expandedPlantillas.includes(id)) {
-        this.expandedPlantillas = this.expandedPlantillas.filter(
-          (pid) => pid !== id
+    async eliminarPlantilla(id_plantilla) {
+      const idUsuario = useUsuarioStore().id;
+      const hoxe = new Date().toISOString().split("T")[0];
+      try {
+        const response = await fetch(
+          "http://localhost:8001/api/plantillas-uso/"
         );
-      } else {
-        this.expandedPlantillas.push(id);
+        const usos = await response.json();
+
+        const uso = usos.find(
+          (u) =>
+            u.plantilla === id_plantilla &&
+            u.usuario === idUsuario &&
+            u.data === hoxe
+        );
+
+        if (!uso) return;
+
+        await fetch(`http://localhost:8001/api/plantillas-uso/${uso.id}/`, {
+          method: "DELETE",
+        });
+
+        this.cargarPlantillasHoxe();
+        this.$refs.historialRef?.cargarExercicios();
+      } catch (error) {
+        console.error("Erro eliminando plantilla:", error);
       }
     },
     async engadirPlantilla(nomePlantilla) {
@@ -154,31 +157,37 @@ export default {
         const plantilla = plantillas.find(
           (p) => p.usuario === idUsuario && p.nome === nomePlantilla
         );
-        await fetch(
-          `http://localhost:8001/api/plantillas/${plantilla.id_plantilla}/`,
-          {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ data: hoxe }),
-          }
-        );
+        console.log("id plantilla", plantilla.id_plantilla);
+
+        await fetch("http://localhost:8001/api/plantillas-uso/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            usuario: idUsuario,
+            plantilla: plantilla.id_plantilla,
+            data: hoxe,
+          }),
+        });
+
         this.cargarPlantillasHoxe();
         this.$refs.historialRef?.cargarExercicios();
       } catch (error) {
         console.error("Erro engadindo plantilla:", error);
       }
     },
-    async eliminarPlantilla(id_plantilla) {
+    async eliminarExercicio(id) {
       try {
-        await fetch(`http://localhost:8001/api/plantillas/${id_plantilla}/`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ data: null }),
+        await fetch(`http://localhost:8001/api/exercicios/${id}/`, {
+          method: "DELETE",
         });
+        this.cargarExerciciosHoxe();
         this.cargarPlantillasHoxe();
         this.$refs.historialRef?.cargarExercicios();
       } catch (error) {
-        console.error("Erro eliminando plantilla:", error);
+        console.error("Erro eliminando exercicio:", error);
       }
     },
   },

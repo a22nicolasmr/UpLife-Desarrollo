@@ -170,8 +170,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  width: 100%;
-  max-width: 500px;
+  width: 90%;
   margin-bottom: 2rem;
 }
 

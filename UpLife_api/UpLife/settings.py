@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-p@$&536+j!4mzyf338c6yln=!_jmit6hbbsy5-@u&$-xy_00b9
 # DEBUG = True
 
 ALLOWED_HOSTS = ['*']  # temporalmente, mellor especificar logo
-DEBUG = False
+DEBUG = True
 
 
 
@@ -59,9 +59,9 @@ MIDDLEWARE = [
 ]
 
 # permitir conexions de "http://localhost:5174",
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:5174",
-# ]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5174",
+]
 
 # permitir conexions de calquera,
 CORS_ALLOW_ALL_ORIGINS = True
