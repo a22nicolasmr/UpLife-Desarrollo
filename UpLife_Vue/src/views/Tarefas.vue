@@ -667,4 +667,94 @@ h1 {
 
   transition: background-color 0.3s, transform 0.2s;
 }
+@media (max-width: 768px) {
+  .tarefas-layout {
+    flex-direction: column;
+    height: auto;
+    margin-right: 0%;
+  }
+
+  .calendario {
+    width: 100%;
+    height: auto;
+  }
+
+  .lateral {
+    width: 100%;
+    height: auto;
+  }
+
+  .divsArriba {
+    flex-direction: column;
+    gap: 1rem;
+    margin: 0 2% 2% 2%;
+  }
+
+  .divsArriba > div {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4%;
+  }
+
+  .divsArriba img {
+    padding-top: 0;
+    width: 6vh;
+    height: 6vh;
+  }
+  .tarxetas {
+    display: flex;
+    justify-content: center;
+  }
+
+  .tarxeta {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+    box-shadow: none;
+    min-width: auto;
+  }
+
+  .tarxeta.inactiva {
+    background-color: #ccc;
+    color: #fff;
+  }
+  .divsArriba {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem;
+    flex: unset;
+  }
+
+  .divsArriba > div {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .divsArriba img {
+    height: 6vh;
+    width: 6vh;
+    padding-top: 0;
+  }
+
+  #izquierda p:nth-of-type(2),
+  #exercicio p:nth-of-type(2),
+  #auga p:nth-of-type(2),
+  #comidas p:nth-of-type(2) {
+    font-size: 1rem;
+    margin: 0.25rem 0;
+  }
+
+  .advertencia {
+    font-size: 0.85rem;
+    text-align: center;
+  }
+  html,
+  body {
+    overflow-x: hidden;
+  }
+}
 </style>

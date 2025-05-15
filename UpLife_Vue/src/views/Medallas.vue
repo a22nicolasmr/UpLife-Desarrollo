@@ -319,4 +319,43 @@ p {
   height: 100%;
   overflow: hidden;
 }
+@media (max-width: 768px) {
+  .medallas-container {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+  .general {
+    width: 100%;
+  }
+  .column {
+    flex: 1 1 100%;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .medalla {
+    height: auto;
+    padding: 1rem;
+  }
+
+  .medalla-info img {
+    width: 20vw;
+    height: 20vw;
+  }
+
+  h3 {
+    font-size: 1rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+
+  .check-icon,
+  #invisible {
+    width: 3vh;
+    height: 3vh;
+  }
+}
 </style>

@@ -40,21 +40,30 @@ export default {
 };
 </script>
 
-s
 <template>
   <div class="imc-wrapper">
     <div class="inputs">
       <div class="input-box altura">
         <label>Altura</label>
-        <input type="range" min="100" max="220" v-model="altura" />
+        <div class="range-control">
+          <button @click="altura = Math.max(100, altura - 1)">−</button>
+          <input type="range" min="100" max="220" v-model="altura" />
+          <button @click="altura = Math.min(220, altura + 1)">+</button>
+        </div>
         <div>{{ altura }} cm</div>
       </div>
+
       <div class="input-box peso">
         <label>Peso</label>
-        <input type="range" min="30" max="150" v-model="peso" />
+        <div class="range-control">
+          <button @click="peso = Math.max(30, peso - 1)">−</button>
+          <input type="range" min="30" max="150" v-model="peso" />
+          <button @click="peso = Math.min(150, peso + 1)">+</button>
+        </div>
         <div>{{ peso }} kg</div>
       </div>
     </div>
+
     <div class="resultado">
       <p id="indice">Índice de Masa Corporal (IMC)</p>
       <div class="valor-imc">{{ imc.toFixed(1) }}</div>
@@ -74,23 +83,22 @@ s
 </template>
 
 <style scoped>
-#indice {
-  font-size: 0.9em;
-  margin-top: 12%;
-}
 .imc-wrapper {
   display: flex;
   gap: 6%;
   align-items: stretch;
   color: white;
   flex: 1;
+  max-width: 100%;
+  box-sizing: border-box;
+  flex-wrap: wrap;
 }
 
 .inputs {
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 5%;
+  gap: 1%;
 }
 
 .input-box {
@@ -102,19 +110,53 @@ s
   flex-direction: column;
   justify-content: center;
   color: black;
+  box-sizing: border-box;
 }
 
 .peso {
   background-color: #caf0f8;
 }
+
+.range-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.range-control input[type="range"] {
+  flex: 1;
+}
+
+.range-control button {
+  background-color: #7f5af0;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 8%;
+  height: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.range-control button:hover {
+  background-color: #5b3ecb;
+}
+
 .resultado {
   background-color: #2d2d2d;
   border-radius: 0 10% 10% 0;
   padding: 6%;
-  width: 40%;
+  width: 42%;
   display: flex;
   flex-direction: column;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .valor-imc {
@@ -137,7 +179,6 @@ s
   border-radius: 5em;
   position: relative;
   width: 100%;
-  /* border: 1px solid red; */
 }
 
 .indicador {
@@ -148,10 +189,72 @@ s
   background-color: red;
   border-radius: 4vh;
 }
+
 .valores {
   display: flex;
   justify-content: space-between;
-  font-size: 2vh;
+  font-size: small;
   color: #ccc;
+}
+
+#indice {
+  font-size: 0.9em;
+  margin-top: 12%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .imc-wrapper {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .inputs {
+    width: 100%;
+    gap: 2rem;
+  }
+
+  .input-box {
+    width: 100%;
+    border-radius: 15px;
+    padding: 1.5rem;
+  }
+
+  .resultado {
+    width: 100%;
+    border-radius: 0;
+    padding: 1.5rem;
+  }
+
+  .valor-imc {
+    font-size: 2rem;
+  }
+
+  .etiqueta {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .barra-imc {
+    height: 1rem;
+    border-radius: 10px;
+  }
+
+  .indicador {
+    width: 2px;
+    height: 1.5rem;
+  }
+
+  .valores {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+  .range-control button {
+    width: 20%;
+    height: 50%;
+  }
 }
 </style>

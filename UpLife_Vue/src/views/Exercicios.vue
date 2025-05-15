@@ -550,7 +550,13 @@ body {
   margin-right: 4%;
   margin-bottom: 1%;
   height: 100%;
-  overflow: hidden;
+  overflow: hidden; /* se actualiza en móvil */
+}
+
+.esquerda,
+.dereita {
+  height: 100%;
+  overflow-y: auto;
 }
 
 .esquerda {
@@ -652,5 +658,131 @@ td[colspan="3"] {
 
 .editable select {
   padding: 3px;
+}
+
+@media (max-width: 768px) {
+  /* CONTENEDORES */
+  .exercicios-layout {
+    flex-direction: column;
+    height: auto !important;
+    overflow: visible !important;
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .esquerda,
+  .dereita {
+    width: 100%;
+    height: auto !important;
+    overflow: visible !important; /* ✅ Elimina scroll interno */
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+
+  .esquerdaAbaixo {
+    width: 100%;
+    overflow-x: auto; /* ✅ Solo scroll horizontal si es necesario */
+    padding: 0;
+  }
+
+  .esquerdaArriba {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  /* TABLAS MÁS COMPACTAS PERO LEGIBLES */
+  table {
+    width: 100%;
+    min-width: 480px; /* ✅ Previene que el contenido colapse */
+    border-collapse: collapse;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    table-layout: auto;
+  }
+
+  thead {
+    background-color: #7f5af0;
+    color: white;
+  }
+
+  th,
+  td {
+    padding: 0.5rem;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.7rem; /* ✅ Más legible */
+    word-break: break-word;
+  }
+
+  td {
+    background-color: #f9f9f9;
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  /* BOTÓN ESTILO COMPACTO */
+  button {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.75rem;
+    margin-top: 0.75rem;
+    background-color: #4880ff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  /* ICONOS AJUSTADOS */
+  .icon,
+  .icon2 {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+
+  .icona,
+  .icon,
+  .icon2 {
+    width: 1.25rem;
+    height: 1.25rem;
+    object-fit: contain;
+  }
+
+  /* TARXETAS NAVEGACIÓN */
+  .tarxetas {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    flex-direction: row;
+    gap: 1%;
+  }
+
+  .tarxeta {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+    box-shadow: none;
+    margin: 0;
+  }
+
+  .tarxeta.inactiva {
+    background-color: #ccc;
+    color: #fff;
+  }
+
+  /* TÍTULOS */
+  h1 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-size: 1rem;
+    margin: 0.75rem 0 0.5rem;
+  }
 }
 </style>

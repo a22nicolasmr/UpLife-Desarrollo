@@ -648,4 +648,108 @@ button {
   outline: 2px solid #7f5af0;
   border-radius: 4px;
 }
+@media (max-width: 768px) {
+  .plantilla-layout {
+    flex-direction: column;
+    height: auto;
+    width: 100%;
+    overflow: visible;
+    margin: 0;
+  }
+
+  .esquerda,
+  .dereita {
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+    box-sizing: border-box;
+    overflow: visible;
+  }
+
+  .grafico-calorias {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .circular-chart {
+    max-width: 40%;
+    max-height: 40%;
+  }
+
+  .info-calorias p {
+    font-size: 1rem;
+  }
+
+  .tarxetas {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    flex-direction: row;
+    gap: 1%;
+  }
+
+  .tarxeta {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+    box-shadow: none;
+    margin: 0;
+  }
+
+  .tarxeta.inactiva {
+    background-color: #ccc;
+    color: #fff;
+  }
+
+  .tabela-exercicios {
+    min-width: 600px;
+    font-size: 0.85rem;
+  }
+
+  .exercicios-plantilla {
+    overflow-x: auto;
+  }
+
+  .button-add {
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .icono-trash {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-top: 0;
+  }
+
+  .expand-button {
+    font-size: 1.2rem;
+  }
+
+  .plantilla-header img:first-child {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  button#engadirE {
+    width: 100%;
+    font-size: 1.5rem;
+    padding: 1rem;
+    margin-top: 1.5rem;
+  }
+  #divXeral2 {
+    height: auto;
+    overflow-y: auto;
+    padding-bottom: 2rem; /* espacio para evitar recorte inferior */
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+  .icono-trash {
+    margin-top: 15%;
+    margin-right: 5%;
+  }
+}
 </style>

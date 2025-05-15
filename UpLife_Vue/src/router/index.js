@@ -32,8 +32,8 @@ const routes = [
   {
     // redirixir a tarefas cando se abre a aplicacion
     path: "/",
-    redirect: "/tarefas",
-    // redirect: "/formularios/rexistro",
+    // redirect: "/tarefas",
+    redirect: "/formularios/rexistro",
   },
   {
     path: "/formularios",

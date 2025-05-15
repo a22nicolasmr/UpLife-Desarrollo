@@ -75,4 +75,28 @@ watch(
   font-size: 2vh;
   color: #d8d8d8;
 }
+@media (max-width: 768px) {
+  .barra-superior {
+    padding: 0.4rem 0.8rem;
+    height: auto;
+  }
+
+  .usuario-info {
+    margin-right: 15%;
+  }
+
+  .usuario-imagen {
+    width: 5vh;
+    height: 5vh;
+    margin-right: 1vh;
+  }
+
+  .usuario-nombre {
+    font-size: 0.9rem;
+  }
+
+  .usuario-medallas {
+    font-size: 0.75rem;
+  }
+}
 </style>

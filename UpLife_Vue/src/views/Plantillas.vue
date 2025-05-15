@@ -392,6 +392,7 @@ export default {
   background-color: white;
   border-radius: 8px;
 }
+
 .button {
   background-color: #d8d8d8;
   color: #7f5af0;
@@ -420,7 +421,6 @@ export default {
 .divPlantilla {
   background-color: #d8d8d8;
   border-radius: 8px;
-
   margin-bottom: 2%;
   padding: 1%;
   display: flex;
@@ -446,8 +446,8 @@ export default {
 #divXeral2 {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
+  height: auto;
+  overflow-x: hidden;
 }
 
 .titulo {
@@ -488,19 +488,17 @@ export default {
   border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
   margin-right: 4%;
-  flex-grow: 1;
-  /* height: calc(100vh - 30vh); */
-  height: 100%;
-  overflow: hidden;
   margin-bottom: 2%;
+  height: auto;
+  overflow: visible;
 }
 
 .esquerda {
   width: 60%;
   padding: 2%;
   box-sizing: border-box;
-  height: 100%;
-  overflow-y: auto;
+  height: auto;
+  overflow: visible;
 }
 
 .dereita {
@@ -508,6 +506,8 @@ export default {
   background-color: #1c1c1c;
   color: white;
   box-sizing: border-box;
+  height: auto;
+  overflow: visible;
 }
 
 button {
@@ -562,12 +562,14 @@ button {
 .fade-slide-leave-active {
   transition: all 0.2s ease;
 }
+
 .fade-slide-enter-from,
 .fade-slide-leave-to {
   max-height: 0;
   opacity: 0;
   transform: translateY(-10px);
 }
+
 .fade-slide-enter-to,
 .fade-slide-leave-from {
   max-height: 500px;
@@ -595,15 +597,100 @@ button {
   margin-top: 22%;
 }
 
-.expand-button {
-  font-size: 1.5rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #333;
-  transition: transform 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+@media (max-width: 768px) {
+  .plantilla-layout {
+    flex-direction: column;
+    width: 100%;
+    height: auto !important;
+    overflow: visible !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  .esquerda,
+  .dereita {
+    width: 100%;
+    height: auto !important;
+    overflow: visible !important;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+
+  #divXeral2 {
+    height: auto;
+    overflow-y: visible;
+    padding-bottom: 2rem;
+  }
+
+  .tarxetas {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    flex-direction: row;
+    gap: 1%;
+    margin-top: 1rem;
+  }
+
+  .tarxeta {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+    box-shadow: none;
+    margin: 0;
+  }
+
+  .tarxeta.inactiva {
+    background-color: #ccc;
+    color: #fff;
+  }
+
+  .tabela-exercicios {
+    min-width: 600px;
+    font-size: 0.85rem;
+  }
+
+  .exercicios-plantilla {
+    overflow-x: auto;
+  }
+
+  .expand-button {
+    font-size: 1.2rem;
+    width: 1.8rem;
+    height: 1.8rem;
+    margin: 0;
+  }
+
+  .button-add {
+    font-size: 1.5rem;
+    height: 2rem;
+    margin: 0;
+  }
+
+  .icono-trash {
+    width: 1rem;
+    height: 1rem;
+    margin-top: 15%;
+  }
+
+  .plantilla-header img:first-child {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  button#engadirE {
+    width: 100%;
+    font-size: 1.5rem;
+    padding: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  .expand-button {
+    margin-left: 20%;
+    margin-top: 10%;
+  }
 }
 </style>

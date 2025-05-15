@@ -3,88 +3,107 @@ export default {
   data() {
     return {
       modal: false,
+      menuAbierto: false,
     };
   },
-
-  // cambiar ruta actual segun onde se atope o usuario
   computed: {
     rutaActual() {
       return this.$route.path;
     },
+    esMovil() {
+      return window.innerWidth <= 768;
+    },
   },
-  methods: {},
+  mounted() {
+    window.addEventListener("resize", this.handleResize);
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.handleResize);
+  },
+  methods: {
+    handleResize() {
+      if (!this.esMovil && this.menuAbierto) {
+        this.menuAbierto = false;
+      }
+    },
+  },
 };
 </script>
 
 <template>
-  <!-- reidirixir usuario segun onde pulse -->
-  <nav>
-    <div class="menu-superior">
-      <ul>
-        <li>
-          <img
-            src="/imaxes/Logo.PNG"
-            alt="UpLife"
-            @click="$router.push('/formularios/rexistro')"
-          />
-        </li>
-        <li
-          :class="{ activo: rutaActual === '/tarefas' }"
-          @click="$router.push('/tarefas')"
-        >
-          Tarefas
-        </li>
-        <li
-          :class="{ activo: rutaActual === '/exercicios' }"
-          @click="$router.push('/exercicios')"
-        >
-          Exercicios
-        </li>
-        <li
-          :class="{ activo: rutaActual === '/comidas' }"
-          @click="$router.push('/comidas')"
-        >
-          Comidas
-        </li>
-        <li
-          :class="{ activo: rutaActual === '/plantillas' }"
-          @click="$router.push('/plantillas')"
-        >
-          Plantillas
-        </li>
-        <li
-          :class="{ activo: rutaActual === '/auga' }"
-          @click="$router.push('/auga')"
-        >
-          Auga
-        </li>
-        <li
-          :class="{ activo: rutaActual === '/medallas' }"
-          @click="$router.push('/medallas')"
-        >
-          Medallas
-        </li>
-      </ul>
-    </div>
+  <div>
+    <!-- Botón hamburguesa solo en móviles -->
+    <div class="hamburguesa" @click="menuAbierto = !menuAbierto">☰</div>
 
-    <div class="menu-inferior">
-      <hr />
-      <ul>
-        <li
-          :class="{ activo: rutaActual === '/perfil' }"
-          @click="$router.push('/perfil')"
-        >
-          Perfil
-        </li>
-        <li
-          :class="{ activo: rutaActual === '/formularios/rexistro' }"
-          @click="$emit('toggleModal')"
-        >
-          Pechar sesión
-        </li>
-      </ul>
-    </div>
-  </nav>
+    <!-- Menú de navegación -->
+    <nav :class="{ abierto: menuAbierto }" v-if="menuAbierto || !esMovil">
+      <div class="menu-superior">
+        <ul>
+          <li>
+            <img
+              src="/imaxes/Logo.PNG"
+              alt="UpLife"
+              @click="$router.push('/formularios/rexistro')"
+            />
+          </li>
+          <li
+            :class="{ activo: rutaActual === '/tarefas' }"
+            @click="$router.push('/tarefas')"
+          >
+            Tarefas
+          </li>
+          <li
+            :class="{ activo: rutaActual === '/exercicios' }"
+            @click="$router.push('/exercicios')"
+          >
+            Exercicios
+          </li>
+          <li
+            :class="{ activo: rutaActual === '/comidas' }"
+            @click="$router.push('/comidas')"
+          >
+            Comidas
+          </li>
+          <li
+            :class="{ activo: rutaActual === '/plantillas' }"
+            @click="$router.push('/plantillas')"
+          >
+            Plantillas
+          </li>
+          <li
+            :class="{ activo: rutaActual === '/auga' }"
+            @click="$router.push('/auga')"
+          >
+            Auga
+          </li>
+          <li
+            :class="{ activo: rutaActual === '/medallas' }"
+            @click="$router.push('/medallas')"
+          >
+            Medallas
+          </li>
+        </ul>
+      </div>
+
+      <div class="menu-inferior">
+        <hr />
+        <ul>
+          <li
+            :class="{ activo: rutaActual === '/perfil' }"
+            @click="$router.push('/perfil')"
+          >
+            Perfil
+          </li>
+          <li
+            :class="{ activo: rutaActual === '/formularios/rexistro' }"
+            @click="$emit('toggleModal')"
+          >
+            Pechar sesión
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
 </template>
 
 <style scoped>
@@ -97,6 +116,7 @@ nav {
   border-right: 1px solid #ccc;
   position: fixed;
   width: 10%;
+  transition: transform 0.3s ease;
 }
 
 .menu-superior {
@@ -111,6 +131,7 @@ nav {
   flex-direction: column;
   margin-top: auto;
   font-size: large;
+  margin-bottom: 6%;
 }
 
 ul {
@@ -148,5 +169,69 @@ hr {
   margin: 10% 0;
   border: none;
   border-top: 1px solid #ccc;
+}
+
+/* Hamburguesa */
+.hamburguesa {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 1rem;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 10000;
+}
+
+/* Estilos móviles */
+@media (max-width: 768px) {
+  nav {
+    width: 35%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    z-index: 9999;
+    padding-top: 20%; /* menos espacio arriba */
+    transform: translateX(-100%);
+  }
+
+  nav.abierto {
+    transform: translateX(0);
+  }
+
+  .hamburguesa {
+    display: block;
+    top: -1.5%;
+  }
+
+  .menu-superior {
+    flex-grow: 0; /* No ocupa altura extra */
+    margin-bottom: 90%;
+  }
+
+  .menu-superior ul,
+  .menu-inferior ul {
+    gap: 2%; /* mínimo espacio entre elementos */
+  }
+
+  .menu-superior li,
+  .menu-inferior li {
+    padding: 0.4rem 0.6rem;
+    font-size: medium;
+  }
+
+  .menu-inferior {
+    margin-top: 100%; /* espacio mínimo entre bloques */
+  }
+
+  li.activo {
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+  }
+
+  hr {
+    margin: 0.5rem 0;
+  }
 }
 </style>

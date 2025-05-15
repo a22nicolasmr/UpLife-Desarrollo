@@ -65,4 +65,29 @@ export default {
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
 }
+@media (max-width: 768px) {
+  .modal-container {
+    width: 85%;
+    padding: 15px 20px;
+    border-radius: 10px;
+  }
+
+  .modal-container h1 {
+    font-size: xx-large;
+    text-align: center;
+  }
+
+  .buttons {
+    margin-top: 10%;
+    flex-direction: row;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+
+  #pechar,
+  #cancelar {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+  }
+}
 </style>

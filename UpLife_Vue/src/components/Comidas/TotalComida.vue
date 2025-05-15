@@ -232,4 +232,62 @@ export default {
   stroke: #10b981;
   stroke-width: 3.8;
 }
+@media (max-width: 768px) {
+  .total-container {
+    margin-top: 1rem;
+    padding: 1rem;
+    height: auto;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 2rem;
+  }
+
+  .card {
+    font-size: 0.95rem;
+    padding: 1rem;
+    min-height: 100px;
+    text-align: center;
+    font-size: small;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 12px;
+  }
+  .card p {
+    margin: 0;
+    margin-bottom: 40%;
+  }
+  .card span {
+    margin-top: 1.5rem;
+    font-size: medium;
+    font-weight: bold;
+    background-color: #eee;
+    padding: 0.3rem 0.7rem;
+    border-radius: 1rem;
+    display: inline-block;
+    margin-right: 14%;
+  }
+
+  .donut-chart {
+    max-width: 80%;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .circular-chart {
+    width: 100%;
+    height: auto;
+  }
+}
 </style>

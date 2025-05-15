@@ -262,4 +262,56 @@ body {
   object-fit: cover;
   cursor: pointer;
 }
+@media (max-width: 768px) {
+  .perfil-layout {
+    flex-direction: column;
+    align-items: center;
+    max-height: none;
+    gap: 0; /* para que estén pegados */
+  }
+
+  .datos,
+  .calculadora {
+    width: 100%;
+    padding: 1.5rem;
+    box-sizing: border-box;
+  }
+
+  .datos {
+    border-radius: 2% 2% 0 0;
+  }
+
+  .calculadora {
+    background-color: #1c1c1c;
+    color: white;
+    border-radius: 0 0 2% 2%;
+  }
+
+  .datos p {
+    font-size: 1rem;
+    margin: 1rem 0;
+    line-height: 1.6;
+  }
+
+  .imaxe-perfil {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .imaxe-perfil img {
+    width: 50vw;
+    height: auto;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+}
 </style>

@@ -115,6 +115,9 @@ export default {
 </template>
 
 <style scoped>
+h1 {
+  color: #7f5af0;
+}
 .erro {
   color: red;
   font-size: 0.9rem;

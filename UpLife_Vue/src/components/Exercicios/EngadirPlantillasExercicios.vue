@@ -145,4 +145,46 @@ select {
   margin-top: 2%;
   font-size: medium;
 }
+@media (max-width: 768px) {
+  .engadir-container {
+    height: auto;
+    width: 100%;
+    overflow: hidden;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  label {
+    font-size: 1rem;
+  }
+
+  select {
+    font-size: 1rem;
+  }
+
+  button {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+
+  .error {
+    font-size: 0.95rem;
+    text-align: center;
+  }
+}
 </style>

@@ -30,32 +30,30 @@ export default {
     toggleModal() {
       this.modalActivo = !this.modalActivo;
     },
-    // emitirDatasConTarefas(tarefas) {
-    //   this.tarefasConHora = tarefas.map((t) => ({ ...t, notificada: false }));
-    // },
+    emitirDatasConTarefas(tarefas) {
+      this.tarefasConHora = tarefas.map((t) => ({ ...t, notificada: false }));
+    },
 
     //comprobar se a hora dunha tarefa coincide coa hora actual
     //true = abrir ventá aviso
     comprobarHoras() {
-      if (this.tarefasConHora) {
-        const agora = new Date();
-        const horaActual = agora.toTimeString().slice(0, 5);
+      const agora = new Date();
+      const horaActual = agora.toTimeString().slice(0, 5);
 
-        for (const tarefa of this.tarefasConHora) {
-          if (
-            tarefa.hora &&
-            tarefa.hora.slice(0, 5) === horaActual &&
-            !tarefa.notificada
-          ) {
-            this.tarefaActual = tarefa;
-            this.avisoActivo = true;
-            tarefa.notificada = true;
-            return;
-          }
+      for (const tarefa of this.tarefasConHora) {
+        if (
+          tarefa.hora &&
+          tarefa.hora.slice(0, 5) === horaActual &&
+          !tarefa.notificada &&
+          !tarefa.completada
+        ) {
+          this.tarefaActual = tarefa;
+          this.avisoActivo = true;
+          tarefa.notificada = true;
+          return;
         }
       }
     },
-
     //pechar ventá aviso
     cerrarAviso() {
       this.avisoActivo = false;
@@ -135,6 +133,7 @@ export default {
       <router-view
         @mandarRachas="mandarRachas"
         :valorMedallas="valorMedallas"
+        @emitirDatasConTarefas="emitirDatasConTarefas"
       />
     </div>
 
@@ -186,5 +185,29 @@ body {
   margin: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
+}
+@media (max-width: 768px) {
+  .vista {
+    margin: 0;
+    margin-top: 8%;
+    margin-right: 5%;
+    padding: 3%;
+    width: 94%;
+    overflow-y: auto;
+  }
+
+  .layout {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    min-height: 100vh;
+  }
+
+  .sin-barras {
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
 }
 </style>
