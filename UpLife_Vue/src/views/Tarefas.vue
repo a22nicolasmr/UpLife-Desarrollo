@@ -50,6 +50,7 @@ export default {
         id_medalla: 4,
         completado: true,
       });
+
       // Medalla 5 - Racha saudable: comidas 7 días seguidos
       valorMedallas.push({
         id_medalla: 5,

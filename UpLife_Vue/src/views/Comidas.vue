@@ -66,7 +66,10 @@ export default {
           .map((g) => ({
             ...g,
             comidas: (g.comidas || []).filter((c) => c.data === hoxe),
-          }));
+          }))
+          .sort((a, b) => a.id_grupo - b.id_grupo); // ✅ Ordenar por id_grupo ascendente
+
+        this.componenteActivo = "historial";
       } catch (error) {
         console.error("Erro cargando datos:", error);
       }
@@ -305,7 +308,9 @@ export default {
                         <span v-else>{{ comida.peso }}</span>
                       </td>
                       <td>{{ calcular(comida.calorias, comida.peso) }} kcal</td>
-                      <td>{{ calcular(comida.carbos, comida.peso) }} g</td>
+                      <td>
+                        {{ calcular(comida.carbohidratos, comida.peso) }} g
+                      </td>
                       <td>{{ calcular(comida.proteinas, comida.peso) }} g</td>
                       <td>{{ calcular(comida.graxas, comida.peso) }} g</td>
                       <td>

@@ -13,16 +13,15 @@ export default {
       terceirasMedallas: [],
     };
   },
-  watch: {
-    valorMedallas: {
-      handler(newVal) {
-        if (newVal && newVal.length > 0) {
-          this.actualizarMedallas();
-        }
-      },
-      immediate: true,
-      deep: true,
+  valorMedallas: {
+    async handler(newVal) {
+      if (newVal && newVal.length > 0) {
+        await this.actualizarMedallas();
+        await this.obterMedallas();
+      }
     },
+    immediate: true,
+    deep: true,
   },
 
   computed: {
@@ -31,8 +30,9 @@ export default {
       return store.id;
     },
   },
-  mounted() {
-    this.obterMedallas();
+  async mounted() {
+    await this.actualizarMedallas(); // primero actualiza
+    // await this.obterMedallas(); // luego recarga
   },
   methods: {
     async actualizarMedallas() {
@@ -48,12 +48,12 @@ export default {
           if (!res.ok) throw new Error("Erro ao obter medalla");
 
           const medallaActual = await res.json();
+          const xaIncluido =
+            medallaActual.usuarios.includes(usuarioId) &&
+            medallaActual.completado;
 
-          const xaIncluido = medallaActual.usuarios.includes(usuarioId);
-
-          // ⚠️ Solo actualizar se está completada e o usuario non está xa asignado
           if (medalla.completado && !xaIncluido) {
-            await fetch(
+            const patchRes = await fetch(
               `http://localhost:8001/api/medallas/${medalla.id_medalla}/`,
               {
                 method: "PATCH",
@@ -66,17 +66,23 @@ export default {
                 }),
               }
             );
+
+            const patchText = await patchRes.text();
+
+            if (!patchRes.ok) {
+              throw new Error(
+                `❌ PATCH fallou para medalla ${medalla.id_medalla}`
+              );
+            }
           }
+          await this.obterMedallas();
         } catch (error) {
           console.error(
-            `Erro ao actualizar medalla ${medalla.id_medalla}`,
+            `🚨 Erro ao actualizar medalla ${medalla.id_medalla}:`,
             error
           );
         }
       }
-
-      await this.obterMedallas();
-      useUsuarioStore().updateNumeroMedallas();
     },
     //obter medallas
     async obterMedallas() {
@@ -99,7 +105,7 @@ export default {
 
     //obter medallas completadas polo usuario
     medallaCompletadaPorUsuario(medalla) {
-      return medalla.usuarios.includes(this.usuarioId) && medalla.completado;
+      return medalla.completado && medalla.usuarios.includes(this.usuarioId);
     },
   },
 };

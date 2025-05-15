@@ -117,16 +117,16 @@ class PlantillasMiniSerializer(serializers.ModelSerializer):
 
 class UsoPlantillaSerializer(serializers.ModelSerializer):
     usuario_nome = serializers.CharField(source='usuario.nome_usuario', read_only=True)
-    plantilla = serializers.SerializerMethodField()
+    plantilla = serializers.PrimaryKeyRelatedField(queryset=Plantillas.objects.all())
 
     class Meta:
         model = UsoPlantilla
         fields = ['id', 'plantilla', 'usuario', 'usuario_nome', 'data']
 
-    def get_plantilla(self, obj):
-        return {
-            'id_plantilla': obj.plantilla.id_plantilla,
-            'nome': obj.plantilla.nome,
-            'icona': obj.plantilla.icona
-        }
+    # def get_plantilla(self, obj):
+    #     return {
+    #         'id_plantilla': obj.plantilla.id_plantilla,
+    #         'nome': obj.plantilla.nome,
+    #         'icona': obj.plantilla.icona
+    #     }
 

@@ -923,6 +923,19 @@
   }
 },
 {
+  "model": "admin.logentry",
+  "pk": 104,
+  "fields": {
+    "action_time": "2025-05-15T06:59:05.179Z",
+    "user": 1,
+    "content_type": 14,
+    "object_id": "103",
+    "object_repr": "nome=comida dia 9, peso=11.0, graxas=111.0, carbohidratos=1.0, proteinas=21.0, calorias=111.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$BU5yxZwBZa9j",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
   "model": "auth.user",
   "pk": 1,
   "fields": {
@@ -1141,6 +1154,46 @@
   }
 },
 {
+  "model": "UpLife_api.auga",
+  "pk": 36,
+  "fields": {
+    "cantidade": 100,
+    "hora": "11:24:00",
+    "usuario": 1,
+    "data": "2025-05-14"
+  }
+},
+{
+  "model": "UpLife_api.auga",
+  "pk": 37,
+  "fields": {
+    "cantidade": 102,
+    "hora": "11:27:00",
+    "usuario": 1,
+    "data": "2025-05-15"
+  }
+},
+{
+  "model": "UpLife_api.auga",
+  "pk": 38,
+  "fields": {
+    "cantidade": 600,
+    "hora": "11:52:00",
+    "usuario": 1,
+    "data": "2025-05-15"
+  }
+},
+{
+  "model": "UpLife_api.auga",
+  "pk": 41,
+  "fields": {
+    "cantidade": 123,
+    "hora": "14:55:00",
+    "usuario": 1,
+    "data": "2025-05-15"
+  }
+},
+{
   "model": "UpLife_api.medallas",
   "pk": 4,
   "fields": {
@@ -1150,7 +1203,8 @@
     "icona": "media/primeirosPasos_532MVGb.png",
     "usuarios": [
       1,
-      35
+      35,
+      34
     ]
   }
 },
@@ -1160,7 +1214,7 @@
   "fields": {
     "nome": "Racha saudable",
     "descripcion": "Rexistra comidas 7 días seguidos",
-    "completado": false,
+    "completado": true,
     "icona": "media/rachaSaudable.jpg",
     "usuarios": [
       1
@@ -1199,7 +1253,7 @@
   "fields": {
     "nome": "Asasino de tarefas",
     "descripcion": "Completa todas as tarefas programadas 5 días seguidos",
-    "completado": false,
+    "completado": true,
     "icona": "media/tarefas.jpg",
     "usuarios": [
       1
@@ -1345,6 +1399,28 @@
     "titulo": "Unha tarefa calquera",
     "completado": false,
     "data": "2025-05-13",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.tarefas",
+  "pk": 36,
+  "fields": {
+    "hora": null,
+    "titulo": "Unha tarefa calquera",
+    "completado": true,
+    "data": "2025-05-14",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.tarefas",
+  "pk": 39,
+  "fields": {
+    "hora": null,
+    "titulo": "tarefa dia 15",
+    "completado": true,
+    "data": "2025-05-15",
     "usuario": 1
   }
 },
@@ -1763,18 +1839,41 @@
   }
 },
 {
+  "model": "UpLife_api.exercicios",
+  "pk": 94,
+  "fields": {
+    "nome": "Dominadas",
+    "repeticions": "5x102",
+    "peso": 4.0,
+    "data": "2025-05-14",
+    "usuario": 1,
+    "categoria": 4
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 96,
+  "fields": {
+    "nome": "Dominada2s",
+    "repeticions": "5x112",
+    "peso": 33.0,
+    "data": "2025-05-15",
+    "usuario": 1,
+    "categoria": 2
+  }
+},
+{
   "model": "UpLife_api.plantillas",
   "pk": 15,
   "fields": {
     "nome": "Plantilla de perna",
     "icona": "/imaxes/leg.png",
-    "data": "2025-05-13",
     "usuario": 1,
     "exercicios": [
-      71,
       72,
       73,
-      74
+      74,
+      71
     ]
   }
 },
@@ -1784,7 +1883,6 @@
   "fields": {
     "nome": "Plantilla de peito",
     "icona": "/imaxes/torso.png",
-    "data": null,
     "usuario": 1,
     "exercicios": []
   }
@@ -1795,7 +1893,6 @@
   "fields": {
     "nome": "Plantilla de core",
     "icona": "/imaxes/abdominales.png",
-    "data": null,
     "usuario": 1,
     "exercicios": []
   }
@@ -1806,7 +1903,6 @@
   "fields": {
     "nome": "Plantilla de espalda",
     "icona": "/imaxes/atras.png",
-    "data": "2025-05-13",
     "usuario": 1,
     "exercicios": [
       75,
@@ -1816,6 +1912,34 @@
       79,
       80
     ]
+  }
+},
+{
+  "model": "UpLife_api.plantillas",
+  "pk": 20,
+  "fields": {
+    "nome": "plantilla de proba",
+    "icona": "/imaxes/musculo.png",
+    "usuario": 1,
+    "exercicios": []
+  }
+},
+{
+  "model": "UpLife_api.usoplantilla",
+  "pk": 13,
+  "fields": {
+    "plantilla": 16,
+    "usuario": 1,
+    "data": "2025-05-14"
+  }
+},
+{
+  "model": "UpLife_api.usoplantilla",
+  "pk": 20,
+  "fields": {
+    "plantilla": 16,
+    "usuario": 1,
+    "data": "2025-05-15"
   }
 },
 {
@@ -1973,6 +2097,76 @@
   }
 },
 {
+  "model": "UpLife_api.comidas",
+  "pk": 67,
+  "fields": {
+    "nome": "Ovos",
+    "peso": 135.0,
+    "graxas": 11.0,
+    "carbohidratos": 11.0,
+    "proteinas": 16.0,
+    "calorias": 100.0,
+    "data": "2025-05-14",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.comidas",
+  "pk": 100,
+  "fields": {
+    "nome": "Leite",
+    "peso": 602.0,
+    "graxas": 1.5,
+    "carbohidratos": 4.7,
+    "proteinas": 3.2,
+    "calorias": 45.0,
+    "data": "2025-05-15",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.comidas",
+  "pk": 101,
+  "fields": {
+    "nome": "Ovos",
+    "peso": 130.0,
+    "graxas": 9.94,
+    "carbohidratos": 0.77,
+    "proteinas": 12.58,
+    "calorias": 147.0,
+    "data": "2025-05-15",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.comidas",
+  "pk": 102,
+  "fields": {
+    "nome": "Pan integral",
+    "peso": 60.0,
+    "graxas": 3.4,
+    "carbohidratos": 48.7,
+    "proteinas": 9.3,
+    "calorias": 282.0,
+    "data": "2025-05-15",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.comidas",
+  "pk": 103,
+  "fields": {
+    "nome": "comida dia 9",
+    "peso": 11.0,
+    "graxas": 111.0,
+    "carbohidratos": 1.0,
+    "proteinas": 21.0,
+    "calorias": 111.0,
+    "data": "2025-05-09",
+    "usuario": 1
+  }
+},
+{
   "model": "UpLife_api.grupos",
   "pk": 2,
   "fields": {
@@ -1980,12 +2174,46 @@
     "icona": "/imaxes/morning.png",
     "usuario": 1,
     "comidas": [
+      65,
+      66,
+      58,
       26,
       59,
-      58,
-      65,
-      66
+      67,
+      100,
+      101,
+      102
     ]
+  }
+},
+{
+  "model": "UpLife_api.grupos",
+  "pk": 4,
+  "fields": {
+    "nome": "Comida",
+    "icona": "/imaxes/sun.png",
+    "usuario": 1,
+    "comidas": []
+  }
+},
+{
+  "model": "UpLife_api.grupos",
+  "pk": 5,
+  "fields": {
+    "nome": "Cea",
+    "icona": "/imaxes/sunset.png",
+    "usuario": 1,
+    "comidas": []
+  }
+},
+{
+  "model": "UpLife_api.grupos",
+  "pk": 6,
+  "fields": {
+    "nome": "Outros",
+    "icona": "/imaxes/lunch.png",
+    "usuario": 1,
+    "comidas": []
   }
 }
 ]

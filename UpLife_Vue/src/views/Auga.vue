@@ -96,7 +96,9 @@ export default {
         // augaBorrar.forEach((e) => {
         //   this.eliminarAuga(e.id_auga);
         // });
-        this.$refs.filloAuga.cargarAuga();
+        this.componenteActivo = "historial";
+
+        // this.$refs.filloAuga.cargarAuga();
       } catch (error) {
         console.error("Erro cargando auga:", error);
       }

@@ -70,6 +70,7 @@ export default {
           method: "DELETE",
         });
         this.plantillas = this.plantillas.filter((p) => p.id_plantilla !== id);
+        this.componenteActivo = "nova";
       } catch (error) {
         console.error("Erro eliminando plantilla:", error);
       }
