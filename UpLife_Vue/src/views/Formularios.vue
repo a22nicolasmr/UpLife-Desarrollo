@@ -148,7 +148,7 @@ body,
   .derecha {
     width: 100%;
     padding: 8% 6%;
-    height: 100vh;
+    height: 115vh;
   }
 
   .formulario {

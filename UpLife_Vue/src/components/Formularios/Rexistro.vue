@@ -181,8 +181,8 @@ export default {
           <a @click.prevent="$router.push('/condicions')">
             termos e condicións de uso da páxina
           </a>
+          <input type="checkbox" id="idCondicions" v-model="aceptaCondicions" />
         </span>
-        <input type="checkbox" id="idCondicions" v-model="aceptaCondicions" />
       </label>
 
       <button type="submit">Crear conta</button>
