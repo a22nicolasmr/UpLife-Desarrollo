@@ -2,7 +2,6 @@
 export default {
   data() {
     return {
-      identificador: "",
       novaContrasinal: "",
       repetirContrasinal: "",
       erro: "",
@@ -14,29 +13,28 @@ export default {
       this.erro = "";
       this.exito = "";
 
-      if (
-        !this.identificador ||
-        !this.novaContrasinal ||
-        !this.repetirContrasinal
-      ) {
-        this.erro = "Completa todos os campos";
+      if (!this.novaContrasinal || !this.repetirContrasinal) {
+        this.erro = "Completa todos os campos.";
         return;
       }
 
       if (this.novaContrasinal !== this.repetirContrasinal) {
-        this.erro = "Os contrasinais non coinciden";
+        this.erro = "Os contrasinais non coinciden.";
+        return;
+      }
+
+      const correo = localStorage.getItem("correoConfirmacion");
+      if (!correo) {
+        this.erro = "Non se atopou o correo do usuario.";
         return;
       }
 
       try {
-        // Buscar usuario polo identificador
         const res = await fetch("http://localhost:8001/api/usuarios/");
         const usuarios = await res.json();
 
         const usuario = usuarios.find(
-          (u) =>
-            u.email === this.identificador ||
-            u.nome_usuario === this.identificador
+          (u) => u.email.toLowerCase() === correo.toLowerCase()
         );
 
         if (!usuario) {
@@ -57,15 +55,23 @@ export default {
           }
         );
 
-        if (!response.ok) throw new Error("Erro ao actualizar o contrasinal");
+        if (!response.ok) throw new Error("Erro ao actualizar o contrasinal.");
 
-        this.exito = "Contrasinal cambiado con éxito";
-        this.identificador = "";
+        this.exito = "Contrasinal cambiado con éxito.";
         this.novaContrasinal = "";
         this.repetirContrasinal = "";
+
+        // Limpia el localStorage por seguridade
+        localStorage.removeItem("correoConfirmacion");
+        localStorage.removeItem("codigoConfirmacion");
+
+        // Redirige tras 2 segundos
+        setTimeout(() => {
+          this.$router.push("/formularios/inicio");
+        }, 2000);
       } catch (e) {
-        this.erro = "Erro ao cambiar a contrasinal.";
         console.error(e);
+        this.erro = "Erro ao cambiar a contrasinal.";
       }
     },
 
@@ -81,14 +87,6 @@ export default {
     <h1>Cambiar Contrasinal</h1>
 
     <form @submit.prevent="cambiarContrasinal">
-      <label for="idUsuario">Nome de usuario ou Email</label>
-      <input
-        type="text"
-        id="idUsuario"
-        v-model="identificador"
-        placeholder="Escribe o nome de usuario ou email"
-      />
-
       <label for="nova">Novo Contrasinal</label>
       <input
         type="password"

@@ -27,6 +27,8 @@ import HistorialExercicios from "@/components/Exercicios/HistorialExercicios.vue
 import NovaPlantilla from "@/components/Plantillas/NovaPlantilla.vue";
 import Condicions from "@/views/Condicions.vue";
 import Cambio from "@/components/Formularios/Cambio.vue";
+import Codigo from "@/components/Formularios/Codigo.vue";
+import CorreoCodigo from "@/components/Formularios/CorreoCodigo.vue";
 
 const routes = [
   {
@@ -55,6 +57,16 @@ const routes = [
         path: "cambio",
         name: "cambio",
         component: Cambio,
+      },
+      {
+        path: "/codigo",
+        path: "codigo",
+        component: Codigo,
+      },
+      {
+        path: "/correoCodigo",
+        path: "correoCodigo",
+        component: CorreoCodigo,
       },
     ],
   },

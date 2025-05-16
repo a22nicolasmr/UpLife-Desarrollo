@@ -467,7 +467,7 @@ export default {
       <div id="auga">
         <div>
           <p>Racha de auga</p>
-          <p>{{ rAuga }}</p>
+          <p class="centro">{{ rAuga }}</p>
           <p v-if="advertencias.auga" class="advertencia">
             💧 Rexistra a túa auga!
           </p>
@@ -671,39 +671,65 @@ h1 {
   .tarefas-layout {
     flex-direction: column;
     height: auto;
-    margin-right: 0%;
+    margin-right: 0;
   }
 
-  .calendario {
-    width: 100%;
-    height: auto;
-  }
-
+  .calendario,
   .lateral {
     width: 100%;
     height: auto;
   }
 
   .divsArriba {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 1rem;
-    margin: 0 2% 2% 2%;
+    margin: 1rem;
   }
 
   .divsArriba > div {
-    flex-direction: row;
-    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    padding: 4%;
+    justify-content: center;
+    background-color: white;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   }
 
   .divsArriba img {
-    padding-top: 0;
-    width: 6vh;
-    height: 6vh;
+    height: 5.5vh;
+    width: 5.5vh;
+    margin-top: 0.5rem;
   }
+
+  .divsArriba p {
+    margin: 0.2rem 0;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  #exercicio div:nth-of-type(1),
+  #auga div:nth-of-type(1),
+  #comidas div:nth-of-type(1) {
+    margin-top: 4%;
+  }
+  #izquierda p:nth-of-type(2),
+  #exercicio p:nth-of-type(2),
+  #auga p:nth-of-type(2),
+  #comidas p:nth-of-type(2) {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #4880ff;
+  }
+
+  .advertencia {
+    font-size: 0.75rem;
+    color: #ff4d4d;
+    margin-top: 0.3rem;
+  }
+
   .tarxetas {
-    display: flex;
     justify-content: center;
   }
 
@@ -711,47 +737,13 @@ h1 {
     padding: 0.5rem 1rem;
     font-size: 0.85rem;
     border-radius: 0.5rem 0.5rem 0 0;
-    box-shadow: none;
-    min-width: auto;
   }
 
   .tarxeta.inactiva {
     background-color: #ccc;
     color: #fff;
   }
-  .divsArriba {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin: 1rem;
-    flex: unset;
-  }
 
-  .divsArriba > div {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-  }
-
-  .divsArriba img {
-    height: 6vh;
-    width: 6vh;
-    padding-top: 0;
-  }
-
-  #izquierda p:nth-of-type(2),
-  #exercicio p:nth-of-type(2),
-  #auga p:nth-of-type(2),
-  #comidas p:nth-of-type(2) {
-    font-size: 1rem;
-    margin: 0.25rem 0;
-  }
-
-  .advertencia {
-    font-size: 0.85rem;
-    text-align: center;
-  }
   html,
   body {
     overflow-x: hidden;

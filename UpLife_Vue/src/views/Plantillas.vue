@@ -598,6 +598,9 @@ button {
 }
 
 @media (max-width: 768px) {
+  img {
+    margin-right: 5%;
+  }
   .plantilla-layout {
     flex-direction: column;
     width: 100%;
@@ -664,6 +667,10 @@ button {
     font-size: 1.5rem;
     height: 2rem;
     margin: 0;
+    padding-left: 0;
+    margin-top: -5%;
+    margin-right: -5%;
+    margin-left: -10%;
   }
 
   .icono-trash {

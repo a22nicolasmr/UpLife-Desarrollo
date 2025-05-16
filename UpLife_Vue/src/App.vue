@@ -88,7 +88,9 @@ export default {
         this.$route.path !== "/formularios/rexistro" &&
         this.$route.path !== "/formularios/inicio" &&
         this.$route.path !== "/condicions" &&
-        this.$route.path !== "/formularios/cambio"
+        this.$route.path !== "/formularios/cambio" &&
+        this.$route.path !== "/formularios/codigo" &&
+        this.$route.path !== "/formularios/correoCodigo"
       );
     },
     nombreUsuario() {
@@ -119,16 +121,21 @@ export default {
 <template>
   <div class="layout">
     <audio ref="audioAviso" src="/audio/alarma.mp3"></audio>
-    <BarraSuperior
-      v-if="mostrarBarra"
-      :nome="nombreUsuario"
-      :key="nombreUsuario"
-    />
-    <BarraNavegacion
-      v-if="mostrarBarra"
-      :rutaActual="rutaActual"
-      @toggleModal="toggleModal"
-    />
+    <div v-if="mostrarBarra" class="barra-superior">
+      <BarraSuperior
+        v-if="mostrarBarra"
+        :nome="nombreUsuario"
+        :key="nombreUsuario"
+      />
+    </div>
+    <div class="barra-navegacion">
+      <BarraNavegacion
+        v-if="mostrarBarra"
+        :rutaActual="rutaActual"
+        @toggleModal="toggleModal"
+      />
+    </div>
+
     <div :class="['vista', { 'sin-barras': !mostrarBarra }]">
       <router-view
         @mandarRachas="mandarRachas"
@@ -153,6 +160,23 @@ body,
 #app {
   height: 100%;
   margin: 0;
+}
+/* Asegurar que la barra se mantenga fija arriba */
+.barra-superior {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  z-index: 1000;
+}
+.barra-navegacion {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  z-index: 1000;
 }
 
 body {

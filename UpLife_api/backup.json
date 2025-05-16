@@ -1003,13 +1003,13 @@
     "contrasinal": "pbkdf2_sha256$600000$BU5yxZwBZa9jsFoTflwWwk$B87pxqHj9YZtH44a5yVJ/WdqE+UjXBncCN0I0sX6S3U=",
     "imaxe_perfil": "avatares/lunaa_gzPwiYp.jpg",
     "xenero": "Muller",
-    "altura": 156,
-    "peso": 57,
+    "altura": 154,
+    "peso": 56,
     "obxectivo": "Manter o peso",
-    "actividade": "Activo",
+    "actividade": "Normal",
     "idade": 20,
-    "calorias_diarias": 2215,
-    "auga_diaria": 1995,
+    "calorias_diarias": 1955,
+    "auga_diaria": 1960,
     "modo_aplicacion": "C"
   }
 },
@@ -1419,6 +1419,17 @@
   "fields": {
     "hora": null,
     "titulo": "tarefa dia 15",
+    "completado": true,
+    "data": "2025-05-15",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.tarefas",
+  "pk": 43,
+  "fields": {
+    "hora": "10:01:00",
+    "titulo": "a",
     "completado": true,
     "data": "2025-05-15",
     "usuario": 1

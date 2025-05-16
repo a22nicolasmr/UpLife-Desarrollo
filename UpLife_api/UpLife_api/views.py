@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.hashers import check_password
 from rest_framework import viewsets
+from django.core.mail import send_mail
 
 # validacion de campos de inicio de sesión
 @api_view(['POST'])
@@ -90,3 +91,27 @@ class UsoPlantillaViewSet(viewsets.ModelViewSet):
         if usuario_id:
             queryset = queryset.filter(usuario=usuario_id)
         return queryset
+    
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+@api_view(["POST"])
+def enviar_codigo_confirmacion(request):
+    email = request.data.get("email")
+    codigo = request.data.get("codigo")
+
+    if not email or not codigo:
+        return Response({"error": "Datos incompletos"}, status=400)
+
+    try:
+        send_mail(
+            subject="Código de confirmación - UpLife",
+            message=f"Tu código de confirmación es: {codigo}",
+            from_email="uplifedaw@gmail.com",
+            recipient_list=[email],
+            fail_silently=False,
+        )
+        return Response({"mensaje": "Correo enviado correctamente"})
+    except Exception as e:
+        print("ERROR AL ENVIAR EMAIL:", e)  # 👈 te mostrará el motivo real
+        return Response({"error": str(e)}, status=500)

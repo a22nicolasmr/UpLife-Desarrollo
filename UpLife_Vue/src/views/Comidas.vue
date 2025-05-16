@@ -591,13 +591,14 @@ button {
   font-size: xx-large;
   padding: 0.5rem 1rem;
   cursor: pointer;
+  margin: 0;
 }
 
 .icono-trash {
   width: 18%;
   height: 18%;
   cursor: pointer;
-  margin-top: 22%;
+  margin-top: 30%;
 }
 .tabela-exercicios {
   width: 100%;
