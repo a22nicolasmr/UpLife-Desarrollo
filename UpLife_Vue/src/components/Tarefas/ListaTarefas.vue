@@ -93,7 +93,9 @@ export default {
       const dataISO = new Date(data).toLocaleDateString("en-CA");
 
       try {
-        const response = await fetch(`http://localhost:8001/api/tarefas/`);
+        const response = await fetch(
+          `https://uplife-final.onrender.com/api/tarefas/`
+        );
         if (!response.ok) throw new Error("Erro ao cargar tarefas");
         const tarefas = await response.json();
 
@@ -118,7 +120,7 @@ export default {
 
     async borrarTarefa(id) {
       try {
-        await fetch(`http://localhost:8001/api/tarefas/${id}/`, {
+        await fetch(`https://uplife-final.onrender.com/api/tarefas/${id}/`, {
           method: "DELETE",
         });
 
@@ -144,7 +146,7 @@ export default {
       try {
         const updated = { completado: !tarefa.completado };
         const response = await fetch(
-          `http://localhost:8001/api/tarefas/${tarefa.id_tarefa}/`,
+          `https://uplife-final.onrender.com/api/tarefas/${tarefa.id_tarefa}/`,
           {
             method: "PATCH",
             headers: {

@@ -95,7 +95,7 @@ export default {
 
       try {
         const response = await fetch(
-          `http://localhost:8001/api/usuarios/${this.id}/`,
+          `https://uplife-final.onrender.com/api/usuarios/${this.id}/`,
           {
             method: "PATCH",
             headers: {

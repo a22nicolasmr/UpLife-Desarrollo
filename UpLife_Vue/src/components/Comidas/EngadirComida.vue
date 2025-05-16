@@ -43,7 +43,9 @@ export default {
       try {
         const usuarioStore = useUsuarioStore();
         const idUsuario = usuarioStore.id;
-        const response = await fetch(`http://localhost:8001/api/grupos/`);
+        const response = await fetch(
+          `https://uplife-final.onrender.com/api/grupos/`
+        );
         if (!response.ok) throw new Error("Erro ao cargar grupos");
         const grupos = await response.json();
         this.grupos = grupos.filter((p) => p.usuario === idUsuario);
@@ -103,13 +105,16 @@ export default {
           usuario: idUsuario,
         };
 
-        const resComida = await fetch("http://localhost:8001/api/comidas/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(comidaPayload),
-        });
+        const resComida = await fetch(
+          "https://uplife-final.onrender.com/api/comidas/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(comidaPayload),
+          }
+        );
 
         if (!resComida.ok) throw new Error("Erro ao crear comida");
         const comidaCreada = await resComida.json();
@@ -125,7 +130,7 @@ export default {
         ];
 
         const resPatch = await fetch(
-          `http://localhost:8001/api/grupos/${this.grupoSeleccionado}/`,
+          `https://uplife-final.onrender.com/api/grupos/${this.grupoSeleccionado}/`,
           {
             method: "PATCH",
             headers: {

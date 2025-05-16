@@ -51,7 +51,9 @@ export default {
     // cargar as plantillas do usuario actual desde a API
     async cargarDatos() {
       try {
-        const response = await fetch("http://localhost:8001/api/plantillas/");
+        const response = await fetch(
+          "https://uplife-final.onrender.com/api/plantillas/"
+        );
         if (!response.ok) throw new Error("Erro ao cargar plantillas");
         const plantillas = await response.json();
         const idUsuario = useUsuarioStore().id;
@@ -66,7 +68,7 @@ export default {
     // eliminar unha plantilla polo seu ID
     async borrarPlantilla(id) {
       try {
-        await fetch(`http://localhost:8001/api/plantillas/${id}/`, {
+        await fetch(`https://uplife-final.onrender.com/api/plantillas/${id}/`, {
           method: "DELETE",
         });
         this.plantillas = this.plantillas.filter((p) => p.id_plantilla !== id);
@@ -86,7 +88,7 @@ export default {
     // eliminar un exercicio polo seu ID
     async borrarExercicio(id) {
       try {
-        await fetch(`http://localhost:8001/api/exercicios/${id}/`, {
+        await fetch(`https://uplife-final.onrender.com/api/exercicios/${id}/`, {
           method: "DELETE",
         });
         this.plantillas.forEach((p) => {
@@ -125,7 +127,7 @@ export default {
       const novoValor = this.editando.valor;
       this.editando = { id: null, campo: null, valor: "" };
       try {
-        await fetch(`http://localhost:8001/api/exercicios/${id}/`, {
+        await fetch(`https://uplife-final.onrender.com/api/exercicios/${id}/`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ [campo]: novoValor }),
@@ -141,7 +143,7 @@ export default {
       const novaLista = plantilla.exercicios.map((e) => e.id_exercicio);
       try {
         await fetch(
-          `http://localhost:8001/api/plantillas/${plantilla.id_plantilla}/`,
+          `https://uplife-final.onrender.com/api/plantillas/${plantilla.id_plantilla}/`,
           {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },

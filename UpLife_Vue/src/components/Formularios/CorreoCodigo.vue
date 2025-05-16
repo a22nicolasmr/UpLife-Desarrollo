@@ -20,7 +20,9 @@ export default {
       }
 
       try {
-        const res = await fetch("http://localhost:8001/api/usuarios/");
+        const res = await fetch(
+          "https://uplife-final.onrender.com/api/usuarios/"
+        );
         if (!res.ok) throw new Error("Error al acceder a usuarios");
         const usuarios = await res.json();
 
@@ -41,14 +43,17 @@ export default {
         localStorage.setItem("codigoConfirmacion", codigo);
 
         // ✅ Enviar al backend para mandar email
-        const envio = await fetch("http://localhost:8001/enviar-codigo/", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: this.identificador,
-            codigo: codigo,
-          }),
-        });
+        const envio = await fetch(
+          "https://uplife-final.onrender.com/enviar-codigo/",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: this.identificador,
+              codigo: codigo,
+            }),
+          }
+        );
 
         if (!envio.ok) {
           this.erro = "Error al enviar el correo.";

@@ -73,7 +73,7 @@ export default {
       if (isValid) {
         try {
           const response = await axios.post(
-            "http://localhost:8001/api/usuarios/",
+            "https://uplife-final.onrender.com/api/usuarios/",
             {
               nome: this.nomeCompleto,
               email: this.email,

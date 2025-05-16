@@ -34,7 +34,7 @@ export default {
       if (this.id) {
         try {
           const response = await fetch(
-            `http://localhost:8001/api/usuarios/${this.id}/`
+            `https://uplife-final.onrender.com/api/usuarios/${this.id}/`
           );
           const data = await response.json();
 
@@ -88,7 +88,7 @@ export default {
 
       try {
         const response = await fetch(
-          `http://localhost:8001/api/usuarios/${this.id}/`,
+          `https://uplife-final.onrender.com/api/usuarios/${this.id}/`,
           {
             method: "PATCH",
             body: formData,

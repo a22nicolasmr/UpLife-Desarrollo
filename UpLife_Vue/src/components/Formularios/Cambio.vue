@@ -30,7 +30,9 @@ export default {
       }
 
       try {
-        const res = await fetch("http://localhost:8001/api/usuarios/");
+        const res = await fetch(
+          "https://uplife-final.onrender.com/api/usuarios/"
+        );
         const usuarios = await res.json();
 
         const usuario = usuarios.find(
@@ -43,7 +45,7 @@ export default {
         }
 
         const response = await fetch(
-          `http://localhost:8001/api/usuarios/${usuario.id_usuario}/`,
+          `https://uplife-final.onrender.com/api/usuarios/${usuario.id_usuario}/`,
           {
             method: "PATCH",
             headers: {

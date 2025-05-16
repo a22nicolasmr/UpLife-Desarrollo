@@ -49,7 +49,7 @@ export default {
       const novoValor = this.editando.valor;
       this.editando = { id: null, campo: null, valor: "" };
       try {
-        await fetch(`http://localhost:8001/api/exercicios/${id}/`, {
+        await fetch(`https://uplife-final.onrender.com/api/exercicios/${id}/`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ [campo]: novoValor }),
@@ -76,7 +76,9 @@ export default {
       const idUsuario = useUsuarioStore().id;
       const hoxe = new Date().toISOString().split("T")[0];
       try {
-        const response = await fetch("http://localhost:8001/api/exercicios/");
+        const response = await fetch(
+          "https://uplife-final.onrender.com/api/exercicios/"
+        );
         const exercicios = await response.json();
         this.exerciciosHoxe = exercicios.filter(
           (ex) => ex.usuario === idUsuario && ex.data === hoxe
@@ -91,7 +93,7 @@ export default {
       const hoxe = new Date().toISOString().split("T")[0];
       try {
         const response = await fetch(
-          "http://localhost:8001/api/plantillas-uso/"
+          "https://uplife-final.onrender.com/api/plantillas-uso/"
         );
         const usos = await response.json();
 
@@ -103,7 +105,7 @@ export default {
         const plantillasCompletas = await Promise.all(
           usosFiltrados.map(async (uso) => {
             const plantillaResponse = await fetch(
-              `http://localhost:8001/api/plantillas/${uso.plantilla}/`
+              `https://uplife-final.onrender.com/api/plantillas/${uso.plantilla}/`
             );
             const plantillaData = await plantillaResponse.json();
             return {
@@ -125,7 +127,7 @@ export default {
       const hoxe = new Date().toISOString().split("T")[0];
       try {
         const response = await fetch(
-          "http://localhost:8001/api/plantillas-uso/"
+          "https://uplife-final.onrender.com/api/plantillas-uso/"
         );
         const usos = await response.json();
 
@@ -138,9 +140,12 @@ export default {
 
         if (!uso) return;
 
-        await fetch(`http://localhost:8001/api/plantillas-uso/${uso.id}/`, {
-          method: "DELETE",
-        });
+        await fetch(
+          `https://uplife-final.onrender.com/api/plantillas-uso/${uso.id}/`,
+          {
+            method: "DELETE",
+          }
+        );
 
         this.cargarPlantillasHoxe();
         this.$refs.historialRef?.cargarExercicios();
@@ -152,14 +157,16 @@ export default {
       const idUsuario = useUsuarioStore().id;
       const hoxe = new Date().toISOString().split("T")[0];
       try {
-        const response = await fetch("http://localhost:8001/api/plantillas/");
+        const response = await fetch(
+          "https://uplife-final.onrender.com/api/plantillas/"
+        );
         const plantillas = await response.json();
         const plantilla = plantillas.find(
           (p) => p.usuario === idUsuario && p.nome === nomePlantilla
         );
         console.log("id plantilla", plantilla.id_plantilla);
 
-        await fetch("http://localhost:8001/api/plantillas-uso/", {
+        await fetch("https://uplife-final.onrender.com/api/plantillas-uso/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -180,7 +187,7 @@ export default {
     },
     async eliminarExercicio(id) {
       try {
-        await fetch(`http://localhost:8001/api/exercicios/${id}/`, {
+        await fetch(`https://uplife-final.onrender.com/api/exercicios/${id}/`, {
           method: "DELETE",
         });
         this.cargarExerciciosHoxe();

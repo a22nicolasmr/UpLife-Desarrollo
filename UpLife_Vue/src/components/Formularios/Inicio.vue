@@ -23,10 +23,13 @@ export default {
 
       // accede a login donde se fai validación dos campos
       try {
-        const response = await axios.post("http://localhost:8001/login/", {
-          identificador: this.email,
-          contrasinal: this.contrasinal,
-        });
+        const response = await axios.post(
+          "https://uplife-final.onrender.com/login/",
+          {
+            identificador: this.email,
+            contrasinal: this.contrasinal,
+          }
+        );
 
         if (response.status === 200) {
           const usuarioStore = useUsuarioStore();

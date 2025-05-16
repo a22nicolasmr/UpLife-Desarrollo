@@ -19,7 +19,9 @@ export const useUsuarioStore = defineStore("usuario", {
     // cargar datos de usuario
     async cargarUsuario(nome) {
       try {
-        const response = await fetch("http://localhost:8001/api/usuarios/");
+        const response = await fetch(
+          "https://uplife-final.onrender.com/api/usuarios/"
+        );
         const usuarios = await response.json();
         const usuario = usuarios.find((u) => u.nome_usuario === nome);
         if (!usuario) return;
@@ -47,7 +49,9 @@ export const useUsuarioStore = defineStore("usuario", {
     // cargar medallas de usuario
     async cargarMedallas() {
       try {
-        const medallasRes = await fetch("http://localhost:8001/api/medallas/");
+        const medallasRes = await fetch(
+          "https://uplife-final.onrender.com/api/medallas/"
+        );
         const medallas = await medallasRes.json();
         this.medallas = medallas.filter(
           (m) => m.usuarios.includes(this.id) && m.completado
@@ -101,7 +105,7 @@ export const useUsuarioStore = defineStore("usuario", {
       if (this.id) {
         try {
           const response = await fetch(
-            `http://localhost:8001/api/usuarios/${this.id}/`
+            `https://uplife-final.onrender.com/api/usuarios/${this.id}/`
           );
           const data = await response.json();
 
@@ -124,7 +128,7 @@ export const useUsuarioStore = defineStore("usuario", {
     },
     async updateNumeroMedallas() {
       // Cuenta solo las medallas completadas
-      fetch("http://localhost:8001/api/medallas/")
+      fetch("https://uplife-final.onrender.com/api/medallas/")
         .then((res) => res.json())
         .then((data) => {
           const completadas = data.filter(

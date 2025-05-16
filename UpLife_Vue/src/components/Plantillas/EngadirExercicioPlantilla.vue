@@ -53,13 +53,16 @@ export default {
           categoria: parseInt(this.categoriaSeleccionada),
         };
 
-        const resEx = await fetch("http://localhost:8001/api/exercicios/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(exercicioPayload),
-        });
+        const resEx = await fetch(
+          "https://uplife-final.onrender.com/api/exercicios/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(exercicioPayload),
+          }
+        );
 
         if (!resEx.ok) throw new Error("Erro ao crear exercicio");
         const exercicioCreado = await resEx.json();
@@ -78,7 +81,7 @@ export default {
         console.log("✅ Nova lista a enviar:", novaLista);
 
         const resPatch = await fetch(
-          `http://localhost:8001/api/plantillas/${this.plantillaSeleccionada}/`,
+          `https://uplife-final.onrender.com/api/plantillas/${this.plantillaSeleccionada}/`,
           {
             method: "PATCH",
             headers: {
@@ -117,14 +120,18 @@ export default {
       try {
         const usuarioStore = useUsuarioStore();
         const idUsuario = usuarioStore.id;
-        const response = await fetch(`http://localhost:8001/api/plantillas/`);
+        const response = await fetch(
+          `https://uplife-final.onrender.com/api/plantillas/`
+        );
 
         if (!response.ok) throw new Error("Erro ao cargar plantillas");
         const plantillas = await response.json();
 
         this.plantillas = plantillas.filter((p) => p.usuario === idUsuario);
 
-        const response2 = await fetch(`http://localhost:8001/api/categorias/`);
+        const response2 = await fetch(
+          `https://uplife-final.onrender.com/api/categorias/`
+        );
         if (!response2.ok) throw new Error("Erro ao cargar categorias");
         const categorias = await response2.json();
         this.categorias = categorias;

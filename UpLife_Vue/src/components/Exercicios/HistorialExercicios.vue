@@ -23,8 +23,8 @@ export default {
     async cargarExercicios() {
       try {
         const [resEx, resUsoPl] = await Promise.all([
-          fetch("http://localhost:8001/api/exercicios/"),
-          fetch("http://localhost:8001/api/plantillas-uso/"),
+          fetch("https://uplife-final.onrender.com/api/exercicios/"),
+          fetch("https://uplife-final.onrender.com/api/plantillas-uso/"),
         ]);
 
         if (!resEx.ok || !resUsoPl.ok) {
@@ -50,7 +50,7 @@ export default {
             .map(async (uso) => {
               try {
                 const plantillaResponse = await fetch(
-                  `http://localhost:8001/api/plantillas/${uso.plantilla}/`
+                  `https://uplife-final.onrender.com/api/plantillas/${uso.plantilla}/`
                 );
                 if (!plantillaResponse.ok)
                   throw new Error("Non se puido cargar a plantilla");
@@ -111,13 +111,16 @@ export default {
       };
 
       try {
-        const response = await fetch("http://localhost:8001/api/exercicios/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        });
+        const response = await fetch(
+          "https://uplife-final.onrender.com/api/exercicios/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          }
+        );
 
         if (!response.ok) throw new Error("Erro ao engadir exercicio");
 
@@ -136,7 +139,7 @@ export default {
 
       try {
         const response = await fetch(
-          "http://localhost:8001/api/plantillas-uso/",
+          "https://uplife-final.onrender.com/api/plantillas-uso/",
           {
             method: "POST",
             headers: {

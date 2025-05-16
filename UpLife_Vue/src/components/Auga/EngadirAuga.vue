@@ -38,13 +38,16 @@ export default {
         const usuarioStore = useUsuarioStore();
         await usuarioStore.cargarUsuario(this.idUsuario);
         await usuarioStore.actualizarDatos();
-        const response = await fetch("http://localhost:8001/api/auga/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        });
+        const response = await fetch(
+          "https://uplife-final.onrender.com/api/auga/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Erro ao engadir auga");

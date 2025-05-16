@@ -21,7 +21,7 @@ export default {
         };
 
         const response = await fetch(
-          `http://localhost:8001/api/tarefas/${this.tarefaActual.id_tarefa}/`,
+          `https://uplife-final.onrender.com/api/tarefas/${this.tarefaActual.id_tarefa}/`,
           {
             method: "PATCH",
             headers: {

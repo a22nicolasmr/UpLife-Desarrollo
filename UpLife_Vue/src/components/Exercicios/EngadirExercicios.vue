@@ -85,13 +85,16 @@ export default {
           usuario: idUsuario,
         };
 
-        const resEx = await fetch("http://localhost:8001/api/exercicios/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(exercicioPayload),
-        });
+        const resEx = await fetch(
+          "https://uplife-final.onrender.com/api/exercicios/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(exercicioPayload),
+          }
+        );
 
         if (!resEx.ok) throw new Error("Erro ao crear exercicio");
         // limpiar campos

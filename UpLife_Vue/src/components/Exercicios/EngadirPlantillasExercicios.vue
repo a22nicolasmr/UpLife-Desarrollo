@@ -22,7 +22,9 @@ export default {
       const idUsuario = useUsuarioStore().id;
 
       try {
-        const response = await fetch("http://localhost:8001/api/plantillas/");
+        const response = await fetch(
+          "https://uplife-final.onrender.com/api/plantillas/"
+        );
         if (!response.ok) throw new Error("Erro ao cargar plantillas");
 
         const data = await response.json();
@@ -49,7 +51,7 @@ export default {
 
       try {
         const response = await fetch(
-          "http://localhost:8001/api/plantillas-uso/",
+          "https://uplife-final.onrender.com/api/plantillas-uso/",
           {
             method: "POST",
             headers: {

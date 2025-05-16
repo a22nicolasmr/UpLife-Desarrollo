@@ -93,8 +93,8 @@ export default {
       // Medalla 11 - Plantillas: 3 plantillas creadas e usadas polo menos 2 veces cada unha
       try {
         const [plantillasRes, usosRes] = await Promise.all([
-          fetch("http://localhost:8001/api/plantillas/"),
-          fetch("http://localhost:8001/api/plantillas-uso/"),
+          fetch("https://uplife-final.onrender.com/api/plantillas/"),
+          fetch("https://uplife-final.onrender.com/api/plantillas-uso/"),
         ]);
 
         const [plantillas, usos] = await Promise.all([
@@ -172,16 +172,20 @@ export default {
       const idUsuario = usuarioStore.id;
 
       const urls = [
-        { key: "auga", var: "rAuga", url: "http://localhost:8001/api/auga/" },
+        {
+          key: "auga",
+          var: "rAuga",
+          url: "https://uplife-final.onrender.com/api/auga/",
+        },
         {
           key: "comidas",
           var: "rComidas",
-          url: "http://localhost:8001/api/comidas/",
+          url: "https://uplife-final.onrender.com/api/comidas/",
         },
         {
           key: "tarefas",
           var: "rTarefas",
-          url: "http://localhost:8001/api/tarefas/",
+          url: "https://uplife-final.onrender.com/api/tarefas/",
         },
       ];
 
@@ -239,8 +243,8 @@ export default {
       // ✅ Calcular rExercicios usando ejercicios + plantillas
       try {
         const [resEx, resUso] = await Promise.all([
-          fetch("http://localhost:8001/api/exercicios/"),
-          fetch("http://localhost:8001/api/plantillas-uso/"),
+          fetch("https://uplife-final.onrender.com/api/exercicios/"),
+          fetch("https://uplife-final.onrender.com/api/plantillas-uso/"),
         ]);
 
         const [exercicios, usos] = await Promise.all([
@@ -301,7 +305,9 @@ export default {
       const idUsuario = usuarioStore.id;
 
       try {
-        const response = await fetch(`http://localhost:8001/api/tarefas/`);
+        const response = await fetch(
+          `https://uplife-final.onrender.com/api/tarefas/`
+        );
         const tarefas = await response.json();
 
         const tarefasNaData = tarefas.filter(
@@ -392,7 +398,9 @@ export default {
       const usuarioStore = useUsuarioStore();
       const idUsuario = usuarioStore.id;
       try {
-        const response = await fetch(`http://localhost:8001/api/tarefas/`);
+        const response = await fetch(
+          `https://uplife-final.onrender.com/api/tarefas/`
+        );
         const tarefas = await response.json();
 
         const datasUnicas = [

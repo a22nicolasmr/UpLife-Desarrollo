@@ -57,7 +57,9 @@ export default {
     async cargarDatos() {
       const hoxe = new Date().toISOString().split("T")[0];
       try {
-        const response = await fetch("http://localhost:8001/api/grupos/");
+        const response = await fetch(
+          "https://uplife-final.onrender.com/api/grupos/"
+        );
         if (!response.ok) throw new Error("Erro ao cargar grupos");
         const grupos = await response.json();
 
@@ -77,7 +79,7 @@ export default {
     async borrarGrupo(id) {
       try {
         const response = await fetch(
-          `http://localhost:8001/api/grupos/${id}/`,
+          `https://uplife-final.onrender.com/api/grupos/${id}/`,
           { method: "DELETE" }
         );
         if (!response.ok) throw new Error("Erro ao eliminar grupo");
@@ -92,7 +94,7 @@ export default {
     async borrarComida(idComida) {
       try {
         const response = await fetch(
-          `http://localhost:8001/api/comidas/${idComida}/`,
+          `https://uplife-final.onrender.com/api/comidas/${idComida}/`,
           { method: "DELETE" }
         );
         if (!response.ok) throw new Error("Erro ao eliminar comida");
@@ -139,7 +141,7 @@ export default {
       const novoValor = this.editando.valor;
       this.editando = { id: null, campo: null, valor: "" };
       try {
-        await fetch(`http://localhost:8001/api/comidas/${id}/`, {
+        await fetch(`https://uplife-final.onrender.com/api/comidas/${id}/`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ [campo]: novoValor }),
