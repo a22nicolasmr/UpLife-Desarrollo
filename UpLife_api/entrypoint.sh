@@ -15,4 +15,4 @@ echo "🧹 Recolectando archivos estáticos..."
 python manage.py collectstatic --noinput
 
 echo "🌐 Iniciando servidor con gunicorn..."
-exec gunicorn UpLife.wsgi:application --bind 0.0.0.0:$PORT --workers 3
+exec gunicorn UpLife.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers 3

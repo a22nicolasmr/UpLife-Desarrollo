@@ -45,12 +45,13 @@ def auto_delete_old_file_on_change(sender, instance, **kwargs):
         return
 
     new_file = instance.imaxe_perfil
-    if old_file and old_file.name:
+
+    if old_file and old_file != new_file:
         try:
-            if os.path.isfile(old_file.path):
-                os.remove(old_file.path)
+            old_file.delete(save=False)  # ✅ Esto funciona con Cloudinary
         except Exception as e:
             print(f"Error eliminando archivo anterior: {e}")
+
 
             
 class Auga(models.Model):

@@ -28,7 +28,14 @@ export const useUsuarioStore = defineStore("usuario", {
 
         this.id = usuario.id_usuario;
         this.nome = usuario.nome;
-        this.imagen = usuario.imaxe_perfil || "/imaxes/usuario.png";
+        const ruta = usuario.imaxe_perfil;
+        if (ruta && ruta.startsWith("http")) {
+          this.imagen = ruta;
+        } else if (ruta) {
+          this.imagen = `https://res.cloudinary.com/dkujevuxh/image/upload/${ruta}`;
+        } else {
+          this.imagen = "/imaxes/usuario.png";
+        }
 
         // Guardar solo lo necesario en localStorage
         localStorage.setItem(
