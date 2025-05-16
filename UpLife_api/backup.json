@@ -936,6 +936,19 @@
   }
 },
 {
+  "model": "admin.logentry",
+  "pk": 105,
+  "fields": {
+    "action_time": "2025-05-16T09:14:27.269Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "1",
+    "object_repr": "nome=lupi, nome_usuario=lupi, email=a22nicolasmr@iessanclemente.net, contrasinal=pbkdf2_sha256$600000$BU5yxZwBZa9jsFoTflwWwk$B87pxqHj9YZtH44a5yVJ/WdqE+UjXBncCN0I0sX6S3U=, imaxe_perfil=avatares/lunaa_g",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Email\"]}}]"
+  }
+},
+{
   "model": "auth.user",
   "pk": 1,
   "fields": {
@@ -999,8 +1012,8 @@
   "fields": {
     "nome": "lupi",
     "nome_usuario": "lupi",
-    "email": "lupi@gmail.com",
-    "contrasinal": "pbkdf2_sha256$600000$BU5yxZwBZa9jsFoTflwWwk$B87pxqHj9YZtH44a5yVJ/WdqE+UjXBncCN0I0sX6S3U=",
+    "email": "a22nicolasmr@iessanclemente.net",
+    "contrasinal": "pbkdf2_sha256$600000$72Jo6kmpx19IQWH6kurRVs$1fSmgPf6Xx3rS7mtFlxBbdPOuRlRpWPxBDjXmDnc7lM=",
     "imaxe_perfil": "avatares/lunaa_gzPwiYp.jpg",
     "xenero": "Muller",
     "altura": 154,
