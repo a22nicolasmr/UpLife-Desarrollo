@@ -149,6 +149,7 @@ body,
     width: 100%;
     padding: 8% 6%;
     height: 115vh;
+    border-radius: 0 0 8px 8px;
   }
 
   .formulario {

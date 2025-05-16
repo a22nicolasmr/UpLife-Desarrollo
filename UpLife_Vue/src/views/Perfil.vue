@@ -313,5 +313,9 @@ body {
     margin-top: 1rem;
     margin-bottom: 0.5rem;
   }
+  #divArriba {
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>

@@ -552,7 +552,6 @@ body {
   flex-direction: row;
   justify-content: center;
   background-color: white;
-  border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
   margin-right: 4%;
   margin-bottom: 1%;
@@ -685,7 +684,12 @@ td[colspan="3"] {
     padding: 1rem;
     box-sizing: border-box;
   }
-
+  .dereita {
+    border-radius: 0 0 8px 8px;
+  }
+  .esquerda {
+    border-radius: 0;
+  }
   .esquerdaAbaixo {
     width: 100%;
     overflow-x: auto; /* ✅ Solo scroll horizontal si es necesario */
@@ -764,6 +768,9 @@ td[colspan="3"] {
     width: 100%;
     justify-content: center;
     flex-direction: row;
+    width: 82%;
+    height: 50px;
+    margin-left: 8%;
     gap: 1%;
   }
 
