@@ -8,18 +8,24 @@ export default {
     };
   },
   watch: {
+    //obter novos valores de altura
     altura(nuevaAltura) {
       this.$emit("updateAltura", nuevaAltura);
     },
+
+    //obter novos valores de peso
     peso(nuevoPeso) {
       this.$emit("updatePeso", nuevoPeso);
     },
   },
   computed: {
+    //calcular imc cos datos introducidos
     imc() {
       const alturaM = this.altura / 100;
       return this.peso / (alturaM * alturaM);
     },
+
+    //determinar estado do imc en función do valor calculado
     estadoIMC() {
       const v = this.imc;
       if (v < 18.5) return "Baixo peso";
@@ -29,6 +35,7 @@ export default {
     },
   },
   methods: {
+    //calcular posición dos sliders
     calcularPosicion() {
       const min = 10;
       const max = 40;

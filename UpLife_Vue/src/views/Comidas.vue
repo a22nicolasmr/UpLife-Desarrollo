@@ -23,12 +23,17 @@ export default {
     };
   },
   computed: {
+    //cargar id de usuario do store
     idUsuario() {
       return useUsuarioStore().id;
     },
+
+    //cargar calorías do store
     caloriasTotaisNecesarias() {
       return useUsuarioStore().calorias;
     },
+
+    //calcular as calorías inxeridas según o peso es as calorías por 100g dos alimentos
     caloriasInxeridasHoxe() {
       const total = this.grupos.reduce((sum, grupo) => {
         return (
@@ -43,6 +48,8 @@ export default {
       }, 0);
       return Math.ceil(total);
     },
+
+    //calcular porcentaxe das calorías inxeridas
     porcentaxeCalorias() {
       const total = this.caloriasTotaisNecesarias;
       const inxerida = this.caloriasInxeridasHoxe;
@@ -50,10 +57,12 @@ export default {
       return Math.min(Math.round((inxerida / total) * 100), 100);
     },
   },
+  //cargar datos cando se monta o compoñente
   mounted() {
     this.cargarDatos();
   },
   methods: {
+    //cargar datos dos grupos filtrado por id de usuario e mapeado por comidas
     async cargarDatos() {
       const hoxe = new Date().toISOString().split("T")[0];
       try {
@@ -69,13 +78,15 @@ export default {
             ...g,
             comidas: (g.comidas || []).filter((c) => c.data === hoxe),
           }))
-          .sort((a, b) => a.id_grupo - b.id_grupo); // ✅ Ordenar por id_grupo ascendente
+          .sort((a, b) => a.id_grupo - b.id_grupo);
 
         this.componenteActivo = "historial";
       } catch (error) {
         console.error("Erro cargando datos:", error);
       }
     },
+
+    //borrar grupo por id
     async borrarGrupo(id) {
       try {
         const response = await fetch(
@@ -91,6 +102,8 @@ export default {
         console.error("Erro eliminando grupo:", error);
       }
     },
+
+    //borrar comida por id
     async borrarComida(idComida) {
       try {
         const response = await fetch(
@@ -109,6 +122,8 @@ export default {
         console.error("Erro eliminando comida:", error);
       }
     },
+
+    //expandir ou comprimir grupo por id
     toggleExpand(id) {
       if (this.expandedGrupos.includes(id)) {
         this.expandedGrupos = this.expandedGrupos.filter((gid) => gid !== id);
@@ -116,10 +131,14 @@ export default {
         this.expandedGrupos.push(id);
       }
     },
+
+    //calcular valor por peso
     calcular(valorPor100, peso) {
       if (!valorPor100 || !peso) return 0;
       return ((valorPor100 / 100) * peso).toFixed(1);
     },
+
+    //activar edición de celas por id e campo
     activarEdicion(id, campo) {
       const comida = this.grupos
         .flatMap((g) => g.comidas || [])
@@ -128,15 +147,16 @@ export default {
 
       this.editando = { id, campo, valor: comida[campo] };
 
-      // Espera a que se renderice el input, luego lo enfoca
+      //poñer o foco no input unha vez cargado no DOM
       this.$nextTick(() => {
         const input = this.$refs.editInput;
         if (input && input.focus) {
-          // Si hay múltiples refs (por v-for), se accede como array
           Array.isArray(input) ? input[0].focus() : input.focus();
         }
       });
     },
+
+    //actualizar elemento editado
     async guardarCampoEditado(id, campo) {
       const novoValor = this.editando.valor;
       this.editando = { id: null, campo: null, valor: "" };

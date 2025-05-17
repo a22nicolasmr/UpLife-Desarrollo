@@ -7,6 +7,7 @@ export default {
     };
   },
   methods: {
+    //comprobar código enviado
     comprobarCodigo(event) {
       event.preventDefault();
       this.erro = null;
@@ -20,7 +21,6 @@ export default {
       }
 
       if (this.identificador === codigoCorrecto) {
-        // ✅ Código correcto → redirigir a cambio de contraseña
         this.$router.push({
           path: "/formularios/cambio",
           query: { email: correo },

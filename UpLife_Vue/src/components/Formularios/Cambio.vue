@@ -9,6 +9,7 @@ export default {
     };
   },
   methods: {
+    //cambiar contrasinal
     async cambiarContrasinal() {
       this.erro = "";
       this.exito = "";
@@ -63,11 +64,10 @@ export default {
         this.novaContrasinal = "";
         this.repetirContrasinal = "";
 
-        // Limpia el localStorage por seguridade
+        //borrar do storage o correo e o código
         localStorage.removeItem("correoConfirmacion");
         localStorage.removeItem("codigoConfirmacion");
 
-        // Redirige tras 2 segundos
         setTimeout(() => {
           this.$router.push("/formularios/inicio");
         }, 2000);
@@ -77,6 +77,7 @@ export default {
       }
     },
 
+    //cambiar vista a inicio
     cancelar() {
       this.$router.push("/formularios/inicio");
     },

@@ -9,19 +9,21 @@ export default {
       peso: null,
       categoriaSeleccionada: "",
       categorias: ["Peito", "Espalda", "Core", "Brazo", "Perna", "Todo corpo"],
-      erro: "", // mensaje de error añadido
+      erro: "",
     };
   },
   computed: {
+    //obter usuario do storage e data de hoxe
     idUsuario() {
       const store = useUsuarioStore();
       return store.id;
     },
     dataHoxeISO() {
-      return new Date().toISOString().split("T")[0]; // formato YYYY-MM-DD
+      return new Date().toISOString().split("T")[0];
     },
   },
   methods: {
+    //validar formulario
     comprobarCampos() {
       this.erro = "";
       console.log(
@@ -48,11 +50,13 @@ export default {
       return true;
     },
 
+    //filtrar categoría por id
     obterIdCategoriaPorId(id) {
       const categoria = this.categorias.find((c) => c.id === parseInt(id));
       return categoria ? categoria.id : null;
     },
 
+    //obter nome da categoría por id
     obterIdCategoria(nome) {
       const mapa = {
         Perna: 1,
@@ -64,6 +68,8 @@ export default {
       };
       return mapa[nome];
     },
+
+    //engadir un novo exercicio
     async engadirExercicio() {
       if (!this.comprobarCampos()) return;
 
@@ -75,7 +81,6 @@ export default {
 
         const idCategoria = this.obterIdCategoria(this.categoriaSeleccionada);
 
-        // 1. Crear exercicio
         const exercicioPayload = {
           categoria: idCategoria,
           nome: this.nome,
@@ -97,7 +102,8 @@ export default {
         );
 
         if (!resEx.ok) throw new Error("Erro ao crear exercicio");
-        // limpiar campos
+
+        //limpar campos
         this.nome = "";
         this.repeticions = "";
         this.peso = 0;

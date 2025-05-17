@@ -10,14 +10,18 @@ export default {
     };
   },
   mounted() {
+    //cargar plantillas cando se monte o compoñente
     this.cargarPlantillas();
   },
   computed: {
+    //obter id usuario do sotore
     idUsuario() {
       return useUsuarioStore().id;
     },
   },
+
   methods: {
+    //cargar plantillas filtradas por id de usuario
     async cargarPlantillas() {
       const idUsuario = useUsuarioStore().id;
 
@@ -29,16 +33,13 @@ export default {
 
         const data = await response.json();
 
-        // Mostrar solo plantillas del usuario actual
         this.plantillas = data.filter((p) => p.usuario === idUsuario);
-        console.log("plantillas", data);
-
-        console.log("plantillas cargadas", this.plantillas);
       } catch (error) {
         console.error("Erro cargando plantillas:", error);
       }
     },
 
+    //engadir plantilla nova
     async engadirPlantilla() {
       this.error = "";
       if (!this.plantillaSeleccionada) {

@@ -16,7 +16,7 @@ export const useUsuarioStore = defineStore("usuario", {
     auga: 0,
   }),
   actions: {
-    // cargar datos de usuario
+    // cargar todos os datos de usuario
     async cargarUsuario(nome) {
       try {
         const response = await fetch(
@@ -37,7 +37,7 @@ export const useUsuarioStore = defineStore("usuario", {
           this.imagen = "/imaxes/usuario.png";
         }
 
-        // Guardar solo lo necesario en localStorage
+        //gardar solo o necesario en localStorage
         localStorage.setItem(
           "usuario",
           JSON.stringify({
@@ -46,14 +46,14 @@ export const useUsuarioStore = defineStore("usuario", {
           })
         );
 
-        // cargar medallas de usuario
+        //cargar medallas de usuario
         await this.cargarMedallas();
       } catch (error) {
         console.error("Error cargando datos del usuario:", error);
       }
     },
 
-    // cargar medallas de usuario
+    //cargar medallas de usuario
     async cargarMedallas() {
       try {
         const medallasRes = await fetch(
@@ -68,18 +68,18 @@ export const useUsuarioStore = defineStore("usuario", {
       }
     },
 
-    // cargar datos de usuario desde localStorage
+    //cargar datos de usuario desde localStorage
     cargarDesdeStorage() {
       const datos = localStorage.getItem("usuario");
       if (datos) {
         const { id, nome } = JSON.parse(datos);
         this.id = id;
         this.nome = nome;
-        this.cargarMedallas(); // Cargar medallas al restaurar
+        this.cargarMedallas();
       }
     },
 
-    // Guardar los datos completos del usuario en el localStorage
+    //gardar datos actualizados do usuario
     guardarUsuarioActualizado() {
       localStorage.setItem(
         "usuario",
@@ -99,6 +99,7 @@ export const useUsuarioStore = defineStore("usuario", {
       );
     },
 
+    //eliminar datos do usuario cando se pecha a sesion
     cerrarSesion() {
       localStorage.removeItem("usuario");
       this.id = null;
@@ -106,9 +107,9 @@ export const useUsuarioStore = defineStore("usuario", {
       this.imagen = "/imaxes/usuario.png";
       this.medallas = 0;
     },
-    async actualizarDatos() {
-      console.log("actualizar ejecutado");
 
+    //actualizar datos usuario
+    async actualizarDatos() {
       if (this.id) {
         try {
           const response = await fetch(
@@ -133,8 +134,9 @@ export const useUsuarioStore = defineStore("usuario", {
         }
       }
     },
+
+    //actualizar numero de medallas filtradas por se están ou non completadas
     async updateNumeroMedallas() {
-      // Cuenta solo las medallas completadas
       fetch("https://uplife-final.onrender.com/api/medallas/")
         .then((res) => res.json())
         .then((data) => {
@@ -146,6 +148,6 @@ export const useUsuarioStore = defineStore("usuario", {
         .catch((err) => console.error("Erro cargando medallas:", err));
     },
   },
-  // cargar datos desde localStorage se existen
+  //cargar datos desde localStorage se existen
   persist: true,
 });

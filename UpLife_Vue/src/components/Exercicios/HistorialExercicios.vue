@@ -9,6 +9,7 @@ export default {
     };
   },
   computed: {
+    //obter id do usuario do store e data de hoxe
     idUsuario() {
       return useUsuarioStore().id;
     },
@@ -17,9 +18,11 @@ export default {
     },
   },
   async mounted() {
+    //cargar exercicios cando se monta o compoñente
     this.cargarExercicios();
   },
   methods: {
+    //cargar exercicios filtrados por id de usuario e data
     async cargarExercicios() {
       try {
         const [resEx, resUsoPl] = await Promise.all([
@@ -100,6 +103,8 @@ export default {
         console.error("Erro ao obter historial:", error);
       }
     },
+
+    //engadir novo exercicio
     async engadirExercicio(exercicio) {
       const payload = {
         nome: exercicio.nome,
@@ -130,6 +135,8 @@ export default {
         console.error("❗Erro no try-catch:", error);
       }
     },
+
+    //engadir nova plantilla
     async engadirPlantilla(plantilla) {
       const payload = {
         plantilla: plantilla.id_plantilla,
@@ -156,6 +163,8 @@ export default {
         console.error("❗Erro ao rexistrar plantilla:", error);
       }
     },
+
+    //obter nome de categoría por id
     nomeCategoria(idCategoria) {
       const mapa = {
         1: "Perna",

@@ -32,9 +32,9 @@ import CorreoCodigo from "@/components/Formularios/CorreoCodigo.vue";
 
 const routes = [
   {
-    // redirixir a tarefas cando se abre a aplicacion
+    //redirixir a tarefas cando se abre a aplicacion
     path: "/",
-    // redirect: "/tarefas",
+    //redirect: "/tarefas",
     redirect: "/formularios/rexistro",
   },
   {

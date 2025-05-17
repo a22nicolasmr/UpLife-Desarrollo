@@ -4,9 +4,10 @@ export default {
     return {};
   },
   methods: {
+    //redirixir usuario a rexistro
     redirixirRexistro() {
-      this.$router.push("/formularios/rexistro");
       this.$emit("pecharModal");
+      this.$router.push("/formularios/rexistro");
     },
   },
 };

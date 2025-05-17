@@ -7,7 +7,7 @@ const usuarioStore = useUsuarioStore();
 const route = useRoute();
 
 watch(
-  // cargar novo nome de usuario
+  //cargar novo nome de usuario
   () => route.query.nome,
   (novoNome) => {
     if (novoNome) usuarioStore.cargarUsuario(novoNome);
@@ -17,7 +17,6 @@ watch(
 </script>
 
 <template>
-  <!-- cargar o nome e imaxe de usuario  -->
   <div class="barra-superior">
     <div class="usuario-info">
       <img :src="usuarioStore.imagen" alt="Usuario" class="usuario-imagen" />

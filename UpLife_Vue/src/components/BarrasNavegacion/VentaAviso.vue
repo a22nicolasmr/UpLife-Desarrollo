@@ -8,6 +8,7 @@ export default {
   },
   mounted() {},
   methods: {
+    //establecer a hora da tarefa 10 minutos despois da hora indicada incialmente
     async posporTarefa() {
       try {
         const [horas, minutos] = this.tarefaActual.hora.split(":").map(Number);
@@ -33,7 +34,6 @@ export default {
 
         if (!response.ok) throw new Error("Erro ao pospor tarefa");
 
-        console.log("Tarefa posposta:", await response.json());
         window.location.reload();
       } catch (error) {
         console.error("Erro ao pospor tarefa:", error);

@@ -23,19 +23,21 @@ export default {
     VentaAviso,
   },
   methods: {
+    // coller o valor das rachas para enviar a clase Medallas como prop
     mandarRachas(valorMedallas) {
       this.valorMedallas = valorMedallas;
     },
-    //activar/desactivar modal pechar sesión
+    // activar/desactivar modal pechar sesión
     toggleModal() {
       this.modalActivo = !this.modalActivo;
     },
+    // coller tarefas con hora filtrando por as que non foran notificadas previamente
     emitirDatasConTarefas(tarefas) {
       this.tarefasConHora = tarefas.map((t) => ({ ...t, notificada: false }));
     },
 
-    //comprobar se a hora dunha tarefa coincide coa hora actual
-    //true = abrir ventá aviso
+    // comprobar se a hora dunha tarefa coincide coa hora actual
+    // true = abrir ventá aviso
     comprobarHoras() {
       const agora = new Date();
       const horaActual = agora.toTimeString().slice(0, 5);
@@ -54,14 +56,14 @@ export default {
         }
       }
     },
-    //pechar ventá aviso
+    // pechar ventá aviso
     cerrarAviso() {
       this.avisoActivo = false;
       this.tarefaActual = null;
     },
   },
   watch: {
-    //se o aviso está activo , o son de ventá aviso execútase en bucle
+    // se o aviso está activo , o son de ventá aviso execútase en bucle
     avisoActivo(novoValor) {
       const audio = this.$refs.audioAviso;
       if (audio) {
@@ -77,12 +79,12 @@ export default {
   },
 
   computed: {
-    //cambiar según a ruta na que se atope o usuario
+    // cambiar según a ruta na que se atope o usuario
     rutaActual() {
       return this.$route.path;
     },
 
-    //mostrar as barras de navegación en todas as pantaias menos en rexistro e inicio
+    // mostrar as barras de navegación en todas as pantaias menos nas pantaias listadas no método
     mostrarBarra() {
       return (
         this.$route.path !== "/formularios/rexistro" &&
@@ -93,14 +95,18 @@ export default {
         this.$route.path !== "/formularios/correoCodigo"
       );
     },
+
+    // devolver nome do usuario actual
     nombreUsuario() {
       return this.$route.query.nome;
     },
   },
   mounted() {
+    // cando se monta a aplicación , cargar o usuario
     const usuarioStore = useUsuarioStore();
     usuarioStore.cargarDesdeStorage();
 
+    // se non hai id de usuario e nome de usuario redirixir ao formulario de inicio
     if (!usuarioStore.id || !usuarioStore.nome) {
       this.$router.push("/formularios/inicio");
     }
@@ -154,6 +160,7 @@ export default {
 </template>
 
 <style>
+/* import de fuente nunito sans */
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap");
 html,
 body,
@@ -161,7 +168,7 @@ body,
   height: 100%;
   margin: 0;
 }
-/* Asegurar que la barra se mantenga fija arriba */
+
 .barra-superior {
   position: fixed;
   top: 0;

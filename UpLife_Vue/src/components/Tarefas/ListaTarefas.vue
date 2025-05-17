@@ -15,9 +15,12 @@ export default {
     };
   },
   computed: {
+    //obter id de usuario do store
     usuarioStore() {
       return useUsuarioStore();
     },
+
+    //filtrar tarefas por data
     tarefasFiltradasPorData() {
       const result = {};
       for (const [data, tarefas] of Object.entries(this.tarefasPorData)) {
@@ -31,7 +34,7 @@ export default {
   },
 
   watch: {
-    // cargar tareas cando cambia 'dataSeleccionada'
+    //cargar tareas cando cambia 'dataSeleccionada'
     dataSeleccionada: {
       immediate: true,
       handler(novaData) {
@@ -44,7 +47,7 @@ export default {
         });
       },
     },
-    // tarefas cando cambia o usuario
+    //tarefas cando cambia o usuario
     "usuarioStore.id": {
       immediate: true,
       handler() {
@@ -62,7 +65,7 @@ export default {
       this.$emit("datas-con-tarefas", tarefasConHora);
     },
 
-    // cando se fai click nunha data con tarefas, facer scroll ata as tarefas
+    //cando se fai click nunha data con tarefas, facer scroll ata as tarefas
     scrollAtaData(data) {
       this.$nextTick(() => {
         const dataISO = new Date(data).toLocaleDateString("en-CA");
@@ -86,6 +89,7 @@ export default {
       });
     },
 
+    //cargar as tarefas por data
     async cargarTarefas(data) {
       const usuarioStore = useUsuarioStore();
       const idUsuario = usuarioStore.id;
@@ -118,6 +122,7 @@ export default {
       }
     },
 
+    //borrrar tarefa por id
     async borrarTarefa(id) {
       try {
         await fetch(`https://uplife-final.onrender.com/api/tarefas/${id}/`, {
@@ -142,6 +147,7 @@ export default {
       }
     },
 
+    //marcar tarefa como completada
     async marcarCompletado(tarefa) {
       try {
         const updated = { completado: !tarefa.completado };
@@ -163,6 +169,7 @@ export default {
       }
     },
 
+    //formatear a data
     formatoData(dataISO) {
       const [ano, mes, dia] = dataISO.split("-");
       return `${dia}/${mes}/${ano}`;

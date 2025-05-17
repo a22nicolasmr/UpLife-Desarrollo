@@ -17,7 +17,7 @@ export default {
   },
 
   computed: {
-    // cargar o id a data de hoxe e a auga necesaria polo usuario
+    //cargar o id a data de hoxe e a auga necesaria polo usuario
     idUsuario() {
       return useUsuarioStore().id;
     },
@@ -47,6 +47,7 @@ export default {
     this.cargarAugaHoxe();
   },
   methods: {
+    //activar edición por id e campo
     activarEdicion(id, campo) {
       const entrada = this.augaHoxe.find((a) => a.id_auga === id);
       if (!entrada) return;
@@ -58,6 +59,8 @@ export default {
         if (ref && ref.focus) ref.focus();
       });
     },
+
+    //gardar campo editado cos novos datos
     async guardarCampoEditado(id, campo) {
       const novoValor = this.editando.valor;
       this.editando = { id: null, campo: null, valor: "" };
@@ -73,6 +76,7 @@ export default {
         console.error("Erro ao actualizar rexistro de auga:", error);
       }
     },
+
     //cargar a auga inxerida na fecha actual
     async cargarAugaHoxe() {
       try {
@@ -86,26 +90,13 @@ export default {
           (ex) => ex.usuario === this.idUsuario && ex.data === this.dataHoxeISO
         );
 
-        // const seteDiasAtras = new Date();
-        // seteDiasAtras.setDate(seteDiasAtras.getDate() - 7);
-
-        // const augaBorrar = auga.filter((e) => {
-        //   if (!e.data) return false;
-        //   const dataAuga = new Date(e.data);
-        //   return dataAuga < seteDiasAtras;
-        // });
-
-        // augaBorrar.forEach((e) => {
-        //   this.eliminarAuga(e.id_auga);
-        // });
         this.componenteActivo = "historial";
-
-        // this.$refs.filloAuga.cargarAuga();
       } catch (error) {
         console.error("Erro cargando auga:", error);
       }
     },
-    //eliminar rexistros de auga
+
+    //eliminar rexistro de auga por id
     async eliminarAuga(id) {
       try {
         const response = await fetch(

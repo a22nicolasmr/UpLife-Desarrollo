@@ -1,4 +1,5 @@
 <script setup>
+// uso de script setup para un compoñente mais simple e rápido
 import { useRouter } from "vue-router";
 
 const router = useRouter();

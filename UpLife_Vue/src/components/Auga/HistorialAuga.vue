@@ -8,12 +8,13 @@ export default {
     };
   },
   computed: {
+    //obter id usuario e auga usuario do store e data de hoxe
     idUsuario() {
       const store = useUsuarioStore();
       return store.id;
     },
     dataHoxeISO() {
-      return new Date().toISOString().split("T")[0]; // formato YYYY-MM-DD
+      return new Date().toISOString().split("T")[0]; //formato YYYY-MM-DD
     },
     augaUsuario() {
       const store = useUsuarioStore();
@@ -21,10 +22,12 @@ export default {
     },
   },
   async mounted() {
+    //cagar auga cando se monta o compoñente
     this.cargarAuga();
   },
 
   methods: {
+    //cargar auga filtrada por id de usuario e data
     async cargarAuga() {
       try {
         const response = await fetch(
@@ -35,7 +38,7 @@ export default {
         const auga = await response.json();
         const augaPorUsuario = auga.filter((a) => a.usuario === this.idUsuario);
         const seteDiasAtras = new Date();
-        seteDiasAtras.setDate(seteDiasAtras.getDate() - 7); // últimos 7 días incluindo hoxe
+        seteDiasAtras.setDate(seteDiasAtras.getDate() - 7); //últimos 7 días incluindo hoxe
 
         const augaFiltrados = augaPorUsuario.filter((a) => {
           const dataAuga = new Date(a.data);
@@ -43,14 +46,14 @@ export default {
           return dataAuga >= seteDiasAtras;
         });
 
-        // Agrupar por data (YYYY-MM-DD)
+        //agrupar por data (YYYY-MM-DD)
         const agrupados = {};
         augaFiltrados.forEach((a) => {
           if (!agrupados[a.data]) agrupados[a.data] = [];
           agrupados[a.data].push(a);
         });
 
-        // Ordenar por data descendente
+        //ordear por data descendente
         this.augaPorDia = Object.fromEntries(
           Object.entries(agrupados).sort(
             (a, b) => new Date(b[0]) - new Date(a[0])
@@ -60,6 +63,8 @@ export default {
         console.error("Erro ao obter historial:", error);
       }
     },
+
+    //engadir auga
     async engadirAuga(auga) {
       const payload = {
         cantidade: auga.cantidade,
@@ -85,6 +90,7 @@ export default {
         }
 
         await response.json();
+        //cargar auga de hoxe en Auga
         this.$emit("cargarAugaHoxe");
       } catch (error) {
         console.error("❗Erro no try-catch:", error);

@@ -21,6 +21,7 @@ export default {
     };
   },
   methods: {
+    //rexistrar usuario se os campos do formulario están ben cubertos
     async mandarFormulario() {
       let isValid = true;
       this.errors = {

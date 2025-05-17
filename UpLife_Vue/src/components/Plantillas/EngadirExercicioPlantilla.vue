@@ -18,6 +18,7 @@ export default {
     plantillaSeleccionadaMandar: "",
   },
   mounted() {
+    //cargar datos cando se monta o compoñente
     this.cargarDatos();
   },
   watch: {
@@ -26,18 +27,13 @@ export default {
       handler(novoValor) {
         if (novoValor != null) {
           this.plantillaSeleccionada = Number(novoValor);
-
-          console.log("🔄 novoValor asignado:", novoValor);
-        } else {
-          console.log("⚠ novoValor é null ou undefined");
         }
       },
     },
   },
   methods: {
+    //engadir novo exercicio
     async engadirExercicio() {
-      console.log("engadir exercicios");
-
       this.comprobarCampos();
       if (this.erro) return;
 
@@ -78,8 +74,6 @@ export default {
           Number(exercicioCreado.id_exercicio),
         ];
 
-        console.log("✅ Nova lista a enviar:", novaLista);
-
         const resPatch = await fetch(
           `https://uplife-final.onrender.com/api/plantillas/${this.plantillaSeleccionada}/`,
           {
@@ -95,18 +89,18 @@ export default {
           throw new Error("Erro ao engadir exercicio á plantilla");
 
         const responsePatchData = await resPatch.json();
-        console.log("📦 Resposta do PATCH:", responsePatchData);
 
-        // recargar datos para actualizar a lista de plantillas
+        //recargar datos para actualizar a lista de plantillas
         await this.cargarDatos();
 
-        // resetear os campos
+        //resetear os campos
         this.nomeExercicio = "";
         this.repeticions = "";
         this.peso = null;
         this.categoriaSeleccionada = "";
         this.erro = "";
-        // window.location.reload();
+
+        //cargar datos en Plantillas
         this.$emit("cargarDatos");
       } catch (error) {
         console.error("❌ Erro engadindo exercicio:", error);
@@ -114,9 +108,8 @@ export default {
       }
     },
 
+    //cargar datos de plantillas
     async cargarDatos() {
-      console.log("cargar datos ejecutado");
-
       try {
         const usuarioStore = useUsuarioStore();
         const idUsuario = usuarioStore.id;
@@ -139,6 +132,8 @@ export default {
         console.error("Erro cargando datos:", error);
       }
     },
+
+    //comprobar campos do formulario
     comprobarCampos() {
       console.log(
         this.plantillaSeleccionada,

@@ -28,23 +28,30 @@ export default {
     };
   },
   mounted() {
+    //cargar exercicios e plantillas cando se monta o compoñente
     this.cargarExerciciosHoxe();
     this.cargarPlantillasHoxe();
+
+    //engadir listener para cancelar edición das celas se se fai click en calquer lado do documento
     document.addEventListener("click", this.cancelarEdicionAoFora);
   },
   beforeUnmount() {
+    //borrar listener cando se desmonta o compoñente
     document.removeEventListener("click", this.cancelarEdicionAoFora);
   },
   methods: {
+    //activa a edición do elemento pasando id do campo , campo e o valor
     activarEdicion(id, campo, valor) {
       this.editando = { id, campo, valor };
-      // Espera a que se renderice el input y luego lo enfoca
+
+      //dalle o foco ao campo cando o DOM se actualice
       this.$nextTick(() => {
         const input = this.$el.querySelector("input:focus, select:focus");
         if (input) input.focus();
       });
     },
 
+    //gardar o valor do campo editado
     async guardarCampoEditado(id, campo) {
       const novoValor = this.editando.valor;
       this.editando = { id: null, campo: null, valor: "" };
@@ -60,6 +67,7 @@ export default {
       }
     },
 
+    //cancelar edición
     cancelarEdicionAoFora(e) {
       const path = e.composedPath?.() || e.path || [];
       const clickedInsideInput = path.some((el) =>
@@ -69,9 +77,13 @@ export default {
         this.editando = { id: null, campo: null, valor: "" };
       }
     },
+
+    //devolver nome da categoría por id da categoría
     nomeCategoriaPorId(id) {
       return this.categoriasMap[id] || "Descoñecida";
     },
+
+    //cargar exercicios filtrados pola data de hoxe e id de usuario
     async cargarExerciciosHoxe() {
       const idUsuario = useUsuarioStore().id;
       const hoxe = new Date().toISOString().split("T")[0];
@@ -88,6 +100,8 @@ export default {
         console.error("Erro cargando exercicios:", error);
       }
     },
+
+    //cargar plantillas de hoxe filtradas pola data de hoxe e id de usuario
     async cargarPlantillasHoxe() {
       const idUsuario = useUsuarioStore().id;
       const hoxe = new Date().toISOString().split("T")[0];
@@ -101,7 +115,7 @@ export default {
           (uso) => uso.usuario === idUsuario && uso.data === hoxe
         );
 
-        // Cargar los detalles de cada plantilla por su ID
+        //cargar los detalles de cada plantilla por su ID
         const plantillasCompletas = await Promise.all(
           usosFiltrados.map(async (uso) => {
             const plantillaResponse = await fetch(
@@ -122,6 +136,8 @@ export default {
         console.error("Erro cargando plantillas hoxe:", error);
       }
     },
+
+    //eliminar plantilla por id de plantilla
     async eliminarPlantilla(id_plantilla) {
       const idUsuario = useUsuarioStore().id;
       const hoxe = new Date().toISOString().split("T")[0];
@@ -153,6 +169,8 @@ export default {
         console.error("Erro eliminando plantilla:", error);
       }
     },
+
+    //engadir nova plantilla
     async engadirPlantilla(nomePlantilla) {
       const idUsuario = useUsuarioStore().id;
       const hoxe = new Date().toISOString().split("T")[0];
@@ -185,6 +203,8 @@ export default {
         console.error("Erro engadindo plantilla:", error);
       }
     },
+
+    //eliminar plantilla por id
     async eliminarExercicio(id) {
       try {
         await fetch(`https://uplife-final.onrender.com/api/exercicios/${id}/`, {

@@ -18,6 +18,7 @@ export default {
     };
   },
   computed: {
+    //obter o id do store
     id() {
       const store = useUsuarioStore();
       return store.id;
@@ -25,7 +26,7 @@ export default {
   },
 
   methods: {
-    // coller altura e peso do compoñente Calculador
+    //coller altura e peso do compoñente Calculador
     actualizarAltura(valor) {
       this.alturaSeleccionada = valor;
       console.log("Altura desde hijo:", valor);
@@ -35,7 +36,7 @@ export default {
       console.log("Peso desde hijo:", valor);
     },
 
-    // actualizar valores do usuario cos valores metidos cando se pulsa boton Calcular
+    //actualizar valores do usuario cos valores metidos cando se pulsa boton Calcular
     async actualizarApi() {
       // Paso 1: calcular TMB (gasto basal)
       const {
@@ -106,7 +107,8 @@ export default {
         );
 
         const resultado = await response.json();
-        console.log("Usuario actualizado con medidas:", resultado);
+
+        //actualizar datos no Perfil
         this.$emit("actualizarDatos");
       } catch (error) {
         console.error("Erro ao facer PATCH cos datos:", error);

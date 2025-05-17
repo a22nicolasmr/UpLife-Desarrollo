@@ -7,13 +7,18 @@ export default {
     };
   },
   computed: {
+    //obter ruta actual
     rutaActual() {
       return this.$route.path;
     },
+
+    //comprobar se se está accedendo dende un móvil
     esMovil() {
       return window.innerWidth <= 768;
     },
   },
+
+  //engadir o evento resize cando se monta o compoñente e quitalo cando se desmonta
   mounted() {
     window.addEventListener("resize", this.handleResize);
   },
@@ -21,6 +26,7 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   methods: {
+    //abrir e pechar menú en función de se se está en móvil ou non
     handleResize() {
       if (!this.esMovil && this.menuAbierto) {
         this.menuAbierto = false;
@@ -32,10 +38,8 @@ export default {
 
 <template>
   <div>
-    <!-- Botón hamburguesa solo en móviles -->
     <div class="hamburguesa" @click="menuAbierto = !menuAbierto">☰</div>
 
-    <!-- Menú de navegación -->
     <nav :class="{ abierto: menuAbierto }" v-if="menuAbierto || !esMovil">
       <div class="menu-superior">
         <ul>

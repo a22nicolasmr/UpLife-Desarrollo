@@ -12,14 +12,17 @@ export default {
     return {
       tarefa: "",
       hora: "",
-      erro: "", // mensaje de error añadido
+      erro: "",
     };
   },
   computed: {
+    //obter id de usuario do storage
     idUsuario() {
       const store = useUsuarioStore();
       return store.id;
     },
+
+    //formatear data
     dataFormateada() {
       return this.dataSeleccionada
         .toLocaleDateString("gl-ES", {
@@ -30,6 +33,8 @@ export default {
         })
         .toUpperCase();
     },
+
+    //obter hora
     minHora() {
       const now = new Date();
       const hojeISO = now.toISOString().split("T")[0];

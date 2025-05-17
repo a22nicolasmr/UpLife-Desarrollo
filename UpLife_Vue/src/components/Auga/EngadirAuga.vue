@@ -10,6 +10,7 @@ export default {
     };
   },
   computed: {
+    //obter id de usuario do store e data de hoxe
     idUsuario() {
       const store = useUsuarioStore();
       return store.id;
@@ -19,6 +20,7 @@ export default {
     },
   },
   methods: {
+    //engadir auga
     async engadirAuga() {
       this.erro = "";
 
@@ -58,6 +60,7 @@ export default {
         this.cantidade = "";
         this.hora = "";
 
+        //cargar auga de hoxe en Auga
         this.$emit("cargarAugaHoxe");
       } catch (error) {
         console.error("❗Erro no try-catch:", error);

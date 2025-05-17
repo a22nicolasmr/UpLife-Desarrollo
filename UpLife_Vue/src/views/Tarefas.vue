@@ -33,7 +33,7 @@ export default {
     };
   },
 
-  //cando se carga a vista, cargar as datas con tarefas
+  // cando se carga a vista, cargar as datas con tarefas, comprobar rachas e medallas do usuario
   mounted() {
     this.cargarDatasConTarefas();
     this.comprobarRachas();
@@ -41,6 +41,7 @@ export default {
   },
 
   methods: {
+    // comprobar se os requerimentos das medallas se cumplen
     async comprobarMedallas() {
       await this.comprobarRachas();
       const valorMedallas = [];
@@ -83,13 +84,11 @@ export default {
       });
 
       // Medalla 10 - Rastreador consciente: idem anterior pero antes das 22:00
-      // Esta necesitaría comprobación de hora exacta en rexistros -> non implementada aquí
       valorMedallas.push({
         id_medalla: 10,
-        completado: false, // Placeholder, implementa se levas control de hora rexistro
+        completado: false,
       });
 
-      // Medalla 11 - Plantillas: 3 plantillas creadas e usadas polo menos 2 veces cada unha
       // Medalla 11 - Plantillas: 3 plantillas creadas e usadas polo menos 2 veces cada unha
       try {
         const [plantillasRes, usosRes] = await Promise.all([
@@ -104,12 +103,12 @@ export default {
 
         const idUsuario = useUsuarioStore().id;
 
-        // Filtrar plantillas do usuario
+        // filtrar plantillas do usuario
         const plantillasUsuario = plantillas.filter(
           (p) => p.usuario === idUsuario
         );
 
-        // Agrupar usos por id_plantilla
+        // agrupar usos por id_plantilla
         const usosPorPlantilla = {};
         usos.forEach((u) => {
           if (u.usuario !== idUsuario) return;
@@ -120,7 +119,7 @@ export default {
           usosPorPlantilla[id].add(u.data);
         });
 
-        // Ver cantas plantillas teñen 2 ou máis usos distintos
+        // ver cantas plantillas teñen 2 ou máis usos distintos
         const usadasSuficiente = plantillasUsuario.filter((p) => {
           const usosSet = usosPorPlantilla[p.id_plantilla];
           return usosSet && usosSet.size >= 2;
@@ -165,8 +164,8 @@ export default {
 
       return valorMedallas;
     },
-    //comprobar as rachas do usuario en función das datas anteriores a data actual
-    // en tarefas tamén comproba se están completadas
+    // comprobar as rachas do usuario en función das datas anteriores a data actual
+    // en Tarefas tamén comproba se están completadas
     async comprobarRachas() {
       const usuarioStore = useUsuarioStore();
       const idUsuario = usuarioStore.id;
@@ -189,13 +188,13 @@ export default {
         },
       ];
 
-      // Reiniciar rachas
+      // reiniciar rachas
       this.rAuga = 0;
       this.rComidas = 0;
       this.rExercicios = 0;
       this.rTarefas = 0;
 
-      // Procesar augas, comidas, tarefas
+      // procesar augas, comidas, tarefas
       for (const item of urls) {
         const res = await fetch(item.url);
         const data = await res.json();
@@ -219,7 +218,6 @@ export default {
         let racha = 0;
         let hoy = new Date().toISOString().split("T")[0];
 
-        // Dentro del bucle for de urls (para auga, comidas, tarefas)
         const hayHoy = userData.some(
           (entry) => entry.data === new Date().toISOString().split("T")[0]
         );
@@ -239,8 +237,7 @@ export default {
         this[item.var] = racha;
       }
 
-      // ✅ Calcular rExercicios usando ejercicios + plantillas
-      // ✅ Calcular rExercicios usando ejercicios + plantillas
+      // calcular rExercicios usando exercicios + plantillas de exercicios
       try {
         const [resEx, resUso] = await Promise.all([
           fetch("https://uplife-final.onrender.com/api/exercicios/"),
@@ -273,7 +270,7 @@ export default {
         const todasFechas = new Set([...exerciciosValidos, ...usosValidos]);
         const fechasUnicasOrdenadas = [...todasFechas].sort().reverse();
 
-        // Calcular racha consecutiva
+        // calcular racha consecutiva
         let rachaEx = 0;
         let hoy = new Date().toISOString().split("T")[0];
 
@@ -299,7 +296,7 @@ export default {
         );
       }
     },
-    //comprobar se hai tarefas para unha data
+    // comprobar se hai tarefas para unha data
     async comprobarTarefasNaData(date) {
       const usuarioStore = useUsuarioStore();
       const idUsuario = usuarioStore.id;
@@ -329,7 +326,7 @@ export default {
         console.error("Erro ao comprobar tarefas na data", error);
       }
     },
-    //enviar as tarefas que teñen hora
+    // enviar as tarefas que teñen hora a App para executar VentáAviso de App
     reenviarTarefasConHora(tarefas) {
       this.$emit("emitirDatasConTarefas", tarefas);
     },
@@ -345,10 +342,10 @@ export default {
       return comparar < hoy;
     },
 
-    //seleccionar data no calendario
+    // seleccionar data no calendario
     seleccionarData(dia) {
       const hoy = new Date();
-      hoy.setHours(0, 0, 0, 0); // eliminar horas para comparar só a data
+      hoy.setHours(0, 0, 0, 0); //eliminar horas para comparar só a data
 
       if (dia.date < hoy) return;
 

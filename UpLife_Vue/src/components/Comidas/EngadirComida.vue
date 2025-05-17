@@ -24,21 +24,21 @@ export default {
       handler(novoValor) {
         if (novoValor != null) {
           this.grupoSeleccionado = Number(novoValor);
-
-          console.log("🔄 novoValor asignado:", novoValor);
-        } else {
-          console.log("⚠ novoValor é null ou undefined");
         }
       },
     },
   },
   mounted() {
+    //cargar datos cando se monta o compoñente
     this.cargarDatos();
   },
   methods: {
+    //obter data de hoxe
     dataHoxeISO() {
       return new Date().toISOString().split("T")[0];
     },
+
+    //cargar datos filtrando por id de usuario
     async cargarDatos() {
       try {
         const usuarioStore = useUsuarioStore();
@@ -53,6 +53,8 @@ export default {
         console.error("Erro cargando datos:", error);
       }
     },
+
+    //validar campos do formulario
     comprobarCampos() {
       this.erro = "";
       console.log(
@@ -85,6 +87,8 @@ export default {
         this.erro = "Por favor, cobre todos os campos.";
       }
     },
+
+    //engadir nova comida
     async engadirComida() {
       this.comprobarCampos();
       if (this.erro) return;
@@ -93,7 +97,6 @@ export default {
         const usuarioStore = useUsuarioStore();
         const idUsuario = usuarioStore.id;
 
-        // 1. Crear comida
         const comidaPayload = {
           nome: this.nomeComida,
           peso: this.peso,
@@ -119,7 +122,6 @@ export default {
         if (!resComida.ok) throw new Error("Erro ao crear comida");
         const comidaCreada = await resComida.json();
 
-        // 2. Engadir comida ao grupo
         const grupo = this.grupos.find(
           (g) => Number(g.id_grupo) === Number(this.grupoSeleccionado)
         );
@@ -142,7 +144,7 @@ export default {
 
         if (!resPatch.ok) throw new Error("Erro ao engadir comida ao grupo");
 
-        // Resetear campos
+        //resetear campos
         this.nomeComida = "";
         this.peso = null;
         this.graxas = null;

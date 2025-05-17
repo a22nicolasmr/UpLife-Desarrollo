@@ -11,6 +11,7 @@ export default {
     };
   },
   computed: {
+    //obter usuario do storage e data de hoxe
     idUsuario() {
       const store = useUsuarioStore();
       return store.id;
@@ -20,10 +21,12 @@ export default {
     },
   },
   async mounted() {
+    //cagar grupos e comidas cando se monta o compoñente
     this.cargarComidas();
     this.cargarGrupos();
   },
   methods: {
+    //cagar comidas filtradas por id de usuario e agrupadas por data
     async cargarComidas() {
       try {
         const response = await fetch(
@@ -52,6 +55,8 @@ export default {
         console.error("Erro ao obter historial de comidas:", error);
       }
     },
+
+    //cargar grupos filtrados por id de usuario
     async cargarGrupos() {
       try {
         const response2 = await fetch(
@@ -68,6 +73,8 @@ export default {
         console.error("Erro ao obter grupos:", error);
       }
     },
+
+    //engadir nova comida
     async engadirComida(comida) {
       this.error = "";
       const grupoSeleccionado =
@@ -125,7 +132,10 @@ export default {
 
           if (!patchResponse.ok) throw new Error("Erro ao actualizar grupo");
 
+          //cargar datos en Comidas
           this.$emit("cargarDatos");
+
+          //volver a cargar comidas e grupos tras a actualización
           this.cargarComidas();
           this.cargarGrupos();
           this.gruposSeleccionadosPorComida = [];

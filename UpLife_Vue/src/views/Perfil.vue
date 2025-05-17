@@ -29,7 +29,7 @@ export default {
     },
   },
   methods: {
-    // actualizar datos do usuario cando click en Calcular de Calculadora
+    // actualizar datos do usuario
     async actualizarDatos() {
       if (this.id) {
         try {
@@ -78,7 +78,7 @@ export default {
       this.$refs.fileInput.click();
     },
 
-    //subir nova imaxe de perfil
+    // subir nova imaxe de perfil
     async subirImagen(event) {
       const archivo = event.target.files[0];
       if (!archivo) return;
@@ -103,7 +103,7 @@ export default {
       }
     },
   },
-  //actualizar datos ao montar o compoñente
+  // actualizar datos ao montar o compoñente
   mounted() {
     this.actualizarDatos();
   },

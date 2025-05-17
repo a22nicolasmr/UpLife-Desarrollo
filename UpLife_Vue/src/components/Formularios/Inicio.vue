@@ -11,7 +11,7 @@ export default {
     };
   },
   methods: {
-    // mandar formulario se os datos estan correctos
+    //mandar formulario se os datos estan correctos
     async mandarFormulario() {
       this.erro = "";
 
@@ -21,7 +21,7 @@ export default {
         return;
       }
 
-      // accede a login donde se fai validación dos campos
+      //accede a login donde se fai validación dos campos
       try {
         const response = await axios.post(
           "https://uplife-final.onrender.com/login/",
@@ -36,7 +36,7 @@ export default {
           await usuarioStore.cargarUsuario(this.email);
           await usuarioStore.actualizarDatos();
 
-          // redirixese a ruta desexada mandando como query o nome do usuario
+          //rediríxese a ruta desexada mandando como query o nome do usuario
           this.$router.push({
             name: "tarefas",
             query: { nome: this.email },

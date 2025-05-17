@@ -7,7 +7,8 @@ export default {
     };
   },
   methods: {
-    async comprobarCodigo(event) {
+    //comprobar se o correo introducido é válido
+    async comprobarCorreo(event) {
       event.preventDefault();
       this.erro = null;
 
@@ -35,14 +36,11 @@ export default {
           return;
         }
 
-        // ✅ Generar código
         const codigo = Math.floor(100000 + Math.random() * 900000).toString();
 
-        // Guardar localmente
         localStorage.setItem("correoConfirmacion", this.identificador);
         localStorage.setItem("codigoConfirmacion", codigo);
 
-        // ✅ Enviar al backend para mandar email
         const envio = await fetch(
           "https://uplife-final.onrender.com/enviar-codigo/",
           {
@@ -60,7 +58,6 @@ export default {
           return;
         }
 
-        // Redirigir si todo fue bien
         this.$router.push("/formularios/codigo");
       } catch (error) {
         console.error("Error:", error);
@@ -75,7 +72,7 @@ export default {
   <div class="formulario">
     <h1>Código electrónico</h1>
 
-    <form @submit.prevent="comprobarCodigo">
+    <form @submit.prevent="comprobarCorreo">
       <label for="idUsuario">Correo electrónico</label>
       <input
         type="text"

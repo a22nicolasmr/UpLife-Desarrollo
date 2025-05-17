@@ -19,15 +19,19 @@ export default {
     };
   },
   computed: {
+    //obter usuario do storage
     idUsuario() {
       const store = useUsuarioStore();
       return store.id;
     },
+
+    //obter e formater a data de hoxe
     dataHoxeISO() {
       return new Date().toISOString().split("T")[0];
     },
   },
   methods: {
+    //engadir unha plantilla nova
     async engadirNovaPlantilla() {
       this.erro = "";
 
@@ -63,7 +67,8 @@ export default {
 
         this.nome = "";
         this.icona = "";
-        // window.location.reload();
+
+        //cargar datos en Plantillas
         this.$emit("cargarDatos");
       } catch (error) {
         this.erro = "Houbo un erro ao engadir plantillas.";
@@ -71,6 +76,7 @@ export default {
     },
   },
   watch: {
+    //seleccionar plantilla
     seleccionada(nova) {
       this.icona = nova;
     },

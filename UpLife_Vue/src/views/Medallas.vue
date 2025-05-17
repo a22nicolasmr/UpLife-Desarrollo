@@ -13,6 +13,7 @@ export default {
       terceirasMedallas: [],
     };
   },
+  //actializar valores das medallas e obter os datos se o valorMedallas,enviado por App, cambia
   valorMedallas: {
     async handler(newVal) {
       if (newVal && newVal.length > 0) {
@@ -25,21 +26,24 @@ export default {
   },
 
   computed: {
+    //obter o valor de usuario do storage
     usuarioId() {
       const store = useUsuarioStore();
       return store.id;
     },
   },
   async mounted() {
-    await this.actualizarMedallas(); // primero actualiza
-    // await this.obterMedallas(); // luego recarga
+    //actualizar medallas cando se monta o compoñente
+    await this.actualizarMedallas();
   },
   methods: {
+    //actualizar se as medallas están ou non completadas en función de valorMedallas mandado por App
     async actualizarMedallas() {
       if (!this.valorMedallas || this.valorMedallas.length === 0) return;
 
       const usuarioId = this.usuarioId;
 
+      //facer un PATCH do campo completado a todas aquelas medallas que non foron completadas ainda
       for (const medalla of this.valorMedallas) {
         try {
           const res = await fetch(
@@ -67,24 +71,23 @@ export default {
               }
             );
 
-            const patchText = await patchRes.text();
-
             if (!patchRes.ok) {
               throw new Error(
-                `❌ PATCH fallou para medalla ${medalla.id_medalla}`
+                `PATCH fallou para medalla ${medalla.id_medalla}`
               );
             }
           }
+          //obter medallas unha vez que teñan os datos actualizados
           await this.obterMedallas();
         } catch (error) {
           console.error(
-            `🚨 Erro ao actualizar medalla ${medalla.id_medalla}:`,
+            `Erro ao actualizar medalla ${medalla.id_medalla}:`,
             error
           );
         }
       }
     },
-    //obter medallas
+    //obter todas as medallas
     async obterMedallas() {
       try {
         const response = await fetch(

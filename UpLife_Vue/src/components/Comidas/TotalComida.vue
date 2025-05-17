@@ -13,6 +13,7 @@ export default {
   },
 
   computed: {
+    //calcular o total dos macros e porcentaxes de cada un
     totalMacros() {
       return this.proteinaTotal + this.graxaTotal + this.carbohidratoTotal || 1;
     },
@@ -25,7 +26,8 @@ export default {
     carboPorcentaxeReal() {
       return (this.carbohidratoTotal / this.totalMacros) * 100;
     },
-    // Solo para mostrar números redondeados en las tarjetas
+
+    //redondear porcentaxes
     proteinaPorcentaxe() {
       return Math.round(this.proteinaPorcentaxeReal);
     },
@@ -38,9 +40,11 @@ export default {
   },
 
   mounted() {
+    //cargar datos ao montar o compoñente
     this.cargarDatos();
   },
   methods: {
+    //cargar comidas filtradas por usuario e data
     async cargarDatos() {
       const usuarioStore = useUsuarioStore();
       const idUsuario = usuarioStore.id;
@@ -67,19 +71,13 @@ export default {
           const totalMacros100g =
             item.proteinas + item.graxas + item.carbohidratos;
 
-          // Escalado si la suma de macros por 100g supera 100
+          //calcular cantidades
           const factor = totalMacros100g > 100 ? 100 / totalMacros100g : 1;
 
           this.pesoTotal += peso;
           this.proteinaTotal += (item.proteinas * peso * factor) / 100;
           this.graxaTotal += (item.graxas * peso * factor) / 100;
           this.carbohidratoTotal += (item.carbohidratos * peso * factor) / 100;
-
-          if (totalMacros100g > 100) {
-            console.warn(
-              `⚠️ Macros excesivos en '${item.nome}': ${totalMacros100g}g por 100g. Se aplicó corrección.`
-            );
-          }
         });
       } catch (error) {
         console.error("Erro cargando datos:", error);

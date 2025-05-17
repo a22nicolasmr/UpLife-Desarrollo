@@ -19,6 +19,7 @@ export default {
     };
   },
   computed: {
+    //obter usuario do storage e data de hoxe
     idUsuario() {
       const store = useUsuarioStore();
       return store.id;
@@ -28,6 +29,7 @@ export default {
     },
   },
   methods: {
+    //engadir grupo novo
     async engadirNovoGrupo() {
       this.erro = "";
 
