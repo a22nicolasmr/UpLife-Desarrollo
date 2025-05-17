@@ -616,11 +616,10 @@ body,
   justify-content: center;
   background-color: white;
   border-radius: 8px;
-
   overflow: hidden;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
   margin-right: 4%;
-  height: 60vh;
+  height: 100%;
   margin-bottom: 2%;
 }
 

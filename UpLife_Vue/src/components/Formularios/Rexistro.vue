@@ -185,7 +185,9 @@ export default {
           <input type="checkbox" id="idCondicions" v-model="aceptaCondicions" />
         </span>
       </label>
-
+      <div v-if="errors.aceptaCondicions" class="erro">
+        {{ errors.aceptaCondicions }}
+      </div>
       <button type="submit">Crear conta</button>
 
       <p>
@@ -199,8 +201,12 @@ export default {
 </template>
 
 <style scoped>
+form {
+  overflow-y: auto;
+}
 h1 {
   color: #7f5af0;
+  margin-top: 2%;
 }
 .erro {
   color: red;

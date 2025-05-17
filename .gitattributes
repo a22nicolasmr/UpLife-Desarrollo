@@ -1,1 +1,2 @@
 UpLife_api/wait-for-it.sh text eol=lf
+UpLife_api/entrypoint.sh text eol=lf

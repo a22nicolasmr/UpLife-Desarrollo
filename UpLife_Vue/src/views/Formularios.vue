@@ -24,11 +24,12 @@ body,
   height: 100%;
   width: 100%;
   margin: 0;
+  overflow-x: hidden;
 }
 
 .contenedor {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
 }
 
@@ -53,15 +54,15 @@ body,
 }
 
 .derecha {
-  padding: 5%;
   background-color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  overflow-y: auto;
 }
 
 .formulario {
+  overflow-y: auto;
   max-width: 60%;
   width: 100%;
   margin: 0 auto;
@@ -77,6 +78,7 @@ body,
   color: #043133;
   font-weight: bold;
   text-align: center;
+  margin-top: 2%;
 }
 
 .formulario label {
@@ -150,6 +152,7 @@ body,
     padding: 8% 6%;
     height: 115vh;
     border-radius: 0 0 8px 8px;
+    overflow-y: auto;
   }
 
   .formulario {

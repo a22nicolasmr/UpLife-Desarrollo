@@ -404,16 +404,15 @@ export default {
 }
 
 .expand-button {
-  font-size: medium;
+  font-size: 1.5rem;
   background: none;
   border: none;
   cursor: pointer;
   color: #333;
-  transition: transform 0.3s ease;
+  transition: transform 0.2s ease;
   display: flex;
-  justify-content: right;
-  transform-origin: center;
-  width: 3%;
+  align-items: center;
+  justify-content: center;
 }
 
 .expand-button.rotated {

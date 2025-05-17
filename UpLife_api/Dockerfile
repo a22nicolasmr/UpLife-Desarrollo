@@ -34,6 +34,8 @@ RUN pip install --no-cache-dir --upgrade pip && pip install -r requirements.txt
 
 # Copia todo el código
 COPY . .
+RUN ls -l
+
 
 # Asegura permisos de ejecución del entrypoint
 RUN chmod +x entrypoint.sh

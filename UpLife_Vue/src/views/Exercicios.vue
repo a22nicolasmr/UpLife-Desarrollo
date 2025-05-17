@@ -576,7 +576,8 @@ body {
   margin-right: 4%;
   margin-bottom: 1%;
   height: 100%;
-  overflow: hidden; /* se actualiza en móvil */
+  overflow: hidden;
+  border-radius: 8px;
 }
 
 .esquerda,

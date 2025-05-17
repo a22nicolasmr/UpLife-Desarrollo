@@ -92,20 +92,34 @@ export default {
 <style scoped>
 .imc-wrapper {
   display: flex;
+  flex-direction: row;
   gap: 6%;
   align-items: stretch;
   color: white;
   flex: 1;
   max-width: 100%;
   box-sizing: border-box;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .inputs {
+  flex: 1 1 auto; /* puede crecer y encoger */
+  max-width: 50%; /* opcional para controlar ancho */
   display: flex;
   flex-direction: column;
-  flex: 1;
   gap: 1%;
+}
+
+.resultado {
+  flex: 0 0 50%; /* ancho fijo para el resultado */
+  background-color: #2d2d2d;
+  border-radius: 0 10% 10% 0;
+  padding: 6%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  box-sizing: border-box;
+  height: 37vh;
 }
 
 .input-box {
@@ -123,17 +137,18 @@ export default {
 .peso {
   background-color: #caf0f8;
 }
-
 .range-control {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   width: 100%;
   box-sizing: border-box;
+  flex-wrap: nowrap; /* evita que los botones o el slider se salgan */
 }
 
 .range-control input[type="range"] {
   flex: 1;
+  width: 5vw;
 }
 
 .range-control button {
@@ -227,7 +242,7 @@ export default {
   .input-box {
     width: 100%;
     border-radius: 15px;
-    padding: 1.5rem;
+    padding: 1rem;
   }
 
   .resultado {
