@@ -20,6 +20,7 @@ export default {
       grupoSeleccionado: null,
       grupoSeleccionadoMandar: null,
       editando: { id: null, campo: null, valor: "" },
+      caloriasRestantes: 0,
     };
   },
   computed: {
@@ -55,6 +56,14 @@ export default {
       const inxerida = this.caloriasInxeridasHoxe;
       if (!total || total <= 0) return 0;
       return Math.min(Math.round((inxerida / total) * 100), 100);
+    },
+
+    //establecer un mínimo de 0 a calorías necesarias
+    calcularCaloriasRestantes() {
+      if (!this.caloriasTotaisNecesarias - this.caloriasInxeridasHoxe <= 0) {
+        this.caloriasRestantes =
+          this.caloriasTotaisNecesarias - this.caloriasInxeridasHoxe;
+      }
     },
   },
   //cargar datos cando se monta o compoñente
@@ -214,7 +223,6 @@ export default {
 
     <div class="plantilla-layout">
       <div class="esquerda">
-        <!-- GRÁFICO DE PROGRESO DE CALORÍAS -->
         <div class="grafico-calorias">
           <svg viewBox="0 0 36 36" class="circular-chart">
             <path
@@ -235,7 +243,7 @@ export default {
           <div class="info-calorias">
             <p>
               <strong>Calorías restantes:</strong>
-              {{ caloriasTotaisNecesarias - caloriasInxeridasHoxe }} kcal
+              {{ caloriasRestantes }} kcal
             </p>
             <p><strong>Inxeridas:</strong> {{ caloriasInxeridasHoxe }} kcal</p>
           </div>

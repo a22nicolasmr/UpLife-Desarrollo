@@ -43,12 +43,12 @@ export default {
           this.nome = data.nome;
           this.email = data.email;
           this.nomeUsuario = data.nome_usuario;
-          this.xenero = data.xenero;
-          this.altura = data.altura;
-          this.peso = data.peso;
-          this.obxectivo = data.obxectivo;
-          this.actividade = data.actividade;
-          this.idade = data.idade;
+          this.xenero = data.xenero || "non especificado";
+          this.altura = data.altura || "non especificado";
+          this.peso = data.peso || "non especificado";
+          this.obxectivo = data.obxectivo || "non especificado";
+          this.actividade = data.actividade || "non especificado";
+          this.idade = data.idade || "non especificado";
           this.calorias = data.calorias_diarias;
           this.auga = data.auga_diaria;
 
@@ -141,14 +141,27 @@ export default {
         <div>
           <h2>Datos do usuario</h2>
           <p><strong>Xénero:</strong> {{ xenero }}</p>
-          <p><strong>Altura:</strong> {{ altura }} cm</p>
-          <p><strong>Peso:</strong> {{ peso }} kg</p>
+          <p>
+            <strong>Altura:</strong> {{ altura
+            }}<span v-if="altura !== 'non especificado'"> cm</span>
+          </p>
+          <p>
+            <strong>Peso:</strong> {{ peso
+            }}<span v-if="peso !== 'non especificado'"> kg</span>
+          </p>
           <p><strong>Obxectivo:</strong> {{ obxectivo }}</p>
           <p><strong>Actividade:</strong> {{ actividade }}</p>
-          <p><strong>Idade:</strong> {{ idade }} anos</p>
-          <p><strong>Calorías diarias:</strong> {{ calorias }} kcal</p>
+          <p>
+            <strong>Idade:</strong> {{ idade
+            }}<span v-if="idade !== 'non especificado'"> anos</span>
+          </p>
+          <p>
+            <strong>Calorías diarias:</strong> {{ calorias
+            }}<span v-if="calorias !== 'non especificado'"> kcal</span>
+          </p>
           <p id="ultimoP">
-            <strong>Cantidad de auga diaria:</strong> {{ auga }} ml
+            <strong>Cantidad de auga diaria:</strong> {{ auga
+            }}<span v-if="auga !== 'non especificado'"> ml</span>
           </p>
         </div>
       </div>

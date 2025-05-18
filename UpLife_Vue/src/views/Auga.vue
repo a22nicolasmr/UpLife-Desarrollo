@@ -13,6 +13,7 @@ export default {
       componenteActivo: "historial",
       augaHoxe: [],
       editando: { id: null, campo: null, valor: "" },
+      augaRestante: 0,
     };
   },
 
@@ -41,6 +42,13 @@ export default {
       if (!total || total <= 0) return 0;
 
       return Math.min(Math.round((inxerida / total) * 100), 100);
+    },
+
+    //establecer un mínimo de 0 a auga necesaria
+    calcularAugaNecesaria() {
+      if (!this.augaTotalNecesaria - this.augaInxeridaHoxe <= 0) {
+        this.augaRestante = this.augaTotalNecesaria - this.augaInxeridaHoxe;
+      }
     },
   },
   mounted() {
@@ -164,7 +172,7 @@ export default {
           <div class="info-auga">
             <p>
               <strong>Auga restante:</strong>
-              {{ augaTotalNecesaria - augaInxeridaHoxe }} ml
+              {{ augaRestante }} ml
             </p>
             <p><strong>Auga inxerida:</strong> {{ augaInxeridaHoxe }} ml</p>
           </div>

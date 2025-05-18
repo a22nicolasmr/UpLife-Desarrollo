@@ -98,11 +98,26 @@ export default {
       <span class="error">{{ error }}</span>
 
       <button @click.prevent="engadirPlantilla()">Engadir</button>
+
+      <!-- no funciona  -->
+      <button
+        id="nova"
+        @click="$router.push('/formularios/plantillas/novaPlantilla')"
+      >
+        Nova plantilla
+      </button>
     </form>
   </div>
 </template>
 
 <style scoped>
+#nova {
+  margin-left: 40%;
+  width: 40%;
+}
+form {
+  padding: 10%;
+}
 button {
   margin-top: 3%;
   padding: 1%;
