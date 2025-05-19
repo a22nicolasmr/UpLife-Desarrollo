@@ -97,9 +97,11 @@ export default {
 
         if (medallas) {
           this.medallas = medallas.sort((a, b) => a.id_medalla - b.id_medalla);
+
           const total = medallas.length;
           const tercio = Math.ceil(total / 3);
           this.primeirasMedallas = medallas.slice(0, tercio);
+
           this.segundasMedallas = medallas.slice(tercio, tercio * 2);
           this.terceirasMedallas = medallas.slice(tercio * 2, total);
         }
@@ -142,7 +144,10 @@ export default {
                 />
               </div>
               <div class="medalla-info">
-                <img :src="medalla.icona" alt="Icona medalla" />
+                <img
+                  :src="'https://res.cloudinary.com/dkujevuxh/' + medalla.icona"
+                  alt="Icona medalla"
+                />
                 <div>
                   <h3>{{ medalla.nome }}</h3>
                   <p>{{ medalla.descripcion }}</p>
@@ -173,7 +178,10 @@ export default {
                 />
               </div>
               <div class="medalla-info">
-                <img :src="medalla.icona" alt="Icona medalla" />
+                <img
+                  :src="'https://res.cloudinary.com/dkujevuxh/' + medalla.icona"
+                  alt="Icona medalla"
+                />
                 <div>
                   <h3>{{ medalla.nome }}</h3>
                   <p>{{ medalla.descripcion }}</p>
@@ -204,7 +212,10 @@ export default {
                 />
               </div>
               <div class="medalla-info">
-                <img :src="medalla.icona" alt="Icona medalla" />
+                <img
+                  :src="'https://res.cloudinary.com/dkujevuxh/' + medalla.icona"
+                  alt="Icona medalla"
+                />
                 <div>
                   <h3>{{ medalla.nome }}</h3>
                   <p>{{ medalla.descripcion }}</p>

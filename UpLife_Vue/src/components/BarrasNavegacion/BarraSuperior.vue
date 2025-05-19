@@ -19,7 +19,11 @@ watch(
 <template>
   <div class="barra-superior">
     <div class="usuario-info">
-      <img :src="usuarioStore.imagen" alt="Usuario" class="usuario-imagen" />
+      <img
+        :src="'https://res.cloudinary.com/dkujevuxh/' + usuarioStore.imagen"
+        alt="Usuario"
+        class="usuario-imagen"
+      />
       <div class="usuario-detalles">
         <div class="usuario-nombre" @click="$router.push('/perfil')">
           {{ usuarioStore.nome }}

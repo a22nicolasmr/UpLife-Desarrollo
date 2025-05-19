@@ -125,7 +125,7 @@ export default {
 
           <div class="imaxe-perfil">
             <img
-              :src="imagen"
+              :src="'https://res.cloudinary.com/dkujevuxh/' + imagen"
               alt="Imaxe de usuario"
               @click="cambiarImagen()"
             />

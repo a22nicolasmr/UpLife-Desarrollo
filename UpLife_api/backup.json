@@ -988,6 +988,630 @@
   }
 },
 {
+  "model": "admin.logentry",
+  "pk": 109,
+  "fields": {
+    "action_time": "2025-05-19T09:28:57.537Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "13",
+    "object_repr": "nome=Lenda da consistencia, descripcion=Mantén unha racha perfecta por 365 días., completado=False, icona=https://res.cloudinary.com/dkujevuxh/image/upload/v1747397600/media/consistencia_thl6oh.png",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Icona\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 110,
+  "fields": {
+    "action_time": "2025-05-19T10:07:06.518Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "13",
+    "object_repr": "nome=Lenda da consistencia, descripcion=Mantén unha racha perfecta por 365 días., completado=False, icona=ihkgbqrjweclpp495ex0",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 111,
+  "fields": {
+    "action_time": "2025-05-19T10:08:18.239Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "13",
+    "object_repr": "nome=Lenda da consistencia, descripcion=Mantén unha racha perfecta por 365 días., completado=False, icona=ihkgbqrjweclpp495ex0",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 112,
+  "fields": {
+    "action_time": "2025-05-19T10:08:40.530Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "12",
+    "object_repr": "nome=Disciplina indestructible, descripcion=Mantén unha racha perfecta por 90 días., completado=False, icona=ykeaz1baj7tzodzeug2h",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 113,
+  "fields": {
+    "action_time": "2025-05-19T10:08:55.584Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "11",
+    "object_repr": "nome=Profesional da plantillas, descripcion=Crea 3 plantillas diferentes e usaas polo menos 2 veces cada unha., completado=False, icona=gtyscuh1pt5xhpydwzb7",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 114,
+  "fields": {
+    "action_time": "2025-05-19T10:09:07.592Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "10",
+    "object_repr": "nome=Rastreador consciente, descripcion=Rexistra exercicios,comidas e auga 7 días seguidos antes das 22:00., completado=False, icona=pbc3ermwkqeivlwxuc2m",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 115,
+  "fields": {
+    "action_time": "2025-05-19T10:09:18.200Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "9",
+    "object_repr": "nome=Semana perfecta, descripcion=Rexistra exercicios,comidas e auga 7 días seguidos., completado=False, icona=p4t0kbztvdaia2ombjdp",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 116,
+  "fields": {
+    "action_time": "2025-05-19T10:09:32.521Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "8",
+    "object_repr": "nome=Asasino de tarefas, descripcion=Completa todas as tarefas programadas 5 días seguidos, completado=True, icona=ty1bvtlo6xowd8awmi7a",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 117,
+  "fields": {
+    "action_time": "2025-05-19T10:09:41.571Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "7",
+    "object_repr": "nome=Máster da hidratación, descripcion=Chega ao teu obxectivo de auga 7 días seguidos., completado=False, icona=ow8ejwdht35ognpw5nhw",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 118,
+  "fields": {
+    "action_time": "2025-05-19T10:09:51.698Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "6",
+    "object_repr": "nome=No camiño, descripcion=Completa 5 días de exercicios na mesma semana., completado=True, icona=dfgbyfsaylpb9zzigrpe",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 119,
+  "fields": {
+    "action_time": "2025-05-19T10:10:03.214Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "5",
+    "object_repr": "nome=Racha saudable, descripcion=Rexistra comidas 7 días seguidos, completado=True, icona=fjhqmi7mc5lrrkb4jekl",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 120,
+  "fields": {
+    "action_time": "2025-05-19T10:10:15.339Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "4",
+    "object_repr": "nome=Primeiros pasos, descripcion=Entra a páxina por primeira vez., completado=True, icona=ch4wll1ahthyabhxlpek",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 121,
+  "fields": {
+    "action_time": "2025-05-19T11:15:41.446Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "13",
+    "object_repr": "nome=Lenda da consistencia, descripcion=Mantén unha racha perfecta por 365 días., completado=False, icona=tvlo1fnvyc16kqzglflb",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 122,
+  "fields": {
+    "action_time": "2025-05-19T11:18:24.103Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "13",
+    "object_repr": "nome=Lenda da consistencia, descripcion=Mantén unha racha perfecta por 365 días., completado=False, icona=o6tq7addfv6gguzgqdua",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 123,
+  "fields": {
+    "action_time": "2025-05-19T11:25:41.832Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "13",
+    "object_repr": "nome=Lenda da consistencia, descripcion=Mantén unha racha perfecta por 365 días., completado=False, icona=False",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 124,
+  "fields": {
+    "action_time": "2025-05-19T11:36:02.669Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "13",
+    "object_repr": "nome=Lenda da consistencia, descripcion=Mantén unha racha perfecta por 365 días., completado=False, icona=False",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 125,
+  "fields": {
+    "action_time": "2025-05-19T11:37:05.154Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "12",
+    "object_repr": "nome=Disciplina indestructible, descripcion=Mantén unha racha perfecta por 90 días., completado=False, icona=False",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 126,
+  "fields": {
+    "action_time": "2025-05-19T11:37:11.753Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "11",
+    "object_repr": "nome=Profesional da plantillas, descripcion=Crea 3 plantillas diferentes e usaas polo menos 2 veces cada unha., completado=False, icona=False",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 127,
+  "fields": {
+    "action_time": "2025-05-19T11:37:17.744Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "10",
+    "object_repr": "nome=Rastreador consciente, descripcion=Rexistra exercicios,comidas e auga 7 días seguidos antes das 22:00., completado=False, icona=False",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 128,
+  "fields": {
+    "action_time": "2025-05-19T11:37:24.294Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "9",
+    "object_repr": "nome=Semana perfecta, descripcion=Rexistra exercicios,comidas e auga 7 días seguidos., completado=False, icona=False",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 129,
+  "fields": {
+    "action_time": "2025-05-19T11:37:30.398Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "8",
+    "object_repr": "nome=Asasino de tarefas, descripcion=Completa todas as tarefas programadas 5 días seguidos, completado=True, icona=False",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 130,
+  "fields": {
+    "action_time": "2025-05-19T11:37:37.272Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "7",
+    "object_repr": "nome=Máster da hidratación, descripcion=Chega ao teu obxectivo de auga 7 días seguidos., completado=False, icona=False",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 131,
+  "fields": {
+    "action_time": "2025-05-19T11:37:44.392Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "6",
+    "object_repr": "nome=No camiño, descripcion=Completa 5 días de exercicios na mesma semana., completado=True, icona=False",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 132,
+  "fields": {
+    "action_time": "2025-05-19T11:38:03.871Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "5",
+    "object_repr": "nome=Racha saudable, descripcion=Rexistra comidas 7 días seguidos, completado=True, icona=False",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 133,
+  "fields": {
+    "action_time": "2025-05-19T11:38:09.395Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "4",
+    "object_repr": "nome=Primeiros pasos, descripcion=Entra a páxina por primeira vez., completado=True, icona=False",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 134,
+  "fields": {
+    "action_time": "2025-05-19T11:49:18.192Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "4",
+    "object_repr": "nome=Primeiros pasos, descripcion=Entra a páxina por primeira vez., completado=True, icona=kpurhgcajjyj7kmuqxpp",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 135,
+  "fields": {
+    "action_time": "2025-05-19T11:51:29.221Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "13",
+    "object_repr": "nome=Lenda da consistencia, descripcion=Mantén unha racha perfecta por 365 días., completado=False, icona=False",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 136,
+  "fields": {
+    "action_time": "2025-05-19T11:51:35.588Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "12",
+    "object_repr": "nome=Disciplina indestructible, descripcion=Mantén unha racha perfecta por 90 días., completado=False, icona=False",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 137,
+  "fields": {
+    "action_time": "2025-05-19T11:52:03.484Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "11",
+    "object_repr": "nome=Profesional da plantillas, descripcion=Crea 3 plantillas diferentes e usaas polo menos 2 veces cada unha., completado=False, icona=False",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 138,
+  "fields": {
+    "action_time": "2025-05-19T11:52:13.329Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "10",
+    "object_repr": "nome=Rastreador consciente, descripcion=Rexistra exercicios,comidas e auga 7 días seguidos antes das 22:00., completado=False, icona=False",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 139,
+  "fields": {
+    "action_time": "2025-05-19T11:52:20.873Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "9",
+    "object_repr": "nome=Semana perfecta, descripcion=Rexistra exercicios,comidas e auga 7 días seguidos., completado=False, icona=False",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 140,
+  "fields": {
+    "action_time": "2025-05-19T11:52:47.715Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "8",
+    "object_repr": "nome=Asasino de tarefas, descripcion=Completa todas as tarefas programadas 5 días seguidos, completado=True, icona=False",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 141,
+  "fields": {
+    "action_time": "2025-05-19T11:52:54.132Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "7",
+    "object_repr": "nome=Máster da hidratación, descripcion=Chega ao teu obxectivo de auga 7 días seguidos., completado=False, icona=False",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 142,
+  "fields": {
+    "action_time": "2025-05-19T11:53:01.021Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "6",
+    "object_repr": "nome=No camiño, descripcion=Completa 5 días de exercicios na mesma semana., completado=True, icona=False",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 143,
+  "fields": {
+    "action_time": "2025-05-19T11:53:07.868Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "5",
+    "object_repr": "nome=Racha saudable, descripcion=Rexistra comidas 7 días seguidos, completado=True, icona=False",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 144,
+  "fields": {
+    "action_time": "2025-05-19T11:53:16.577Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "4",
+    "object_repr": "nome=Primeiros pasos, descripcion=Entra a páxina por primeira vez., completado=True, icona=False",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 145,
+  "fields": {
+    "action_time": "2025-05-19T12:01:18.312Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "13",
+    "object_repr": "nome=Lenda da consistencia, descripcion=Mantén unha racha perfecta por 365 días., completado=False, icona=afoeko3ylzbfo0p25iex",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 146,
+  "fields": {
+    "action_time": "2025-05-19T12:14:25.040Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "13",
+    "object_repr": "nome=Lenda da consistencia, descripcion=Mantén unha racha perfecta por 365 días., completado=False, icona=jkyz2x1ylpytdqd6phb0",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 147,
+  "fields": {
+    "action_time": "2025-05-19T12:30:46.345Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "12",
+    "object_repr": "nome=Disciplina indestructible, descripcion=Mantén unha racha perfecta por 90 días., completado=False, icona=gtmfom906safkhqgbjuq",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 148,
+  "fields": {
+    "action_time": "2025-05-19T12:30:58.617Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "11",
+    "object_repr": "nome=Profesional da plantillas, descripcion=Crea 3 plantillas diferentes e usaas polo menos 2 veces cada unha., completado=False, icona=vdrrk9gzyjzi4ngl7i4p",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 149,
+  "fields": {
+    "action_time": "2025-05-19T12:31:10.409Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "10",
+    "object_repr": "nome=Rastreador consciente, descripcion=Rexistra exercicios,comidas e auga 7 días seguidos antes das 22:00., completado=False, icona=ye0pdzaxvtajrqgjrrk1",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 150,
+  "fields": {
+    "action_time": "2025-05-19T12:31:20.570Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "9",
+    "object_repr": "nome=Semana perfecta, descripcion=Rexistra exercicios,comidas e auga 7 días seguidos., completado=False, icona=elsj5exnwwcyj5fmysem",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 151,
+  "fields": {
+    "action_time": "2025-05-19T12:31:33.234Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "8",
+    "object_repr": "nome=Asasino de tarefas, descripcion=Completa todas as tarefas programadas 5 días seguidos, completado=True, icona=wm4hoywzirsvykzutwak",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 152,
+  "fields": {
+    "action_time": "2025-05-19T12:31:42.832Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "7",
+    "object_repr": "nome=Máster da hidratación, descripcion=Chega ao teu obxectivo de auga 7 días seguidos., completado=False, icona=z3qrth7cpedplz0coaw0",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 153,
+  "fields": {
+    "action_time": "2025-05-19T12:31:55.424Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "6",
+    "object_repr": "nome=No camiño, descripcion=Completa 5 días de exercicios na mesma semana., completado=True, icona=wy2y4xvxakjytgnmopzd",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 154,
+  "fields": {
+    "action_time": "2025-05-19T12:32:06.398Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "5",
+    "object_repr": "nome=Racha saudable, descripcion=Rexistra comidas 7 días seguidos, completado=True, icona=xwyy3nzfxqgtm4gtcafv",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 155,
+  "fields": {
+    "action_time": "2025-05-19T12:32:19.690Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "4",
+    "object_repr": "nome=Primeiros pasos, descripcion=Entra a páxina por primeira vez., completado=True, icona=qqbdax82szd3q7h94kd7",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 156,
+  "fields": {
+    "action_time": "2025-05-19T12:37:46.577Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "1",
+    "object_repr": "nome=lupi, nome_usuario=lupi, email=a22nicolasmr@iessanclemente.net, contrasinal=pbkdf2_sha256$600000$72Jo6kmpx19IQWH6kurRVs$1fSmgPf6Xx3rS7mtFlxBbdPOuRlRpWPxBDjXmDnc7lM=, imaxe_perfil=pxf3nyg5tqrvydsu",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+  }
+},
+{
   "model": "auth.user",
   "pk": 1,
   "fields": {
@@ -1069,7 +1693,7 @@
     "nome_usuario": "lupi",
     "email": "a22nicolasmr@iessanclemente.net",
     "contrasinal": "pbkdf2_sha256$600000$72Jo6kmpx19IQWH6kurRVs$1fSmgPf6Xx3rS7mtFlxBbdPOuRlRpWPxBDjXmDnc7lM=",
-    "imaxe_perfil": "image/upload/avatares/lunaa_gzPwiYp.jpg",
+    "imaxe_perfil": "image/upload/v1747658266/pxf3nyg5tqrvydsu0mry.jpg",
     "xenero": "Muller",
     "altura": 154,
     "peso": 56,
@@ -1318,12 +1942,12 @@
     "nome": "Primeiros pasos",
     "descripcion": "Entra a páxina por primeira vez.",
     "completado": true,
-    "icona": "image/upload/media/primeirosPasos_532MVGb.png",
+    "icona": "image/upload/v1747657939/qqbdax82szd3q7h94kd7.png",
     "usuarios": [
-      1,
-      34,
       35,
-      36
+      36,
+      1,
+      34
     ]
   }
 },
@@ -1334,7 +1958,7 @@
     "nome": "Racha saudable",
     "descripcion": "Rexistra comidas 7 días seguidos",
     "completado": true,
-    "icona": "image/upload/media/rachaSaudable.jpg",
+    "icona": "image/upload/v1747657925/xwyy3nzfxqgtm4gtcafv.png",
     "usuarios": [
       1
     ]
@@ -1347,7 +1971,7 @@
     "nome": "No camiño",
     "descripcion": "Completa 5 días de exercicios na mesma semana.",
     "completado": true,
-    "icona": "image/upload/media/noCaminho.jpg",
+    "icona": "image/upload/v1747657914/wy2y4xvxakjytgnmopzd.png",
     "usuarios": [
       1
     ]
@@ -1360,7 +1984,7 @@
     "nome": "Máster da hidratación",
     "descripcion": "Chega ao teu obxectivo de auga 7 días seguidos.",
     "completado": false,
-    "icona": "image/upload/media/hidratacion.jpg",
+    "icona": "image/upload/v1747657902/z3qrth7cpedplz0coaw0.png",
     "usuarios": [
       1
     ]
@@ -1373,7 +1997,7 @@
     "nome": "Asasino de tarefas",
     "descripcion": "Completa todas as tarefas programadas 5 días seguidos",
     "completado": true,
-    "icona": "image/upload/media/tarefas.jpg",
+    "icona": "image/upload/v1747657892/wm4hoywzirsvykzutwak.png",
     "usuarios": [
       1
     ]
@@ -1386,7 +2010,7 @@
     "nome": "Semana perfecta",
     "descripcion": "Rexistra exercicios,comidas e auga 7 días seguidos.",
     "completado": false,
-    "icona": "image/upload/media/semana.jpg",
+    "icona": "image/upload/v1747657880/elsj5exnwwcyj5fmysem.png",
     "usuarios": [
       1
     ]
@@ -1399,7 +2023,7 @@
     "nome": "Rastreador consciente",
     "descripcion": "Rexistra exercicios,comidas e auga 7 días seguidos antes das 22:00.",
     "completado": false,
-    "icona": "image/upload/media/rastredador.jpg",
+    "icona": "image/upload/v1747657869/ye0pdzaxvtajrqgjrrk1.png",
     "usuarios": [
       1
     ]
@@ -1412,7 +2036,7 @@
     "nome": "Profesional da plantillas",
     "descripcion": "Crea 3 plantillas diferentes e usaas polo menos 2 veces cada unha.",
     "completado": false,
-    "icona": "image/upload/media/plantillas.jpg",
+    "icona": "image/upload/v1747657857/vdrrk9gzyjzi4ngl7i4p.png",
     "usuarios": [
       1
     ]
@@ -1425,7 +2049,7 @@
     "nome": "Disciplina indestructible",
     "descripcion": "Mantén unha racha perfecta por 90 días.",
     "completado": false,
-    "icona": "image/upload/media/disciplina.jpg",
+    "icona": "image/upload/v1747657845/gtmfom906safkhqgbjuq.png",
     "usuarios": [
       1
     ]
@@ -1438,7 +2062,7 @@
     "nome": "Lenda da consistencia",
     "descripcion": "Mantén unha racha perfecta por 365 días.",
     "completado": false,
-    "icona": "image/upload/media/consistencia.jpg",
+    "icona": "image/upload/v1747656864/jkyz2x1ylpytdqd6phb0.png",
     "usuarios": [
       1
     ]
