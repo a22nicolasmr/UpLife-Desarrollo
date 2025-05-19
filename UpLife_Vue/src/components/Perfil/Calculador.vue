@@ -104,7 +104,6 @@ export default {
 
 .inputs {
   flex: 1 1 auto; /* puede crecer y encoger */
-  max-width: 50%; /* opcional para controlar ancho */
   display: flex;
   flex-direction: column;
   gap: 1%;
@@ -119,7 +118,6 @@ export default {
   flex-direction: column;
   text-align: center;
   box-sizing: border-box;
-  height: 37vh;
 }
 
 .input-box {
@@ -143,7 +141,6 @@ export default {
   gap: 0.5rem;
   width: 100%;
   box-sizing: border-box;
-  flex-wrap: nowrap; /* evita que los botones o el slider se salgan */
 }
 
 .range-control input[type="range"] {
@@ -155,9 +152,9 @@ export default {
   background-color: #7f5af0;
   color: white;
   border: none;
-  border-radius: 50%;
-  width: 8%;
-  height: 50%;
+  border-radius: 60%;
+  width: 5%;
+  height: 40%;
   font-size: 1.2rem;
   cursor: pointer;
   display: flex;
@@ -231,11 +228,11 @@ export default {
     gap: 2rem;
     align-items: center;
     width: 100%;
-    box-sizing: border-box;
   }
 
   .inputs {
     width: 100%;
+    height: 100%;
     gap: 2rem;
   }
 
@@ -247,7 +244,7 @@ export default {
 
   .resultado {
     width: 100%;
-    border-radius: 0;
+    border-radius: 8px;
     padding: 1.5rem;
   }
 

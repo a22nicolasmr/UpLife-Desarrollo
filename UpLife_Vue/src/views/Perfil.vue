@@ -208,7 +208,6 @@ body {
   background-color: #f2f2f2;
   display: flex;
   flex-direction: column;
-  margin-right: 1%;
   margin-bottom: 2%;
   height: 70%;
 }
@@ -225,7 +224,7 @@ body {
 
 .datos {
   flex: 1;
-  padding: 6%;
+  padding: 4%;
   background-color: white;
   border-radius: 2% 0 0 2%;
   box-sizing: border-box;
