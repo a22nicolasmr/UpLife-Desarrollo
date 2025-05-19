@@ -59,7 +59,12 @@ export default {
         const idUsuario = useUsuarioStore().id;
         this.plantillas = plantillas
           .filter((p) => p.usuario === idUsuario)
-          .map((p) => ({ ...p, exercicios: p.exercicios || [] }));
+          .map((p) => ({
+            ...p,
+            exercicios: (p.exercicios || []).sort(
+              (a, b) => a.id_exercicio - b.id_exercicio
+            ),
+          }));
       } catch (error) {
         console.error("Erro cargando datos:", error);
       }
@@ -116,7 +121,12 @@ export default {
     // obter o valor actual dun campo dun exercicio
     getExercicioValue(id, campo) {
       for (const plantilla of this.plantillas) {
-        const ex = plantilla.exercicios.find((e) => e.id_exercicio === id);
+        // Ordenamos los ejercicios por ID antes de buscar
+        const ejerciciosOrdenados = [...plantilla.exercicios].sort(
+          (a, b) => a.id_exercicio - b.id_exercicio
+        );
+
+        const ex = ejerciciosOrdenados.find((e) => e.id_exercicio === id);
         if (ex) return ex[campo];
       }
       return "";
@@ -181,7 +191,7 @@ export default {
 
     <div class="plantilla-layout">
       <div class="esquerda">
-        <h1>Lista de plantillas</h1>
+        <h2>Lista de plantillas</h2>
         <div
           v-for="plantilla in plantillas"
           :key="plantilla.id_plantilla"
@@ -457,6 +467,9 @@ export default {
   font-weight: bold;
   color: #7f5af0;
   margin-bottom: 0;
+}
+h2 {
+  color: #7f5af0;
 }
 
 .tarxetas {

@@ -20,7 +20,6 @@ export default {
       grupoSeleccionado: null,
       grupoSeleccionadoMandar: null,
       editando: { id: null, campo: null, valor: "" },
-      caloriasRestantes: 0,
     };
   },
   computed: {
@@ -55,15 +54,19 @@ export default {
       const total = this.caloriasTotaisNecesarias;
       const inxerida = this.caloriasInxeridasHoxe;
       if (!total || total <= 0) return 0;
+
       return Math.min(Math.round((inxerida / total) * 100), 100);
     },
 
     //establecer un mínimo de 0 a calorías necesarias
-    calcularCaloriasRestantes() {
-      if (!this.caloriasTotaisNecesarias - this.caloriasInxeridasHoxe <= 0) {
-        this.caloriasRestantes =
-          this.caloriasTotaisNecesarias - this.caloriasInxeridasHoxe;
-      }
+    caloriasRestantes() {
+      const necesarias = this.caloriasTotaisNecesarias;
+      const inxeridas = this.caloriasInxeridasHoxe;
+
+      if (!necesarias || necesarias <= 0) return 0;
+
+      const restantes = necesarias - inxeridas;
+      return restantes > 0 ? restantes : 0;
     },
   },
   //cargar datos cando se monta o compoñente
@@ -384,7 +387,6 @@ export default {
 </template>
 
 <style scoped>
-/* Gráfico circular */
 .grafico-calorias {
   display: flex;
   align-items: center;
@@ -421,7 +423,6 @@ export default {
   font-size: large;
 }
 
-/* Resto de estilos ya existentes... */
 .plantilla-header img:first-child {
   background-color: white;
   border-radius: 8px;
@@ -628,7 +629,7 @@ button {
   width: 18%;
   height: 18%;
   cursor: pointer;
-  margin-top: 30%;
+  margin-top: 21%;
 }
 .tabela-exercicios {
   width: 100%;

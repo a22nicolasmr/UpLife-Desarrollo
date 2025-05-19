@@ -28,3 +28,9 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+# lista to do
+toDo
+
+# archivo routing
+Routing.txt

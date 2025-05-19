@@ -13,7 +13,6 @@ export default {
       componenteActivo: "historial",
       augaHoxe: [],
       editando: { id: null, campo: null, valor: "" },
-      augaRestante: 0,
     };
   },
 
@@ -45,10 +44,14 @@ export default {
     },
 
     //establecer un mínimo de 0 a auga necesaria
-    calcularAugaNecesaria() {
-      if (!this.augaTotalNecesaria - this.augaInxeridaHoxe <= 0) {
-        this.augaRestante = this.augaTotalNecesaria - this.augaInxeridaHoxe;
-      }
+    augaRestante() {
+      const necesaria = this.augaTotalNecesaria;
+      const inxerida = this.augaInxeridaHoxe;
+
+      if (!necesaria || necesaria <= 0) return 0;
+
+      const restantes = necesaria - inxerida;
+      return restantes > 0 ? restantes : 0;
     },
   },
   mounted() {
@@ -226,6 +229,7 @@ export default {
                     src="/imaxes/trash.png"
                     alt="icona borrar"
                     @click="eliminarAuga(auga.id_auga)"
+                    id="icona"
                   />
                 </td>
               </tr>
@@ -256,6 +260,9 @@ export default {
 </template>
 
 <style scoped>
+#icona {
+  cursor: pointer;
+}
 #divXeral2 {
   display: flex;
   flex-direction: column;

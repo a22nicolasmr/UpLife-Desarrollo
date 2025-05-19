@@ -92,9 +92,9 @@ export default {
           "https://uplife-final.onrender.com/api/exercicios/"
         );
         const exercicios = await response.json();
-        this.exerciciosHoxe = exercicios.filter(
-          (ex) => ex.usuario === idUsuario && ex.data === hoxe
-        );
+        this.exerciciosHoxe = exercicios
+          .filter((ex) => ex.usuario === idUsuario && ex.data === hoxe)
+          .sort((a, b) => a.id_exercicio - b.id_exercicio);
         this.$refs.historialRef?.cargarExercicios();
       } catch (error) {
         console.error("Erro cargando exercicios:", error);
