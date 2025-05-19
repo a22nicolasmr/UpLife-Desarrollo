@@ -71,7 +71,7 @@ class Medallas(models.Model):
     nome=models.CharField(max_length=50,unique=True)
     descripcion=models.CharField(max_length=200,unique=True)
     completado=models.BooleanField()
-    icona = models.CharField(max_length=500, blank=True, null=True)
+    icona=CloudinaryField('image', blank=True, null=True)
     usuarios=models.ManyToManyField(Usuarios)
     def __str__(self):
         return f"nome={self.nome}, descripcion={self.descripcion}, completado={self.completado}, icona={self.icona}"
