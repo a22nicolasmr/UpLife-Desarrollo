@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.hashers import make_password
 from django.dispatch import receiver
 import os
+from cloudinary.models import CloudinaryField
 # opcions modo_aplicacion
 MODO_CHOICES = [
     ('C', 'Claro'),
@@ -14,7 +15,7 @@ class Usuarios(models.Model):
     nome_usuario=models.CharField(max_length=100,unique=True)
     email=models.EmailField(max_length=255, unique=True)
     contrasinal=models.CharField(max_length=100)
-    imaxe_perfil=models.ImageField(upload_to="avatares",null=True, blank=True)
+    imaxe_perfil= CloudinaryField('image', blank=True, null=True)
     xenero=models.CharField(max_length=7, null=True, blank=True)
     altura=models.IntegerField(null=True, blank=True)
     peso=models.IntegerField(null=True, blank=True)
@@ -70,7 +71,7 @@ class Medallas(models.Model):
     nome=models.CharField(max_length=50,unique=True)
     descripcion=models.CharField(max_length=200,unique=True)
     completado=models.BooleanField()
-    icona=models.ImageField(upload_to="media")
+    icona=CloudinaryField('image', blank=True, null=True)
     usuarios=models.ManyToManyField(Usuarios)
     def __str__(self):
         return f"nome={self.nome}, descripcion={self.descripcion}, completado={self.completado}, icona={self.icona}"

@@ -4,6 +4,7 @@ echo "⏳ Esperando base de datos..."
 # while ! nc -z $DB_HOST $DB_PORT; do sleep 1; done
 
 echo "🚀 Aplicando migraciones..."
+python manage.py makemigrations --noinput
 python manage.py migrate --noinput
 
 echo "📦 Cargando datos (si backup existe)..."

@@ -1,0 +1,2429 @@
+[
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2025-04-22T07:33:09.815Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "1",
+    "object_repr": "nome=Primeiros pasos, descripcion=Entra a páxina por primeira vez., completado=False, icona=media/primeirosPasos.png, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2025-04-22T07:38:38.741Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "2",
+    "object_repr": "nome=Nome, descripcion=Proba, completado=False, icona=media/primeirosPasos_CIpYsre.png, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6W",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 3,
+  "fields": {
+    "action_time": "2025-04-22T07:38:56.026Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "3",
+    "object_repr": "nome=asdasd, descripcion=asdasdasdasd, completado=False, icona=media/primeirosPasos_vVNdVPs.png, usuario=nome=nico, nome_usuario=nico, email=nico@gmail.com, contrasinal=pbkdf2_sha256$600000$8FhjHTCOhR",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 4,
+  "fields": {
+    "action_time": "2025-04-22T07:50:23.327Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "3",
+    "object_repr": "nome=asdasd, descripcion=asdasdasdasd, completado=False, icona=media/primeirosPasos_vVNdVPs.png, usuario=nome=nico, nome_usuario=nico, email=nico@gmail.com, contrasinal=pbkdf2_sha256$600000$8FhjHTCOhR",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 5,
+  "fields": {
+    "action_time": "2025-04-22T07:50:26.321Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "2",
+    "object_repr": "nome=Nome, descripcion=Proba, completado=False, icona=media/primeirosPasos_CIpYsre.png, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6W",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 6,
+  "fields": {
+    "action_time": "2025-04-22T07:50:29.518Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "1",
+    "object_repr": "nome=Primeiros pasos, descripcion=Entra a páxina por primeira vez., completado=True, icona=media/primeirosPasos.png, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha2",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Completado\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 7,
+  "fields": {
+    "action_time": "2025-04-22T08:23:10.926Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "1",
+    "object_repr": "nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImwzx0gm7ag2f4KCyQFAkwHDBpoAssFyJtI=, imaxe_perfil=media/imagen4.png, altura=None, p",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imaxe perfil\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 8,
+  "fields": {
+    "action_time": "2025-04-22T08:31:37.781Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "1",
+    "object_repr": "nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImwzx0gm7ag2f4KCyQFAkwHDBpoAssFyJtI=, imaxe_perfil=avatares/imagen4_6HhOpye.png, alt",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imaxe perfil\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 41,
+  "fields": {
+    "action_time": "2025-04-22T09:43:23.153Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "1",
+    "object_repr": "nome=Primeiros pasos, descripcion=Entra a páxina por primeira vez., completado=True, icona=media/primeirosPasos.png, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha2",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 42,
+  "fields": {
+    "action_time": "2025-04-22T09:43:39.745Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "4",
+    "object_repr": "nome=Primeiros pasos, descripcion=Entra a páxina por primeira vez., completado=True, icona=media/primeirosPasos.png, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha2",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 43,
+  "fields": {
+    "action_time": "2025-04-22T10:50:07.434Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "1",
+    "object_repr": "nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImwzx0gm7ag2f4KCyQFAkwHDBpoAssFyJtI=, imaxe_perfil=avatares/imagen4_6l6PL2W.png, alt",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imaxe perfil\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 44,
+  "fields": {
+    "action_time": "2025-04-22T10:50:23.074Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "4",
+    "object_repr": "nome=Primeiros pasos, descripcion=Entra a páxina por primeira vez., completado=True, icona=media/primeirosPasos.png, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha2",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 45,
+  "fields": {
+    "action_time": "2025-04-22T11:09:02.317Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "5",
+    "object_repr": "nome=Racha saudable, descripcion=Rexistra comidas 7 días seguidos, completado=False, icona=media/rachaSaudable.jpg, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha25",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 46,
+  "fields": {
+    "action_time": "2025-04-22T11:09:34.174Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "6",
+    "object_repr": "nome=No camiño, descripcion=Completa 5 días de exercicios na mesma semana., completado=False, icona=media/noCaminho.jpg, usuario=nome=nico, nome_usuario=nico, email=nico@gmail.com, contrasinal=pbkdf2_",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 47,
+  "fields": {
+    "action_time": "2025-04-22T11:10:07.590Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "7",
+    "object_repr": "nome=Máster da hidratación, descripcion=Chega ao teu obxectivo de auga 7 días seguidos., completado=False, icona=media/hidratacion.jpg, usuario=nome=nico, nome_usuario=nico, email=nico@gmail.com, cont",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 48,
+  "fields": {
+    "action_time": "2025-04-22T11:10:35.083Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "8",
+    "object_repr": "nome=Asasino de tarefas, descripcion=Completa todas as tarefas programadas 5 días seguidos, completado=False, icona=media/tarefas.jpg, usuario=nome=nico, nome_usuario=nico, email=nico@gmail.com, contr",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 49,
+  "fields": {
+    "action_time": "2025-04-22T11:11:08.080Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "9",
+    "object_repr": "nome=Semana perfecta, descripcion=Rexistra exercicios,comidas e auga 7 días seguidos., completado=False, icona=media/semana.jpg, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 50,
+  "fields": {
+    "action_time": "2025-04-22T11:13:51.255Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "10",
+    "object_repr": "nome=Rastreador consciente, descripcion=Rexistra exercicios,comidas e auga 7 días seguidos antes das 22:00., completado=False, icona=media/rastredador.jpg, usuario=nome=nico, nome_usuario=nico, email=",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 51,
+  "fields": {
+    "action_time": "2025-04-22T11:14:24.443Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "11",
+    "object_repr": "nome=Profesional da plantillas, descripcion=Crea 3 plantillas diferentes e usaas polo menos 2 veces cada unha., completado=False, icona=media/plantillas.jpg, usuario=nome=lupi, nome_usuario=lupi, emai",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 52,
+  "fields": {
+    "action_time": "2025-04-22T11:15:04.166Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "12",
+    "object_repr": "nome=Disciplina indestructible, descripcion=Mantén unha racha perfecta por 90 días., completado=False, icona=media/disciplina.jpg, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasin",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 53,
+  "fields": {
+    "action_time": "2025-04-22T11:15:46.134Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "13",
+    "object_repr": "nome=Lenda da consistencia, descripcion=Mantén unha racha perfecta por 365 días., completado=False, icona=media/consistencia.jpg, usuario=nome=nico, nome_usuario=nico, email=nico@gmail.com, contrasina",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 54,
+  "fields": {
+    "action_time": "2025-04-22T11:59:12.672Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "4",
+    "object_repr": "nome=Primeiros pasos, descripcion=Entra a páxina por primeira vez., completado=True, icona=media/primeirosPasos.png",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Usuarios\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 55,
+  "fields": {
+    "action_time": "2025-04-22T11:59:30.864Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "4",
+    "object_repr": "nome=Primeiros pasos, descripcion=Entra a páxina por primeira vez., completado=True, icona=media/primeirosPasos.png",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 56,
+  "fields": {
+    "action_time": "2025-04-22T11:59:34.902Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "5",
+    "object_repr": "nome=Racha saudable, descripcion=Rexistra comidas 7 días seguidos, completado=False, icona=media/rachaSaudable.jpg",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Usuarios\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 57,
+  "fields": {
+    "action_time": "2025-04-22T11:59:37.753Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "6",
+    "object_repr": "nome=No camiño, descripcion=Completa 5 días de exercicios na mesma semana., completado=False, icona=media/noCaminho.jpg",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Usuarios\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 58,
+  "fields": {
+    "action_time": "2025-04-22T11:59:40.142Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "7",
+    "object_repr": "nome=Máster da hidratación, descripcion=Chega ao teu obxectivo de auga 7 días seguidos., completado=False, icona=media/hidratacion.jpg",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Usuarios\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 59,
+  "fields": {
+    "action_time": "2025-04-22T11:59:43.032Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "8",
+    "object_repr": "nome=Asasino de tarefas, descripcion=Completa todas as tarefas programadas 5 días seguidos, completado=False, icona=media/tarefas.jpg",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Usuarios\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 60,
+  "fields": {
+    "action_time": "2025-04-22T11:59:45.533Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "9",
+    "object_repr": "nome=Semana perfecta, descripcion=Rexistra exercicios,comidas e auga 7 días seguidos., completado=False, icona=media/semana.jpg",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Usuarios\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 61,
+  "fields": {
+    "action_time": "2025-04-22T11:59:47.690Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "10",
+    "object_repr": "nome=Rastreador consciente, descripcion=Rexistra exercicios,comidas e auga 7 días seguidos antes das 22:00., completado=False, icona=media/rastredador.jpg",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Usuarios\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 62,
+  "fields": {
+    "action_time": "2025-04-22T11:59:49.742Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "11",
+    "object_repr": "nome=Profesional da plantillas, descripcion=Crea 3 plantillas diferentes e usaas polo menos 2 veces cada unha., completado=False, icona=media/plantillas.jpg",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Usuarios\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 63,
+  "fields": {
+    "action_time": "2025-04-22T11:59:51.622Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "12",
+    "object_repr": "nome=Disciplina indestructible, descripcion=Mantén unha racha perfecta por 90 días., completado=False, icona=media/disciplina.jpg",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Usuarios\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 64,
+  "fields": {
+    "action_time": "2025-04-22T11:59:53.923Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "13",
+    "object_repr": "nome=Lenda da consistencia, descripcion=Mantén unha racha perfecta por 365 días., completado=False, icona=media/consistencia.jpg",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Usuarios\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 65,
+  "fields": {
+    "action_time": "2025-04-22T12:01:40.725Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "1",
+    "object_repr": "nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImwzx0gm7ag2f4KCyQFAkwHDBpoAssFyJtI=, imaxe_perfil=avatares/imagen4_Vtq7ZK2.png, alt",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imaxe perfil\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 66,
+  "fields": {
+    "action_time": "2025-04-30T10:06:30.465Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "1",
+    "object_repr": "nome=Perna",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 67,
+  "fields": {
+    "action_time": "2025-04-30T10:06:36.952Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "2",
+    "object_repr": "nome=Brazo",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 68,
+  "fields": {
+    "action_time": "2025-04-30T10:06:53.918Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "3",
+    "object_repr": "nome=Core",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 69,
+  "fields": {
+    "action_time": "2025-04-30T10:06:57.784Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "4",
+    "object_repr": "nome=Espalda",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 70,
+  "fields": {
+    "action_time": "2025-04-30T10:07:03.129Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "5",
+    "object_repr": "nome=Peito",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 71,
+  "fields": {
+    "action_time": "2025-04-30T10:07:28.347Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "1",
+    "object_repr": "nome=Exercicio1, repeticions=5x10, peso=20.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImwzx0gm7ag2f4KCyQFAkwHDBpoAss",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 72,
+  "fields": {
+    "action_time": "2025-05-06T08:34:56.313Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "4",
+    "object_repr": "nome=Primeiros pasos, descripcion=Entra a páxina por primeira vez., completado=True, icona=media/primeirosPasos_532MVGb.png",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Icona\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 73,
+  "fields": {
+    "action_time": "2025-05-07T07:25:37.675Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "43",
+    "object_repr": "nome=Sentadilla, repeticions=5x10, peso=120.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImwzx0gm7ag2f4KCyQFAkwHDBpoAs",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 74,
+  "fields": {
+    "action_time": "2025-05-07T07:25:40.904Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "42",
+    "object_repr": "nome=Sentadilla, repeticions=5x10, peso=120.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImwzx0gm7ag2f4KCyQFAkwHDBpoAs",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 75,
+  "fields": {
+    "action_time": "2025-05-07T07:25:44.020Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "41",
+    "object_repr": "nome=Exercicio exemplo plantilla de perna, repeticions=5x10, peso=111.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImw",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 76,
+  "fields": {
+    "action_time": "2025-05-07T07:25:48.055Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "39",
+    "object_repr": "nome=Exercicio de perna de proba, repeticions=4x20, peso=20.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImwzx0gm7ag2f",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 77,
+  "fields": {
+    "action_time": "2025-05-07T07:25:51.568Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "6",
+    "object_repr": "nome=Sentadilla, repeticions=5x10, peso=12222.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImwzx0gm7ag2f4KCyQFAkwHDBpo",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 78,
+  "fields": {
+    "action_time": "2025-05-07T07:25:55.872Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "5",
+    "object_repr": "nome=Sentadilla, repeticions=5x10, peso=1112.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImwzx0gm7ag2f4KCyQFAkwHDBpoA",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 79,
+  "fields": {
+    "action_time": "2025-05-07T08:01:00.287Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "6",
+    "object_repr": "nome=Todo corpo",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 80,
+  "fields": {
+    "action_time": "2025-05-08T09:34:34.734Z",
+    "user": 1,
+    "content_type": 14,
+    "object_id": "2",
+    "object_repr": "nome=Salmon, peso=11.0, graxas=111.0, carbohidratos=111.0, proteinas=111.0, calorias=11.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eo",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 81,
+  "fields": {
+    "action_time": "2025-05-08T09:34:37.127Z",
+    "user": 1,
+    "content_type": 14,
+    "object_id": "1",
+    "object_repr": "nome=Salmon, peso=111.0, graxas=111.0, carbohidratos=111.0, proteinas=111.0, calorias=111.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 82,
+  "fields": {
+    "action_time": "2025-05-10T07:27:26.454Z",
+    "user": 1,
+    "content_type": 14,
+    "object_id": "5",
+    "object_repr": "nome=Patacas, peso=150.0, graxas=20.0, carbohidratos=122.0, proteinas=4.0, calorias=200.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eo",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Data\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 83,
+  "fields": {
+    "action_time": "2025-05-10T08:40:34.200Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "15",
+    "object_repr": "nome=Plantilla de perna, icona=/imaxes/leg.png, exercicios=['Xemelgos']",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Data\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 84,
+  "fields": {
+    "action_time": "2025-05-10T08:40:41.327Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "15",
+    "object_repr": "nome=Plantilla de perna, icona=/imaxes/leg.png, exercicios=['Xemelgos']",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Data\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 85,
+  "fields": {
+    "action_time": "2025-05-10T09:24:55.111Z",
+    "user": 1,
+    "content_type": 14,
+    "object_id": "12",
+    "object_repr": "nome=Ovos, peso=160.0, graxas=11.0, carbohidratos=22.0, proteinas=15.0, calorias=100.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6W",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 86,
+  "fields": {
+    "action_time": "2025-05-10T09:24:59.157Z",
+    "user": 1,
+    "content_type": 14,
+    "object_id": "10",
+    "object_repr": "nome=Ovos, peso=160.0, graxas=11.0, carbohidratos=22.0, proteinas=15.0, calorias=100.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6W",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 87,
+  "fields": {
+    "action_time": "2025-05-10T10:51:28.247Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "62",
+    "object_repr": "nome=Exercicio de proba, repeticions=5x7, peso=111.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImwzx0gm7ag2f4KCyQFAkw",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 88,
+  "fields": {
+    "action_time": "2025-05-10T10:51:45.935Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "63",
+    "object_repr": "nome=Exercicio de proba 2, repeticions=5x7, peso=111.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImwzx0gm7ag2f4KCyQFA",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 89,
+  "fields": {
+    "action_time": "2025-05-10T10:52:38.883Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "64",
+    "object_repr": "nome=Exercicio de proba 2, repeticions=5x7, peso=111.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImwzx0gm7ag2f4KCyQFA",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 90,
+  "fields": {
+    "action_time": "2025-05-10T11:03:31.691Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "64",
+    "object_repr": "nome=Exercicio de proba 2, repeticions=5x7, peso=111.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImwzx0gm7ag2f4KCyQFA",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 91,
+  "fields": {
+    "action_time": "2025-05-10T11:06:38.009Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "65",
+    "object_repr": "nome=Exercicio de proba 3, repeticions=5x7, peso=1111.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImwzx0gm7ag2f4KCyQF",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 92,
+  "fields": {
+    "action_time": "2025-05-10T11:41:12.728Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "32",
+    "object_repr": "cantidade=111, hora=11:41:07, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImwzx0gm7ag2f4KCyQFAkwHDBpoAssFyJtI=, imaxe_pe",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 93,
+  "fields": {
+    "action_time": "2025-05-10T11:49:44.048Z",
+    "user": 1,
+    "content_type": 14,
+    "object_id": "18",
+    "object_repr": "nome=comida non borrar, peso=111.0, graxas=111.0, carbohidratos=11.0, proteinas=111.0, calorias=11.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo9",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 94,
+  "fields": {
+    "action_time": "2025-05-10T11:49:59.784Z",
+    "user": 1,
+    "content_type": 14,
+    "object_id": "19",
+    "object_repr": "nome=comida borrar, peso=111.0, graxas=111.0, carbohidratos=111.0, proteinas=111.0, calorias=111.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 95,
+  "fields": {
+    "action_time": "2025-05-10T11:53:19.637Z",
+    "user": 1,
+    "content_type": 14,
+    "object_id": "18",
+    "object_repr": "nome=comida non borrar, peso=111.0, graxas=111.0, carbohidratos=11.0, proteinas=111.0, calorias=11.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo9",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 96,
+  "fields": {
+    "action_time": "2025-05-10T15:43:48.147Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "66",
+    "object_repr": "nome=Exercicio de onte, repeticions=5x7, peso=111.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImwzx0gm7ag2f4KCyQFAkwH",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 97,
+  "fields": {
+    "action_time": "2025-05-10T15:44:24.503Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "66",
+    "object_repr": "nome=Exercicio de onte, repeticions=5x7, peso=111.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImwzx0gm7ag2f4KCyQFAkwH",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 98,
+  "fields": {
+    "action_time": "2025-05-12T06:55:04.978Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "29",
+    "object_repr": "titulo=Cars, hora=None, data=2025-05-11, completado=False, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImwzx0gm7ag2f4KCy",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 99,
+  "fields": {
+    "action_time": "2025-05-12T12:00:25.076Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "84",
+    "object_repr": "nome=Exercicio de proba, repeticions=5x10, peso=111.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImwzx0gm7ag2f4KCyQFAk",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 100,
+  "fields": {
+    "action_time": "2025-05-12T12:34:41.958Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "84",
+    "object_repr": "nome=Exercicio de proba, repeticions=5x10, peso=111.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImwzx0gm7ag2f4KCyQFAk",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 101,
+  "fields": {
+    "action_time": "2025-05-12T12:35:10.593Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "85",
+    "object_repr": "nome=Exercicio de proba, repeticions=5x10, peso=11.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImwzx0gm7ag2f4KCyQFAkw",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 102,
+  "fields": {
+    "action_time": "2025-05-13T07:38:31.177Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "85",
+    "object_repr": "nome=Exercicio de proba, repeticions=5x10, peso=11.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImwzx0gm7ag2f4KCyQFAkw",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 103,
+  "fields": {
+    "action_time": "2025-05-13T07:39:04.074Z",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "88",
+    "object_repr": "nome=Exercicio de recheo, repeticions=5x10, peso=111.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$PRQo908qwKQGJ5eoW6WXf4$AHdxJ9VAImwzx0gm7ag2f4KCyQFA",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 104,
+  "fields": {
+    "action_time": "2025-05-15T06:59:05.179Z",
+    "user": 1,
+    "content_type": 14,
+    "object_id": "103",
+    "object_repr": "nome=comida dia 9, peso=11.0, graxas=111.0, carbohidratos=1.0, proteinas=21.0, calorias=111.0, usuario=nome=lupi, nome_usuario=lupi, email=lupi@gmail.com, contrasinal=pbkdf2_sha256$600000$BU5yxZwBZa9j",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 105,
+  "fields": {
+    "action_time": "2025-05-16T09:14:27.269Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "1",
+    "object_repr": "nome=lupi, nome_usuario=lupi, email=a22nicolasmr@iessanclemente.net, contrasinal=pbkdf2_sha256$600000$BU5yxZwBZa9jsFoTflwWwk$B87pxqHj9YZtH44a5yVJ/WdqE+UjXBncCN0I0sX6S3U=, imaxe_perfil=avatares/lunaa_g",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Email\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 106,
+  "fields": {
+    "action_time": "2025-05-16T11:29:20.087Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "1",
+    "object_repr": "nome=lupi, nome_usuario=lupi, email=a22nicolasmr@iessanclemente.net, contrasinal=pbkdf2_sha256$600000$72Jo6kmpx19IQWH6kurRVs$1fSmgPf6Xx3rS7mtFlxBbdPOuRlRpWPxBDjXmDnc7lM=, imaxe_perfil=media/avatares/l",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imaxe perfil\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 107,
+  "fields": {
+    "action_time": "2025-05-16T12:13:21.439Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "13",
+    "object_repr": "nome=Lenda da consistencia, descripcion=Mantén unha racha perfecta por 365 días., completado=False, icona=media/consistencia_thl6oh",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Icona\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 108,
+  "fields": {
+    "action_time": "2025-05-19T08:28:20.325Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "1",
+    "object_repr": "nome=lupi, nome_usuario=lupi, email=a22nicolasmr@iessanclemente.net, contrasinal=pbkdf2_sha256$600000$72Jo6kmpx19IQWH6kurRVs$1fSmgPf6Xx3rS7mtFlxBbdPOuRlRpWPxBDjXmDnc7lM=, imaxe_perfil=media/avatares/l",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Imaxe perfil\"]}}]"
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$600000$qwmwkfhq907kvw2HMz9sbQ$as+6Jwi30tqPp/7f7PVESGpU15XsLtJZ54htHLQAP90=",
+    "last_login": "2025-05-10T07:26:56.349Z",
+    "is_superuser": true,
+    "username": "root",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-04-21T11:46:21.154Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "0wdpeovb60vo8ztgjszsunecquumeu0v",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2pABCjIu3fcMzcCAVA0kpV0Z765NutDtf-_9l5hoW8u09bRMM4uLUOL0uwWKj1R3wHeqtyZjq-syB7kr8qBdjo3T83q4fweFevnW2RKyTQoha1QcLaMhtsE4A54cmujO7EMEh2AMYNJeRzVkxxpAD0q8P93iNww:1u7BUG:wUjWYju15CvQ9tlSjCAKr4pMuPGl_D3cmpSjaDliAyY",
+    "expire_date": "2025-05-06T11:08:24.363Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "40e3lguxix74moe6ijvbjv9xgdnzle2b",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2pABCjIu3fcMzcCAVA0kpV0Z765NutDtf-_9l5hoW8u09bRMM4uLUOL0uwWKj1R3wHeqtyZjq-syB7kr8qBdjo3T83q4fweFevnW2RKyTQoha1QcLaMhtsE4A54cmujO7EMEh2AMYNJeRzVkxxpAD0q8P93iNww:1uCHEI:4S1mK_MmNThuDKpsmDaqKlZEmsEqO88Qu6_we7NE1PI",
+    "expire_date": "2025-05-20T12:16:58.764Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "bemlrtsjgv6xxudc2u2db6hewkor0bmp",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2pABCjIu3fcMzcCAVA0kpV0Z765NutDtf-_9l5hoW8u09bRMM4uLUOL0uwWKj1R3wHeqtyZjq-syB7kr8qBdjo3T83q4fweFevnW2RKyTQoha1QcLaMhtsE4A54cmujO7EMEh2AMYNJeRzVkxxpAD0q8P93iNww:1uFtEq:UoozF3yyR-YARrRmRF4WgZWYLdQjNuT3NK_4GvCJnns",
+    "expire_date": "2025-05-30T11:28:28.276Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "g5gt597rhb9ax5w32ijrpz49vr1p4ik4",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2pABCjIu3fcMzcCAVA0kpV0Z765NutDtf-_9l5hoW8u09bRMM4uLUOL0uwWKj1R3wHeqtyZjq-syB7kr8qBdjo3T83q4fweFevnW2RKyTQoha1QcLaMhtsE4A54cmujO7EMEh2AMYNJeRzVkxxpAD0q8P93iNww:1u7BCE:xY_wl1-SGHYN0R_HdxM4LdiBm4791gIZuYvA8Uj0YiA",
+    "expire_date": "2025-05-06T10:49:46.566Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "jz1es37nyneufyfhhzckxo0ek37x87in",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2pABCjIu3fcMzcCAVA0kpV0Z765NutDtf-_9l5hoW8u09bRMM4uLUOL0uwWKj1R3wHeqtyZjq-syB7kr8qBdjo3T83q4fweFevnW2RKyTQoha1QcLaMhtsE4A54cmujO7EMEh2AMYNJeRzVkxxpAD0q8P93iNww:1uF8O6:EtUZfYRn6TsthHlMtrNJcxCTR-ZMqEvT3YJqhP9DK6g",
+    "expire_date": "2025-05-28T09:26:54.662Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "le7a5oz7wbgoi0voutwhpaktwnsss9vk",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2pABCjIu3fcMzcCAVA0kpV0Z765NutDtf-_9l5hoW8u09bRMM4uLUOL0uwWKj1R3wHeqtyZjq-syB7kr8qBdjo3T83q4fweFevnW2RKyTQoha1QcLaMhtsE4A54cmujO7EMEh2AMYNJeRzVkxxpAD0q8P93iNww:1u6pcc:__aTLyONpm2sFpebdGbKXnV4AICQAwH8xkj9LLngo3o",
+    "expire_date": "2025-05-05T11:47:34.915Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "r4mfqjtx91obiai77tgi1hq7yx081r8k",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2pABCjIu3fcMzcCAVA0kpV0Z765NutDtf-_9l5hoW8u09bRMM4uLUOL0uwWKj1R3wHeqtyZjq-syB7kr8qBdjo3T83q4fweFevnW2RKyTQoha1QcLaMhtsE4A54cmujO7EMEh2AMYNJeRzVkxxpAD0q8P93iNww:1uDebo:4XVDYfIx8HZ7ZNJ6biDchIrmnt91GkuUCr_me3SvZdY",
+    "expire_date": "2025-05-24T07:26:56.357Z"
+  }
+},
+{
+  "model": "UpLife_api.usuarios",
+  "pk": 1,
+  "fields": {
+    "nome": "lupi",
+    "nome_usuario": "lupi",
+    "email": "a22nicolasmr@iessanclemente.net",
+    "contrasinal": "pbkdf2_sha256$600000$72Jo6kmpx19IQWH6kurRVs$1fSmgPf6Xx3rS7mtFlxBbdPOuRlRpWPxBDjXmDnc7lM=",
+    "imaxe_perfil": "image/upload/avatares/lunaa_gzPwiYp.jpg",
+    "xenero": "Muller",
+    "altura": 154,
+    "peso": 56,
+    "obxectivo": "Manter o peso",
+    "actividade": "Normal",
+    "idade": 20,
+    "calorias_diarias": 1955,
+    "auga_diaria": 1960,
+    "modo_aplicacion": "C"
+  }
+},
+{
+  "model": "UpLife_api.usuarios",
+  "pk": 34,
+  "fields": {
+    "nome": "nico",
+    "nome_usuario": "nico",
+    "email": "nico@gmail.com",
+    "contrasinal": "pbkdf2_sha256$600000$8FhjHTCOhRcOFY7edTwbaD$oaHfGRl0actgTdQ3AnIsYtXQmVpQaLgWBk9IgWhdc1Y=",
+    "imaxe_perfil": null,
+    "xenero": null,
+    "altura": null,
+    "peso": null,
+    "obxectivo": null,
+    "actividade": null,
+    "idade": null,
+    "calorias_diarias": null,
+    "auga_diaria": null,
+    "modo_aplicacion": "C"
+  }
+},
+{
+  "model": "UpLife_api.usuarios",
+  "pk": 35,
+  "fields": {
+    "nome": "proba",
+    "nome_usuario": "proba",
+    "email": "proba@gmail.com",
+    "contrasinal": "pbkdf2_sha256$600000$wgBsUsIdkV2uEZPi4t4HE9$GZmmfV6188cgGIKrM/tEjQ82rDM66IHACS09Fb82PU4=",
+    "imaxe_perfil": null,
+    "xenero": null,
+    "altura": null,
+    "peso": null,
+    "obxectivo": null,
+    "actividade": null,
+    "idade": null,
+    "calorias_diarias": null,
+    "auga_diaria": null,
+    "modo_aplicacion": "C"
+  }
+},
+{
+  "model": "UpLife_api.usuarios",
+  "pk": 36,
+  "fields": {
+    "nome": "lucia",
+    "nome_usuario": "lupi2",
+    "email": "lucia@compostela.me",
+    "contrasinal": "pbkdf2_sha256$600000$IDMRe8uqOlkZ1d3iaV377I$mlt/q2YrC3AacI35mX3XmWbae5gNeh8gFo7yj3k8E1Q=",
+    "imaxe_perfil": null,
+    "xenero": null,
+    "altura": null,
+    "peso": null,
+    "obxectivo": null,
+    "actividade": null,
+    "idade": null,
+    "calorias_diarias": null,
+    "auga_diaria": null,
+    "modo_aplicacion": "C"
+  }
+},
+{
+  "model": "UpLife_api.auga",
+  "pk": 4,
+  "fields": {
+    "cantidade": 100,
+    "hora": "10:17:00",
+    "usuario": 1,
+    "data": "2025-05-06"
+  }
+},
+{
+  "model": "UpLife_api.auga",
+  "pk": 5,
+  "fields": {
+    "cantidade": 200,
+    "hora": "10:18:00",
+    "usuario": 1,
+    "data": "2025-05-06"
+  }
+},
+{
+  "model": "UpLife_api.auga",
+  "pk": 16,
+  "fields": {
+    "cantidade": 200,
+    "hora": "10:18:00",
+    "usuario": 1,
+    "data": "2025-05-07"
+  }
+},
+{
+  "model": "UpLife_api.auga",
+  "pk": 17,
+  "fields": {
+    "cantidade": 200,
+    "hora": "10:18:00",
+    "usuario": 1,
+    "data": "2025-05-07"
+  }
+},
+{
+  "model": "UpLife_api.auga",
+  "pk": 18,
+  "fields": {
+    "cantidade": 200,
+    "hora": "10:18:00",
+    "usuario": 1,
+    "data": "2025-05-08"
+  }
+},
+{
+  "model": "UpLife_api.auga",
+  "pk": 28,
+  "fields": {
+    "cantidade": 100,
+    "hora": "10:17:00",
+    "usuario": 1,
+    "data": "2025-05-08"
+  }
+},
+{
+  "model": "UpLife_api.auga",
+  "pk": 31,
+  "fields": {
+    "cantidade": 200,
+    "hora": "10:18:00",
+    "usuario": 1,
+    "data": "2025-05-10"
+  }
+},
+{
+  "model": "UpLife_api.auga",
+  "pk": 33,
+  "fields": {
+    "cantidade": 1000,
+    "hora": "19:49:00",
+    "usuario": 1,
+    "data": "2025-05-10"
+  }
+},
+{
+  "model": "UpLife_api.auga",
+  "pk": 34,
+  "fields": {
+    "cantidade": 100,
+    "hora": "11:24:00",
+    "usuario": 1,
+    "data": "2025-05-12"
+  }
+},
+{
+  "model": "UpLife_api.auga",
+  "pk": 35,
+  "fields": {
+    "cantidade": 100,
+    "hora": "11:24:00",
+    "usuario": 1,
+    "data": "2025-05-13"
+  }
+},
+{
+  "model": "UpLife_api.auga",
+  "pk": 36,
+  "fields": {
+    "cantidade": 100,
+    "hora": "11:24:00",
+    "usuario": 1,
+    "data": "2025-05-14"
+  }
+},
+{
+  "model": "UpLife_api.auga",
+  "pk": 37,
+  "fields": {
+    "cantidade": 102,
+    "hora": "11:27:00",
+    "usuario": 1,
+    "data": "2025-05-15"
+  }
+},
+{
+  "model": "UpLife_api.auga",
+  "pk": 38,
+  "fields": {
+    "cantidade": 600,
+    "hora": "11:52:00",
+    "usuario": 1,
+    "data": "2025-05-15"
+  }
+},
+{
+  "model": "UpLife_api.auga",
+  "pk": 41,
+  "fields": {
+    "cantidade": 123,
+    "hora": "14:55:00",
+    "usuario": 1,
+    "data": "2025-05-15"
+  }
+},
+{
+  "model": "UpLife_api.auga",
+  "pk": 42,
+  "fields": {
+    "cantidade": 43,
+    "hora": "21:22:00",
+    "usuario": 36,
+    "data": "2025-05-17"
+  }
+},
+{
+  "model": "UpLife_api.auga",
+  "pk": 45,
+  "fields": {
+    "cantidade": 23,
+    "hora": "18:23:00",
+    "usuario": 36,
+    "data": "2025-05-17"
+  }
+},
+{
+  "model": "UpLife_api.auga",
+  "pk": 46,
+  "fields": {
+    "cantidade": 1000,
+    "hora": "22:07:00",
+    "usuario": 34,
+    "data": "2025-05-18"
+  }
+},
+{
+  "model": "UpLife_api.medallas",
+  "pk": 4,
+  "fields": {
+    "nome": "Primeiros pasos",
+    "descripcion": "Entra a páxina por primeira vez.",
+    "completado": true,
+    "icona": "image/upload/media/primeirosPasos_532MVGb.png",
+    "usuarios": [
+      1,
+      34,
+      35,
+      36
+    ]
+  }
+},
+{
+  "model": "UpLife_api.medallas",
+  "pk": 5,
+  "fields": {
+    "nome": "Racha saudable",
+    "descripcion": "Rexistra comidas 7 días seguidos",
+    "completado": true,
+    "icona": "image/upload/media/rachaSaudable.jpg",
+    "usuarios": [
+      1
+    ]
+  }
+},
+{
+  "model": "UpLife_api.medallas",
+  "pk": 6,
+  "fields": {
+    "nome": "No camiño",
+    "descripcion": "Completa 5 días de exercicios na mesma semana.",
+    "completado": true,
+    "icona": "image/upload/media/noCaminho.jpg",
+    "usuarios": [
+      1
+    ]
+  }
+},
+{
+  "model": "UpLife_api.medallas",
+  "pk": 7,
+  "fields": {
+    "nome": "Máster da hidratación",
+    "descripcion": "Chega ao teu obxectivo de auga 7 días seguidos.",
+    "completado": false,
+    "icona": "image/upload/media/hidratacion.jpg",
+    "usuarios": [
+      1
+    ]
+  }
+},
+{
+  "model": "UpLife_api.medallas",
+  "pk": 8,
+  "fields": {
+    "nome": "Asasino de tarefas",
+    "descripcion": "Completa todas as tarefas programadas 5 días seguidos",
+    "completado": true,
+    "icona": "image/upload/media/tarefas.jpg",
+    "usuarios": [
+      1
+    ]
+  }
+},
+{
+  "model": "UpLife_api.medallas",
+  "pk": 9,
+  "fields": {
+    "nome": "Semana perfecta",
+    "descripcion": "Rexistra exercicios,comidas e auga 7 días seguidos.",
+    "completado": false,
+    "icona": "image/upload/media/semana.jpg",
+    "usuarios": [
+      1
+    ]
+  }
+},
+{
+  "model": "UpLife_api.medallas",
+  "pk": 10,
+  "fields": {
+    "nome": "Rastreador consciente",
+    "descripcion": "Rexistra exercicios,comidas e auga 7 días seguidos antes das 22:00.",
+    "completado": false,
+    "icona": "image/upload/media/rastredador.jpg",
+    "usuarios": [
+      1
+    ]
+  }
+},
+{
+  "model": "UpLife_api.medallas",
+  "pk": 11,
+  "fields": {
+    "nome": "Profesional da plantillas",
+    "descripcion": "Crea 3 plantillas diferentes e usaas polo menos 2 veces cada unha.",
+    "completado": false,
+    "icona": "image/upload/media/plantillas.jpg",
+    "usuarios": [
+      1
+    ]
+  }
+},
+{
+  "model": "UpLife_api.medallas",
+  "pk": 12,
+  "fields": {
+    "nome": "Disciplina indestructible",
+    "descripcion": "Mantén unha racha perfecta por 90 días.",
+    "completado": false,
+    "icona": "image/upload/media/disciplina.jpg",
+    "usuarios": [
+      1
+    ]
+  }
+},
+{
+  "model": "UpLife_api.medallas",
+  "pk": 13,
+  "fields": {
+    "nome": "Lenda da consistencia",
+    "descripcion": "Mantén unha racha perfecta por 365 días.",
+    "completado": false,
+    "icona": "image/upload/media/consistencia.jpg",
+    "usuarios": [
+      1
+    ]
+  }
+},
+{
+  "model": "UpLife_api.tarefas",
+  "pk": 26,
+  "fields": {
+    "hora": null,
+    "titulo": "tarfefa",
+    "completado": true,
+    "data": "2025-05-12",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.tarefas",
+  "pk": 27,
+  "fields": {
+    "hora": null,
+    "titulo": "tarfefa",
+    "completado": true,
+    "data": "2025-05-12",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.tarefas",
+  "pk": 28,
+  "fields": {
+    "hora": null,
+    "titulo": "tarfefa",
+    "completado": true,
+    "data": "2025-05-13",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.tarefas",
+  "pk": 29,
+  "fields": {
+    "hora": null,
+    "titulo": "Cars",
+    "completado": true,
+    "data": "2025-05-11",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.tarefas",
+  "pk": 30,
+  "fields": {
+    "hora": null,
+    "titulo": "Unha tarefa calquera",
+    "completado": true,
+    "data": "2025-05-13",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.tarefas",
+  "pk": 31,
+  "fields": {
+    "hora": null,
+    "titulo": "Unha tarefa calquera 2",
+    "completado": true,
+    "data": "2025-05-13",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.tarefas",
+  "pk": 35,
+  "fields": {
+    "hora": null,
+    "titulo": "Unha tarefa calquera",
+    "completado": false,
+    "data": "2025-05-13",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.tarefas",
+  "pk": 36,
+  "fields": {
+    "hora": null,
+    "titulo": "Unha tarefa calquera",
+    "completado": true,
+    "data": "2025-05-14",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.tarefas",
+  "pk": 39,
+  "fields": {
+    "hora": null,
+    "titulo": "tarefa dia 15",
+    "completado": true,
+    "data": "2025-05-15",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.tarefas",
+  "pk": 43,
+  "fields": {
+    "hora": "10:01:00",
+    "titulo": "a",
+    "completado": true,
+    "data": "2025-05-15",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.tarefas",
+  "pk": 44,
+  "fields": {
+    "hora": "18:29:00",
+    "titulo": "irme",
+    "completado": true,
+    "data": "2025-05-17",
+    "usuario": 36
+  }
+},
+{
+  "model": "UpLife_api.categorias",
+  "pk": 1,
+  "fields": {
+    "nome": "Perna"
+  }
+},
+{
+  "model": "UpLife_api.categorias",
+  "pk": 2,
+  "fields": {
+    "nome": "Brazo"
+  }
+},
+{
+  "model": "UpLife_api.categorias",
+  "pk": 3,
+  "fields": {
+    "nome": "Core"
+  }
+},
+{
+  "model": "UpLife_api.categorias",
+  "pk": 4,
+  "fields": {
+    "nome": "Espalda"
+  }
+},
+{
+  "model": "UpLife_api.categorias",
+  "pk": 5,
+  "fields": {
+    "nome": "Peito"
+  }
+},
+{
+  "model": "UpLife_api.categorias",
+  "pk": 6,
+  "fields": {
+    "nome": "Todo corpo"
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 4,
+  "fields": {
+    "nome": "Sentadilla",
+    "repeticions": "5x10",
+    "peso": 111.0,
+    "data": "2025-05-06",
+    "usuario": 1,
+    "categoria": 1
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 44,
+  "fields": {
+    "nome": "Xemelgos",
+    "repeticions": "5x10",
+    "peso": 1.0,
+    "data": null,
+    "usuario": 1,
+    "categoria": 1
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 45,
+  "fields": {
+    "nome": "Cuádriceps",
+    "repeticions": "4x20",
+    "peso": 12.0,
+    "data": null,
+    "usuario": 1,
+    "categoria": 1
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 46,
+  "fields": {
+    "nome": "Cuádriceps",
+    "repeticions": "5x10",
+    "peso": 111.0,
+    "data": null,
+    "usuario": 1,
+    "categoria": 1
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 47,
+  "fields": {
+    "nome": "Cuádriceps",
+    "repeticions": "5x10",
+    "peso": 11.0,
+    "data": null,
+    "usuario": 1,
+    "categoria": 1
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 48,
+  "fields": {
+    "nome": "Cuádriceps",
+    "repeticions": "5x10",
+    "peso": 11.0,
+    "data": null,
+    "usuario": 1,
+    "categoria": 1
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 49,
+  "fields": {
+    "nome": "Femoral",
+    "repeticions": "5x10",
+    "peso": 30.0,
+    "data": null,
+    "usuario": 1,
+    "categoria": 1
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 50,
+  "fields": {
+    "nome": "Boxeo",
+    "repeticions": "1",
+    "peso": 1.0,
+    "data": "2025-05-07",
+    "usuario": 1,
+    "categoria": 6
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 51,
+  "fields": {
+    "nome": "Boxeo",
+    "repeticions": "1",
+    "peso": 1.0,
+    "data": "2025-05-07",
+    "usuario": 1,
+    "categoria": 6
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 54,
+  "fields": {
+    "nome": "Paseo longo",
+    "repeticions": "1",
+    "peso": 1.0,
+    "data": "2025-05-08",
+    "usuario": 1,
+    "categoria": 6
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 55,
+  "fields": {
+    "nome": "Muscle up",
+    "repeticions": "1x3",
+    "peso": 1.0,
+    "data": "2025-05-08",
+    "usuario": 1,
+    "categoria": 4
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 56,
+  "fields": {
+    "nome": "Sentadilla",
+    "repeticions": "5x10",
+    "peso": 111.0,
+    "data": "2025-05-08",
+    "usuario": 1,
+    "categoria": 1
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 57,
+  "fields": {
+    "nome": "Dominadas",
+    "repeticions": "5x7",
+    "peso": 1.0,
+    "data": "2025-05-10",
+    "usuario": 1,
+    "categoria": 4
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 58,
+  "fields": {
+    "nome": "Curl de bíceps",
+    "repeticions": "5x8",
+    "peso": 15.0,
+    "data": "2025-05-10",
+    "usuario": 1,
+    "categoria": 4
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 62,
+  "fields": {
+    "nome": "Exercicio de proba",
+    "repeticions": "5x7",
+    "peso": 111.0,
+    "data": "2025-05-05",
+    "usuario": 1,
+    "categoria": 1
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 63,
+  "fields": {
+    "nome": "Exercicio de proba 2",
+    "repeticions": "5x7",
+    "peso": 111.0,
+    "data": "2025-05-04",
+    "usuario": 1,
+    "categoria": 3
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 64,
+  "fields": {
+    "nome": "Exercicio de proba 2",
+    "repeticions": "5x7",
+    "peso": 111.0,
+    "data": "2025-05-04",
+    "usuario": 1,
+    "categoria": 3
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 68,
+  "fields": {
+    "nome": "Curl de bíceps",
+    "repeticions": "5x8",
+    "peso": 15.0,
+    "data": "2025-05-10",
+    "usuario": 1,
+    "categoria": 4
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 69,
+  "fields": {
+    "nome": "Dominadas",
+    "repeticions": "5x7",
+    "peso": 1.0,
+    "data": "2025-05-11",
+    "usuario": 1,
+    "categoria": 4
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 70,
+  "fields": {
+    "nome": "Dominadas",
+    "repeticions": "5x102",
+    "peso": 4.0,
+    "data": "2025-05-12",
+    "usuario": 1,
+    "categoria": 4
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 71,
+  "fields": {
+    "nome": "Extensión de cuádriceps",
+    "repeticions": "5x10",
+    "peso": 80.0,
+    "data": null,
+    "usuario": 1,
+    "categoria": 1
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 72,
+  "fields": {
+    "nome": "Xemelgos",
+    "repeticions": "5x20",
+    "peso": 83.0,
+    "data": null,
+    "usuario": 1,
+    "categoria": 1
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 73,
+  "fields": {
+    "nome": "Prensa",
+    "repeticions": "5x10",
+    "peso": 200.0,
+    "data": null,
+    "usuario": 1,
+    "categoria": 1
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 74,
+  "fields": {
+    "nome": "Curl de femoral",
+    "repeticions": "5x10",
+    "peso": 45.0,
+    "data": null,
+    "usuario": 1,
+    "categoria": 1
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 75,
+  "fields": {
+    "nome": "Dominadas",
+    "repeticions": "5x7",
+    "peso": 84.0,
+    "data": null,
+    "usuario": 1,
+    "categoria": 4
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 76,
+  "fields": {
+    "nome": "Curl de bíceps",
+    "repeticions": "5x11",
+    "peso": 17.5,
+    "data": null,
+    "usuario": 1,
+    "categoria": 2
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 77,
+  "fields": {
+    "nome": "Cable pulldown",
+    "repeticions": "5x10",
+    "peso": 35.0,
+    "data": null,
+    "usuario": 1,
+    "categoria": 4
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 78,
+  "fields": {
+    "nome": "Curl martillo",
+    "repeticions": "5x10",
+    "peso": 17.5,
+    "data": null,
+    "usuario": 1,
+    "categoria": 2
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 79,
+  "fields": {
+    "nome": "Remo sentado",
+    "repeticions": "3x7",
+    "peso": 30.0,
+    "data": null,
+    "usuario": 1,
+    "categoria": 4
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 80,
+  "fields": {
+    "nome": "Levantamentos de escápula",
+    "repeticions": "5x12",
+    "peso": 40.0,
+    "data": null,
+    "usuario": 1,
+    "categoria": 4
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 88,
+  "fields": {
+    "nome": "Exercicio de recheo",
+    "repeticions": "5x10",
+    "peso": 111.0,
+    "data": "2025-05-09",
+    "usuario": 1,
+    "categoria": 6
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 94,
+  "fields": {
+    "nome": "Dominadas",
+    "repeticions": "5x102",
+    "peso": 4.0,
+    "data": "2025-05-14",
+    "usuario": 1,
+    "categoria": 4
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 96,
+  "fields": {
+    "nome": "Dominada2s",
+    "repeticions": "5x112",
+    "peso": 33.0,
+    "data": "2025-05-15",
+    "usuario": 1,
+    "categoria": 2
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 97,
+  "fields": {
+    "nome": "Dominadas",
+    "repeticions": "5x112",
+    "peso": 33.0,
+    "data": "2025-05-19",
+    "usuario": 1,
+    "categoria": 2
+  }
+},
+{
+  "model": "UpLife_api.exercicios",
+  "pk": 98,
+  "fields": {
+    "nome": "Dominadas",
+    "repeticions": "5x102",
+    "peso": 4.0,
+    "data": "2025-05-19",
+    "usuario": 1,
+    "categoria": 4
+  }
+},
+{
+  "model": "UpLife_api.plantillas",
+  "pk": 15,
+  "fields": {
+    "nome": "Plantilla de perna",
+    "icona": "/imaxes/leg.png",
+    "usuario": 1,
+    "exercicios": [
+      71,
+      72,
+      73,
+      74
+    ]
+  }
+},
+{
+  "model": "UpLife_api.plantillas",
+  "pk": 16,
+  "fields": {
+    "nome": "Plantilla de peito",
+    "icona": "/imaxes/torso.png",
+    "usuario": 1,
+    "exercicios": []
+  }
+},
+{
+  "model": "UpLife_api.plantillas",
+  "pk": 18,
+  "fields": {
+    "nome": "Plantilla de core",
+    "icona": "/imaxes/abdominales.png",
+    "usuario": 1,
+    "exercicios": []
+  }
+},
+{
+  "model": "UpLife_api.plantillas",
+  "pk": 19,
+  "fields": {
+    "nome": "Plantilla de espalda",
+    "icona": "/imaxes/atras.png",
+    "usuario": 1,
+    "exercicios": [
+      75,
+      76,
+      77,
+      78,
+      79,
+      80
+    ]
+  }
+},
+{
+  "model": "UpLife_api.plantillas",
+  "pk": 20,
+  "fields": {
+    "nome": "plantilla de proba",
+    "icona": "/imaxes/musculo.png",
+    "usuario": 1,
+    "exercicios": []
+  }
+},
+{
+  "model": "UpLife_api.plantillas",
+  "pk": 21,
+  "fields": {
+    "nome": "jeiow fa",
+    "icona": "/imaxes/torso.png",
+    "usuario": 36,
+    "exercicios": []
+  }
+},
+{
+  "model": "UpLife_api.usoplantilla",
+  "pk": 13,
+  "fields": {
+    "plantilla": 16,
+    "usuario": 1,
+    "data": "2025-05-14"
+  }
+},
+{
+  "model": "UpLife_api.usoplantilla",
+  "pk": 20,
+  "fields": {
+    "plantilla": 16,
+    "usuario": 1,
+    "data": "2025-05-15"
+  }
+},
+{
+  "model": "UpLife_api.usoplantilla",
+  "pk": 21,
+  "fields": {
+    "plantilla": 16,
+    "usuario": 1,
+    "data": "2025-05-19"
+  }
+},
+{
+  "model": "UpLife_api.comidas",
+  "pk": 7,
+  "fields": {
+    "nome": "Patacas",
+    "peso": 150.0,
+    "graxas": 20.0,
+    "carbohidratos": 122.0,
+    "proteinas": 4.0,
+    "calorias": 200.0,
+    "data": "2025-05-08",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.comidas",
+  "pk": 9,
+  "fields": {
+    "nome": "leite",
+    "peso": 600.0,
+    "graxas": 60.0,
+    "carbohidratos": 23.0,
+    "proteinas": 4.0,
+    "calorias": 60.0,
+    "data": "2025-05-08",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.comidas",
+  "pk": 24,
+  "fields": {
+    "nome": "Patacas",
+    "peso": 150.0,
+    "graxas": 20.0,
+    "carbohidratos": 122.0,
+    "proteinas": 4.0,
+    "calorias": 200.0,
+    "data": "2025-05-10",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.comidas",
+  "pk": 26,
+  "fields": {
+    "nome": "Patacas",
+    "peso": 150.0,
+    "graxas": 20.0,
+    "carbohidratos": 122.0,
+    "proteinas": 4.0,
+    "calorias": 200.0,
+    "data": "2025-05-10",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.comidas",
+  "pk": 58,
+  "fields": {
+    "nome": "Patacas",
+    "peso": 150.0,
+    "graxas": 20.0,
+    "carbohidratos": 122.0,
+    "proteinas": 4.0,
+    "calorias": 200.0,
+    "data": "2025-05-10",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.comidas",
+  "pk": 59,
+  "fields": {
+    "nome": "Patacas",
+    "peso": 150.0,
+    "graxas": 20.0,
+    "carbohidratos": 122.0,
+    "proteinas": 4.0,
+    "calorias": 200.0,
+    "data": "2025-05-11",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.comidas",
+  "pk": 60,
+  "fields": {
+    "nome": "Patacas",
+    "peso": 150.0,
+    "graxas": 20.0,
+    "carbohidratos": 122.0,
+    "proteinas": 4.0,
+    "calorias": 200.0,
+    "data": "2025-05-11",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.comidas",
+  "pk": 63,
+  "fields": {
+    "nome": "Patacas",
+    "peso": 150.0,
+    "graxas": 20.0,
+    "carbohidratos": 122.0,
+    "proteinas": 4.0,
+    "calorias": 200.0,
+    "data": "2025-05-11",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.comidas",
+  "pk": 64,
+  "fields": {
+    "nome": "Patacas",
+    "peso": 150.0,
+    "graxas": 20.0,
+    "carbohidratos": 122.0,
+    "proteinas": 4.0,
+    "calorias": 200.0,
+    "data": "2025-05-11",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.comidas",
+  "pk": 65,
+  "fields": {
+    "nome": "Patacas",
+    "peso": 150.0,
+    "graxas": 20.0,
+    "carbohidratos": 122.0,
+    "proteinas": 4.0,
+    "calorias": 200.0,
+    "data": "2025-05-12",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.comidas",
+  "pk": 66,
+  "fields": {
+    "nome": "Ovos",
+    "peso": 135.0,
+    "graxas": 11.0,
+    "carbohidratos": 11.0,
+    "proteinas": 16.0,
+    "calorias": 100.0,
+    "data": "2025-05-13",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.comidas",
+  "pk": 67,
+  "fields": {
+    "nome": "Ovos",
+    "peso": 135.0,
+    "graxas": 11.0,
+    "carbohidratos": 11.0,
+    "proteinas": 16.0,
+    "calorias": 100.0,
+    "data": "2025-05-14",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.comidas",
+  "pk": 100,
+  "fields": {
+    "nome": "Leite",
+    "peso": 602.0,
+    "graxas": 1.5,
+    "carbohidratos": 4.7,
+    "proteinas": 3.2,
+    "calorias": 45.0,
+    "data": "2025-05-15",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.comidas",
+  "pk": 101,
+  "fields": {
+    "nome": "Ovos",
+    "peso": 130.0,
+    "graxas": 9.94,
+    "carbohidratos": 0.77,
+    "proteinas": 12.58,
+    "calorias": 147.0,
+    "data": "2025-05-15",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.comidas",
+  "pk": 102,
+  "fields": {
+    "nome": "Pan integral",
+    "peso": 60.0,
+    "graxas": 3.4,
+    "carbohidratos": 48.7,
+    "proteinas": 9.3,
+    "calorias": 282.0,
+    "data": "2025-05-15",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.comidas",
+  "pk": 103,
+  "fields": {
+    "nome": "comida dia 9",
+    "peso": 11.0,
+    "graxas": 111.0,
+    "carbohidratos": 1.0,
+    "proteinas": 21.0,
+    "calorias": 111.0,
+    "data": "2025-05-09",
+    "usuario": 1
+  }
+},
+{
+  "model": "UpLife_api.comidas",
+  "pk": 104,
+  "fields": {
+    "nome": "Leite",
+    "peso": 600.0,
+    "graxas": 11.0,
+    "carbohidratos": 11.0,
+    "proteinas": 111.0,
+    "calorias": 11.0,
+    "data": "2025-05-18",
+    "usuario": 34
+  }
+},
+{
+  "model": "UpLife_api.grupos",
+  "pk": 2,
+  "fields": {
+    "nome": "Desayuno",
+    "icona": "/imaxes/morning.png",
+    "usuario": 1,
+    "comidas": [
+      26,
+      58,
+      59,
+      65,
+      66,
+      67,
+      100,
+      101,
+      102
+    ]
+  }
+},
+{
+  "model": "UpLife_api.grupos",
+  "pk": 4,
+  "fields": {
+    "nome": "Comida",
+    "icona": "/imaxes/sun.png",
+    "usuario": 1,
+    "comidas": []
+  }
+},
+{
+  "model": "UpLife_api.grupos",
+  "pk": 5,
+  "fields": {
+    "nome": "Cea",
+    "icona": "/imaxes/sunset.png",
+    "usuario": 1,
+    "comidas": []
+  }
+},
+{
+  "model": "UpLife_api.grupos",
+  "pk": 6,
+  "fields": {
+    "nome": "Outros",
+    "icona": "/imaxes/lunch.png",
+    "usuario": 1,
+    "comidas": []
+  }
+},
+{
+  "model": "UpLife_api.grupos",
+  "pk": 7,
+  "fields": {
+    "nome": "Desayuno",
+    "icona": "/imaxes/morning.png",
+    "usuario": 34,
+    "comidas": [
+      104
+    ]
+  }
+}
+]
