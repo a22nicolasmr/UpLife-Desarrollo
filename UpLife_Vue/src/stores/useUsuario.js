@@ -28,12 +28,9 @@ export const useUsuarioStore = defineStore("usuario", {
 
         this.id = usuario.id_usuario;
         this.nome = usuario.nome;
+
         const ruta = usuario.imaxe_perfil;
-        if (ruta) {
-          this.imagen = ruta;
-        } else {
-          this.imagen = "/imaxes/usuario.png";
-        }
+        this.imagen = ruta || "/imaxes/usuario.png";
 
         //gardar solo o necesario en localStorage
         localStorage.setItem(
