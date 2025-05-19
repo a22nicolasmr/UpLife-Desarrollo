@@ -17,7 +17,7 @@ services:
         "off",
       ]
     volumes:
-      - .:/code
+      - .:/app
       - static_volume:/app/staticfiles
       - ./media:/app/media
     ports:
