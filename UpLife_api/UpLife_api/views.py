@@ -9,6 +9,7 @@ from django.core.mail import send_mail
 import logging
 from django.http import JsonResponse
 logger = logging.getLogger(__name__)
+from django.views.decorators.csrf import csrf_exempt
 
 # validacion de campos de inicio de sesión
 @api_view(['POST'])
@@ -119,6 +120,7 @@ from rest_framework.response import Response
 #         print("ERROR AL ENVIAR EMAIL:", e)  # 👈 te mostrará el motivo real
 #         return Response({"error": str(e)}, status=500)
 
+@csrf_exempt
 def enviar_codigo_confirmacion(request):
     if request.method == 'POST':
         try:
