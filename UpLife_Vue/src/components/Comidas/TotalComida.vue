@@ -242,7 +242,9 @@ export default {
     flex-direction: column;
     align-items: center;
   }
-
+  span {
+    width: 40%;
+  }
   .cards {
     display: grid;
     grid-template-columns: 1fr 1fr;

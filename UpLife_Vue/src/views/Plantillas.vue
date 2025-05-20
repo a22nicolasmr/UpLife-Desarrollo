@@ -70,16 +70,32 @@ export default {
       }
     },
 
-    // eliminar unha plantilla polo seu ID
+    // eliminar unha plantilla polo seu ID e os seus exercicios
     async borrarPlantilla(id) {
       try {
-        await fetch(`https://uplife-final.onrender.com/api/plantillas/${id}/`, {
-          method: "DELETE",
-        });
+        const plantilla = this.plantillas.find((p) => p.id_plantilla === id);
+        if (!plantilla) throw new Error("Plantilla no encontrada");
+
+        const exercicios = plantilla.exercicios || [];
+        for (const ex of exercicios) {
+          const res = await fetch(
+            `https://uplife-final.onrender.com/api/exercicios/${ex.id_exercicio}/`,
+            { method: "DELETE" }
+          );
+          if (!res.ok)
+            throw new Error(`Erro ao eliminar exercicio ${ex.id_exercicio}`);
+        }
+
+        const response = await fetch(
+          `https://uplife-final.onrender.com/api/plantillas/${id}/`,
+          { method: "DELETE" }
+        );
+        if (!response.ok) throw new Error("Erro ao eliminar plantilla");
+
         this.plantillas = this.plantillas.filter((p) => p.id_plantilla !== id);
         this.componenteActivo = "nova";
       } catch (error) {
-        console.error("Erro eliminando plantilla:", error);
+        console.error("Erro eliminando plantilla e exercicios:", error);
       }
     },
 

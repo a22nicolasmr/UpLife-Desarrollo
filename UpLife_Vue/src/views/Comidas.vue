@@ -98,20 +98,34 @@ export default {
       }
     },
 
-    //borrar grupo por id
+    //borrar grupo por id e todas as comidas asociadas
     async borrarGrupo(id) {
       try {
+        const grupo = this.grupos.find((g) => g.id_grupo === id);
+        if (!grupo) throw new Error("Grupo no encontrado");
+
+        const comidas = grupo.comidas || [];
+        for (const comida of comidas) {
+          const res = await fetch(
+            `https://uplife-final.onrender.com/api/comidas/${comida.id_comida}/`,
+            { method: "DELETE" }
+          );
+          if (!res.ok)
+            throw new Error(`Error al eliminar comida ${comida.id_comida}`);
+        }
+
         const response = await fetch(
           `https://uplife-final.onrender.com/api/grupos/${id}/`,
           { method: "DELETE" }
         );
         if (!response.ok) throw new Error("Erro ao eliminar grupo");
+
         this.grupos = this.grupos.filter((g) => g.id_grupo !== id);
         this.componenteActivo = "historial";
         this.$refs.hijoRef.cargarComidas();
         this.$refs.hijoRef.cargarGrupos();
       } catch (error) {
-        console.error("Erro eliminando grupo:", error);
+        console.error("Erro eliminando grupo e comidas:", error);
       }
     },
 
