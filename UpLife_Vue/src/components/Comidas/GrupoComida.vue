@@ -34,7 +34,7 @@ export default {
       this.erro = "";
 
       if (!this.nome || !this.icona) {
-        this.erro = "Por favor, cobre todos os campos.";
+        this.erro = "Por favor, enche todos os campos.";
         return;
       }
 

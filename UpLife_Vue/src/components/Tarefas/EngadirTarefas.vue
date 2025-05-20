@@ -54,7 +54,7 @@ export default {
       this.erro = "";
 
       if (!this.tarefa) {
-        this.erro = "Por favor, cobre todos os campos.";
+        this.erro = "Por favor, enche todos os campos.";
         return;
       }
 

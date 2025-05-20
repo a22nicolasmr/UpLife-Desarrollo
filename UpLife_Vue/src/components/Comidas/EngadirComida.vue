@@ -84,7 +84,7 @@ export default {
         this.proteinas === null ||
         this.calorias === null
       ) {
-        this.erro = "Por favor, cobre todos os campos.";
+        this.erro = "Por favor, enche todos os campos.";
       }
     },
 

@@ -25,7 +25,7 @@ export default {
       this.erro = "";
 
       if (!this.cantidade || !this.hora) {
-        this.erro = "Por favor, cobre todos os campos.";
+        this.erro = "Por favor, enche todos os campos.";
         return;
       }
 

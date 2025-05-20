@@ -152,7 +152,7 @@ export default {
         this.peso === null ||
         this.peso <= 0
       ) {
-        this.erro = "Por favor, cobre todos os campos.";
+        this.erro = "Por favor, enche todos os campos.";
       }
     },
   },

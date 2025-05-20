@@ -522,7 +522,7 @@ h2 {
   box-sizing: border-box;
   height: auto;
   overflow: visible;
-  border-radius: 0 8px 8px 0;
+  border-radius: 0 0 8px 8px;
 }
 
 button {

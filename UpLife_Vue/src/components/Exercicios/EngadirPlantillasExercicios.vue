@@ -190,8 +190,11 @@ select {
   select {
     font-size: 1rem;
   }
-
-  button {
+  #nova {
+    margin: 0;
+  }
+  button,
+  #nova {
     width: 100%;
     font-size: 1rem;
     padding: 0.75rem;
