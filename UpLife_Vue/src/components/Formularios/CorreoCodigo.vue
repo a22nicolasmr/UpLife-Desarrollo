@@ -63,7 +63,7 @@ export default {
             headers: {
               "Content-Type": "application/json",
             },
-            "X-CSRFToken": getCookie("csrftoken"),
+            "X-CSRFToken": this.getCookie("csrftoken"),
             body: JSON.stringify({
               email: this.identificador,
               codigo: codigo,
