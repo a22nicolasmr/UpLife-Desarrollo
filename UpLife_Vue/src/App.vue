@@ -2,6 +2,7 @@
 import BarraNavegacion from "./components/BarrasNavegacion/BarraNavegacion.vue";
 import BarraSuperior from "./components/BarrasNavegacion/BarraSuperior.vue";
 import VentaAviso from "./components/BarrasNavegacion/VentaAviso.vue";
+import VentaEliminar from "./components/BarrasNavegacion/VentaEliminar.vue";
 import VentaPechar from "./components/BarrasNavegacion/VentaPechar.vue";
 import { useUsuarioStore } from "@/stores/useUsuario";
 
@@ -14,6 +15,7 @@ export default {
       tarefaActual: null,
       intervalId: null,
       valorMedallas: [],
+      ventaEliminar: false,
     };
   },
   components: {
@@ -21,6 +23,7 @@ export default {
     BarraSuperior,
     VentaPechar,
     VentaAviso,
+    VentaEliminar,
   },
   methods: {
     // coller o valor das rachas para enviar a clase Medallas como prop
@@ -61,6 +64,15 @@ export default {
       this.avisoActivo = false;
       this.tarefaActual = null;
     },
+
+    // abrir modal para eliminar conta
+    async eliminarConta() {
+      this.ventaEliminar = true;
+    },
+
+    pecharModalEliminar() {
+      this.ventaEliminar = false;
+    },
   },
   watch: {
     // se o aviso está activo , o son de ventá aviso execútase en bucle
@@ -99,6 +111,10 @@ export default {
     // devolver nome do usuario actual
     nombreUsuario() {
       return this.$route.query.nome;
+    },
+    id() {
+      const store = useUsuarioStore();
+      return store.id;
     },
   },
   mounted() {
@@ -147,6 +163,7 @@ export default {
         @mandarRachas="mandarRachas"
         :valorMedallas="valorMedallas"
         @emitirDatasConTarefas="emitirDatasConTarefas"
+        @eliminarConta="eliminarConta"
       />
     </div>
 
@@ -156,6 +173,11 @@ export default {
       :tarefaActual="tarefaActual"
       @cerrarAviso="cerrarAviso"
     />
+    <VentaEliminar
+      v-if="ventaEliminar"
+      @pecharModalEliminar="pecharModalEliminar"
+    >
+    </VentaEliminar>
   </div>
 </template>
 

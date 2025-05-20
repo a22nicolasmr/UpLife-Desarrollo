@@ -325,6 +325,7 @@ export default {
   color: white;
   box-sizing: border-box;
   overflow-y: auto;
+  border-radius: 0 0 8px 8px;
 }
 
 .grafico-auga {

@@ -4,7 +4,7 @@ export const useUsuarioStore = defineStore("usuario", {
   state: () => ({
     id: null,
     nome: "",
-    imagen: "/imaxes/usuario.png",
+    imagen: "image/upload/v1747728142/usuario_xotela.png",
     medallas: 0,
     altura: 0,
     peso: 0,
@@ -30,7 +30,7 @@ export const useUsuarioStore = defineStore("usuario", {
         this.nome = usuario.nome;
 
         const ruta = usuario.imaxe_perfil;
-        this.imagen = ruta || "/imaxes/usuario.png";
+        this.imagen = ruta || "image/upload/v1747728142/usuario_xotela.png";
 
         //gardar solo o necesario en localStorage
         localStorage.setItem(
@@ -112,7 +112,8 @@ export const useUsuarioStore = defineStore("usuario", {
           );
           const data = await response.json();
 
-          this.imagen = data.imaxe_perfil || "/imaxes/usuario.png";
+          this.imagen =
+            data.imaxe_perfil || "image/upload/v1747728142/usuario_xotela.png";
           this.nome = data.nome;
           this.altura = data.altura;
           this.peso = data.peso;

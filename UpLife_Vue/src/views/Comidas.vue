@@ -544,6 +544,7 @@ export default {
   color: white;
   overflow-y: auto;
   box-sizing: border-box;
+  border-radius: 0 0 8px 8px;
 }
 
 button {

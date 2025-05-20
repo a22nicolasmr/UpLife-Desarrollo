@@ -39,7 +39,8 @@ export default {
           const data = await response.json();
 
           // actualizar os datos no compoñente
-          this.imagen = data.imaxe_perfil || "/imaxes/usuario.png";
+          this.imagen =
+            data.imaxe_perfil || "image/upload/v1747728142/usuario_xotela.png";
           this.nome = data.nome;
           this.email = data.email;
           this.nomeUsuario = data.nome_usuario;
@@ -97,7 +98,9 @@ export default {
         const resultado = await response.json();
         this.actualizarDatos();
         const store = useUsuarioStore();
-        store.imagen = resultado.imaxe_perfil || "/imaxes/usuario.png";
+        store.imagen =
+          resultado.imaxe_perfil ||
+          "image/upload/v1747728142/usuario_xotela.png";
       } catch (error) {
         console.error("Erro ao subir imaxe:", error);
       }
@@ -163,6 +166,9 @@ export default {
             <strong>Cantidad de auga diaria:</strong> {{ auga
             }}<span v-if="auga !== 'non especificado'"> ml</span>
           </p>
+          <button id="eliminar" @click="$emit('eliminarConta')">
+            Eliminar conta
+          </button>
         </div>
       </div>
       <div class="calculadora">
@@ -173,6 +179,16 @@ export default {
 </template>
 
 <style scoped>
+#eliminar {
+  background-color: red;
+  color: white;
+  border-radius: 3px;
+  border: none;
+  height: 6%;
+  margin-bottom: 3%;
+  margin-top: 3%;
+  cursor: pointer;
+}
 #detallesArriba > p {
   margin: 10%;
   margin-left: 0;
