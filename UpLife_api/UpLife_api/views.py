@@ -7,6 +7,7 @@ from django.contrib.auth.hashers import check_password
 from rest_framework import viewsets
 from django.core.mail import send_mail
 import logging
+import json
 from django.http import JsonResponse
 logger = logging.getLogger(__name__)
 from django.views.decorators.csrf import csrf_exempt
@@ -124,8 +125,9 @@ from rest_framework.response import Response
 def enviar_codigo_confirmacion(request):
     if request.method == 'POST':
         try:
-            email = request.data.get('email')
-            codigo = request.data.get('codigo')
+            data = json.loads(request.body)  # <-- aquí se procesa el JSON manualmente
+            email = data.get('email')
+            codigo = data.get('codigo')
             
             send_mail(
                 subject="Código de confirmación - UpLife",
