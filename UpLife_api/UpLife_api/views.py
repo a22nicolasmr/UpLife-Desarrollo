@@ -100,44 +100,44 @@ class UsoPlantillaViewSet(viewsets.ModelViewSet):
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-# @api_view(["POST"])
-# def enviar_codigo_confirmacion(request):
-#     email = request.data.get("email")
-#     codigo = request.data.get("codigo")
-
-#     if not email or not codigo:
-#         return Response({"error": "Datos incompletos"}, status=400)
-
-#     try:
-#         send_mail(
-#             subject="Código de confirmación - UpLife",
-#             message=f"Tu código de confirmación es: {codigo}",
-#             from_email="uplifedaw@gmail.com",
-#             recipient_list=[email],
-#             fail_silently=False,
-#         )
-#         return Response({"mensaje": "Correo enviado correctamente"})
-#     except Exception as e:
-#         print("ERROR AL ENVIAR EMAIL:", e)  # 👈 te mostrará el motivo real
-#         return Response({"error": str(e)}, status=500)
-
-@csrf_exempt
+@api_view(["POST"])
 def enviar_codigo_confirmacion(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)  # <-- aquí se procesa el JSON manualmente
-            email = data.get('email')
-            codigo = data.get('codigo')
+    email = request.data.get("email")
+    codigo = request.data.get("codigo")
+
+    if not email or not codigo:
+        return Response({"error": "Datos incompletos"}, status=400)
+
+    try:
+        send_mail(
+            subject="Código de confirmación - UpLife",
+            message=f"Tu código de confirmación es: {codigo}",
+            from_email="uplifedaw@gmail.com",
+            recipient_list=[email],
+            fail_silently=False,
+        )
+        return Response({"mensaje": "Correo enviado correctamente"})
+    except Exception as e:
+        print("ERROR AL ENVIAR EMAIL:", e)  # 👈 te mostrará el motivo real
+        return Response({"error": str(e)}, status=500)
+
+# @csrf_exempt
+# def enviar_codigo_confirmacion(request):
+#     if request.method == 'POST':
+#         try:
+#             data = json.loads(request.body)  # <-- aquí se procesa el JSON manualmente
+#             email = data.get('email')
+#             codigo = data.get('codigo')
             
-            send_mail(
-                subject="Código de confirmación - UpLife",
-                message=f"Tu código de confirmación es: {codigo}",
-                from_email="uplifedaw@gmail.com",
-                recipient_list=[email],
-                fail_silently=False,
-            )
-            return JsonResponse({'status': 'success'})
-        except Exception as e:
-            logger.error(f"Error sending email: {str(e)}")
-            return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
-    return JsonResponse({'status': 'error', 'message': 'Invalid method'}, status=405)
+#             send_mail(
+#                 subject="Código de confirmación - UpLife",
+#                 message=f"Tu código de confirmación es: {codigo}",
+#                 from_email="uplifedaw@gmail.com",
+#                 recipient_list=[email],
+#                 fail_silently=False,
+#             )
+#             return JsonResponse({'status': 'success'})
+#         except Exception as e:
+#             logger.error(f"Error sending email: {str(e)}")
+#             return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+#     return JsonResponse({'status': 'error', 'message': 'Invalid method'}, status=405)
