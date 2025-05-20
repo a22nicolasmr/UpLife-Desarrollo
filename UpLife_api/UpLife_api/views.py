@@ -60,27 +60,48 @@ class ExerciciosViewSet(viewsets.ModelViewSet):
     queryset = Exercicios.objects.all()
     serializer_class = ExerciciosSerializer
 
+# class PlantillasViewSet(viewsets.ModelViewSet):
+#     queryset = Plantillas.objects.all()
+#     serializer_class = PlantillasSerializer
+
+#     def get_serializer_class(self):
+#         if self.action == 'retrieve' or self.action == 'list':
+#             return PlantillasDetailSerializer
+#         return PlantillasSerializer
+
 class PlantillasViewSet(viewsets.ModelViewSet):
-    queryset = Plantillas.objects.all()
-    serializer_class = PlantillasSerializer
+    queryset = Plantillas.objects.all()  # 👈 añade esto
+
+    def get_queryset(self):
+        return Plantillas.objects.prefetch_related("exercicios")
 
     def get_serializer_class(self):
-        if self.action == 'retrieve' or self.action == 'list':
+        if self.action in ['retrieve', 'list']:
             return PlantillasDetailSerializer
         return PlantillasSerializer
+
 
 
 class ComidasViewSet(viewsets.ModelViewSet):
     queryset = Comidas.objects.all()
     serializer_class = ComidasSerializer
 
+# class GruposViewSet(viewsets.ModelViewSet):
+#     queryset = Grupos.objects.all()
+#     serializer_class = GruposSerializer
+#     def get_serializer_class(self):
+#         if self.action == 'retrieve' or self.action == 'list':
+#             return GruposDetailSerializer
+#         return GruposSerializer
+
 class GruposViewSet(viewsets.ModelViewSet):
     queryset = Grupos.objects.all()
+    
     serializer_class = GruposSerializer
-    def get_serializer_class(self):
-        if self.action == 'retrieve' or self.action == 'list':
-            return GruposDetailSerializer
-        return GruposSerializer
+
+    def get_queryset(self):
+        return Grupos.objects.prefetch_related("comidas")  
+
 
 class UsoPlantillaViewSet(viewsets.ModelViewSet):
     queryset = UsoPlantilla.objects.all()
@@ -118,7 +139,7 @@ from rest_framework.response import Response
 #         )
 #         return Response({"mensaje": "Correo enviado correctamente"})
 #     except Exception as e:
-#         print("ERROR AL ENVIAR EMAIL:", e)  # 👈 te mostrará el motivo real
+#         print("ERROR AL ENVIAR EMAIL:", e)  
 #         return Response({"error": str(e)}, status=500)
 
 @csrf_exempt
