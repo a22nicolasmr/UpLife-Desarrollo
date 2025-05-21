@@ -35,7 +35,7 @@ export default {
       this.erro = null;
 
       try {
-        const correo = localStorage.getItem("correoConfirmacion"); // 🔁 Recuperar o correo anterior
+        const correo = localStorage.getItem("correoConfirmacion");
 
         if (!correo) {
           this.erro = "Non hai ningún correo gardado para reenviar.";
@@ -44,7 +44,7 @@ export default {
 
         const codigo = Math.floor(100000 + Math.random() * 900000).toString();
 
-        localStorage.setItem("codigoConfirmacion", codigo); // 🔁 Só actualizamos o código, o correo xa está
+        localStorage.setItem("codigoConfirmacion", codigo);
 
         const envio = await fetch(
           "https://uplife-final.onrender.com/enviar-codigo/",

@@ -99,7 +99,6 @@ export default {
 
       <button @click.prevent="engadirPlantilla()">Engadir</button>
 
-      <!-- no funciona  -->
       <button id="nova" @click="$router.push('/plantillas/novaPlantilla')">
         Nova plantilla
       </button>

@@ -103,14 +103,14 @@ export default {
 }
 
 .inputs {
-  flex: 1 1 auto; /* puede crecer y encoger */
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   gap: 1%;
 }
 
 .resultado {
-  flex: 0 0 50%; /* ancho fijo para el resultado */
+  flex: 0 0 50%;
   background-color: #2d2d2d;
   border-radius: 0 10% 10% 0;
   padding: 6%;
@@ -221,7 +221,6 @@ export default {
   margin-top: 12%;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .imc-wrapper {
     flex-direction: column;

@@ -64,7 +64,7 @@ export default {
         this.$emit("cargarAugaHoxe");
       } catch (error) {
         console.error("❗Erro no try-catch:", error);
-        this.erro = "Houbo un erro ao engadir auga."; // Mensaje de error al usuario
+        this.erro = "Houbo un erro ao engadir auga.";
       }
     },
   },

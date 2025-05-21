@@ -199,7 +199,6 @@ export default {
           }}
         </h3>
 
-        <!-- Exercicios -->
         <ul>
           <li v-for="ex in actividades.exercicios" :key="ex.id_exercicio">
             <div class="fila-exercicio">
@@ -215,7 +214,6 @@ export default {
           </li>
         </ul>
 
-        <!-- Plantillas -->
         <ul>
           <li v-for="p in actividades.plantillas" :key="p.id_plantilla">
             <div class="fila-exercicio">

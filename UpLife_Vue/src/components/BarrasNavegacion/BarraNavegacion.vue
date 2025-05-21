@@ -175,7 +175,6 @@ hr {
   border-top: 1px solid #ccc;
 }
 
-/* Hamburguesa */
 .hamburguesa {
   display: none;
   font-size: 2rem;
@@ -187,7 +186,6 @@ hr {
   z-index: 10000;
 }
 
-/* Estilos móviles */
 @media (max-width: 768px) {
   nav {
     width: 35%;
@@ -196,7 +194,7 @@ hr {
     left: 0;
     position: fixed;
     z-index: 9999;
-    padding-top: 20%; /* menos espacio arriba */
+    padding-top: 20%;
     transform: translateX(-100%);
   }
 
@@ -210,13 +208,13 @@ hr {
   }
 
   .menu-superior {
-    flex-grow: 0; /* No ocupa altura extra */
+    flex-grow: 0;
     margin-bottom: 90%;
   }
 
   .menu-superior ul,
   .menu-inferior ul {
-    gap: 2%; /* mínimo espacio entre elementos */
+    gap: 2%;
   }
 
   .menu-superior li,
@@ -226,7 +224,7 @@ hr {
   }
 
   .menu-inferior {
-    margin-top: 100%; /* espacio mínimo entre bloques */
+    margin-top: 100%;
   }
 
   li.activo {
