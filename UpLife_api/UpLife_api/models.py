@@ -2,7 +2,9 @@ from django.db import models
 from django.contrib.auth.hashers import make_password
 from django.dispatch import receiver
 import os
+from cloudinary.uploader import destroy
 from cloudinary.models import CloudinaryField
+from django.db.models.signals import pre_save
 # opcions modo_aplicacion
 MODO_CHOICES = [
     ('C', 'Claro'),
@@ -35,7 +37,25 @@ class Usuarios(models.Model):
         return f"nome={self.nome}, nome_usuario={self.nome_usuario}, email={self.email}, contrasinal={self.contrasinal}, imaxe_perfil={self.imaxe_perfil}, altura={self.altura}, peso={self.peso}, obxectivo={self.obxectivo}, actividade={self.actividade}, idade={self.idade}, calorias_diarias={self.calorias_diarias}, auga_diaria={self.auga_diaria}, modo_aplicacion={self.modo_aplicacion}"
 
 # cando se actualiza a imaxe de perfil , borrase a existente e actualizase ca nova
-@receiver(models.signals.pre_save, sender=Usuarios)
+# @receiver(models.signals.pre_save, sender=Usuarios)
+# def auto_delete_old_file_on_change(sender, instance, **kwargs):
+#     if not instance.pk:
+#         return
+
+#     try:
+#         old_file = sender.objects.get(pk=instance.pk).imaxe_perfil
+#     except sender.DoesNotExist:
+#         return
+
+#     new_file = instance.imaxe_perfil
+
+#     if old_file and old_file != new_file:
+#         try:
+#             old_file.delete(save=False)  # ✅ Esto funciona con Cloudinary
+#         except Exception as e:
+#             print(f"Error eliminando archivo anterior: {e}")
+
+@receiver(pre_save, sender=Usuarios)
 def auto_delete_old_file_on_change(sender, instance, **kwargs):
     if not instance.pk:
         return
@@ -49,10 +69,10 @@ def auto_delete_old_file_on_change(sender, instance, **kwargs):
 
     if old_file and old_file != new_file:
         try:
-            old_file.delete(save=False)  # ✅ Esto funciona con Cloudinary
+            destroy(old_file.public_id)
         except Exception as e:
             print(f"Error eliminando archivo anterior: {e}")
-
+            
 
             
 class Auga(models.Model):
