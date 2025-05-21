@@ -41,6 +41,7 @@ export default {
   },
 
   methods: {
+    // actualizar valores das medallas
     async actualizarMedallas() {
       console.log("🛠️ Executando actualizarMedallas()");
       if (!this.valorMedallas || this.valorMedallas.length === 0) {
@@ -103,6 +104,8 @@ export default {
       if (algunhaActualizada) {
         console.log("♻️ Algún cambio detectado, recargando medallas...");
         await this.obterMedallas();
+        // actualizar medallas na barra superior
+        this.$emit("medallasActualizadas");
       } else {
         console.log("🟡 Ningún cambio detectado, non se recarga nada");
       }

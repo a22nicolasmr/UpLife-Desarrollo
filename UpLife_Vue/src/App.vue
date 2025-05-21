@@ -25,7 +25,16 @@ export default {
     VentaAviso,
     VentaEliminar,
   },
-
+  mounted() {
+    // chamar a actualizar medallas de medallas para cargar as medallas
+    this.$nextTick(async () => {
+      const medallasComp = this.$refs.medallasRef;
+      if (medallasComp?.actualizarMedallas) {
+        console.log("⏳ Chamando a actualizarMedallas desde App.vue...");
+        await medallasComp.actualizarMedallas();
+      }
+    });
+  },
   methods: {
     // coller o valor das rachas para enviar a clase Medallas como prop
     mandarRachas(valorMedallas) {
@@ -73,6 +82,12 @@ export default {
 
     pecharModalEliminar() {
       this.ventaEliminar = false;
+    },
+    async actualizarMedallasStore() {
+      console.log(
+        "📥 Evento recibido: medallasActualizadas → recargando store"
+      );
+      await useUsuarioStore().cargarMedallas(); // 🔁 actualiza o número no store
     },
   },
   watch: {
@@ -165,6 +180,8 @@ export default {
         :valorMedallas="valorMedallas"
         @emitirDatasConTarefas="emitirDatasConTarefas"
         @eliminarConta="eliminarConta"
+        @medallasActualizadas="actualizarMedallasStore"
+        ref="medallasRef"
       />
     </div>
 
