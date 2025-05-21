@@ -29,6 +29,48 @@ export default {
         this.erro = "O código non é correcto. Revisa o correo.";
       }
     },
+    //comprobar se o correo introducido é válido
+    async reenviarCodigo(event) {
+      event.preventDefault();
+      this.erro = null;
+
+      try {
+        const correo = localStorage.getItem("correoConfirmacion"); // 🔁 Recuperar o correo anterior
+
+        if (!correo) {
+          this.erro = "Non hai ningún correo gardado para reenviar.";
+          return;
+        }
+
+        const codigo = Math.floor(100000 + Math.random() * 900000).toString();
+
+        localStorage.setItem("codigoConfirmacion", codigo); // 🔁 Só actualizamos o código, o correo xa está
+
+        const envio = await fetch(
+          "https://uplife-final.onrender.com/enviar-codigo/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: correo,
+              codigo: codigo,
+            }),
+          }
+        );
+
+        if (!envio.ok) {
+          this.erro = "Erro ao reenviar o correo.";
+          return;
+        }
+
+        this.$router.push("/formularios/codigo");
+      } catch (error) {
+        console.error("Erro:", error);
+        this.erro = "Erro de conexión. Inténtao máis tarde.";
+      }
+    },
   },
 };
 </script>
@@ -64,6 +106,9 @@ export default {
 </template>
 
 <style scoped>
+a {
+  cursor: pointer;
+}
 h1 {
   color: #7f5af0;
 }
