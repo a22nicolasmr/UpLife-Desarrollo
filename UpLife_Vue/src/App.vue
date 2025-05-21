@@ -25,6 +25,7 @@ export default {
     VentaAviso,
     VentaEliminar,
   },
+
   methods: {
     // coller o valor das rachas para enviar a clase Medallas como prop
     mandarRachas(valorMedallas) {

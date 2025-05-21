@@ -85,7 +85,12 @@ export default {
         {{ erro }}
       </div>
 
-      <button type="submit" @click.prevent="mandarFormulario()">
+      <button
+        name="botonInicio"
+        id="idBotonInicio"
+        type="submit"
+        @click.prevent="mandarFormulario()"
+      >
         Iniciar sesión
       </button>
 

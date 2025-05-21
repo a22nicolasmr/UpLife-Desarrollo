@@ -13,38 +13,46 @@ export default {
       terceirasMedallas: [],
     };
   },
-  //actializar valores das medallas e obter os datos se o valorMedallas,enviado por App, cambia
-  valorMedallas: {
-    async handler(newVal) {
-      if (newVal && newVal.length > 0) {
-        await this.actualizarMedallas();
-        await this.obterMedallas();
-      }
+  mounted() {
+    console.log("🚀 Compoñente montado -> executando obterMedallas()");
+    this.obterMedallas();
+  },
+
+  watch: {
+    // ✅ O teu watcher correcto con LOGS
+    valorMedallas: {
+      async handler(newVal) {
+        console.log("🔄 valorMedallas cambiou:", newVal);
+        if (newVal && newVal.length > 0) {
+          await this.actualizarMedallas();
+          await this.obterMedallas();
+        }
+      },
+      immediate: true,
+      deep: true,
     },
-    immediate: true,
-    deep: true,
   },
 
   computed: {
-    //obter o valor de usuario do storage
     usuarioId() {
       const store = useUsuarioStore();
       return store.id;
     },
   },
-  async mounted() {
-    //actualizar medallas cando se monta o compoñente
-    await this.actualizarMedallas();
-  },
+
   methods: {
-    //actualizar se as medallas están ou non completadas en función de valorMedallas mandado por App
     async actualizarMedallas() {
-      if (!this.valorMedallas || this.valorMedallas.length === 0) return;
+      console.log("🛠️ Executando actualizarMedallas()");
+      if (!this.valorMedallas || this.valorMedallas.length === 0) {
+        console.log("⛔ Non hai medallas que actualizar");
+        return;
+      }
 
       const usuarioId = this.usuarioId;
+      let algunhaActualizada = false;
 
-      //facer un PATCH do campo completado a todas aquelas medallas que non foron completadas ainda
       for (const medalla of this.valorMedallas) {
+        console.log(`🔍 Comprobando medalla ${medalla.id_medalla}`);
         try {
           const res = await fetch(
             `https://uplife-final.onrender.com/api/medallas/${medalla.id_medalla}/`
@@ -57,6 +65,7 @@ export default {
             medallaActual.completado;
 
           if (medalla.completado && !xaIncluido) {
+            console.log(`✅ Actualizando medalla ${medalla.id_medalla}`);
             const patchRes = await fetch(
               `https://uplife-final.onrender.com/api/medallas/${medalla.id_medalla}/`,
               {
@@ -76,19 +85,31 @@ export default {
                 `PATCH fallou para medalla ${medalla.id_medalla}`
               );
             }
+
+            algunhaActualizada = true;
+          } else {
+            console.log(
+              `🔸 Medalla ${medalla.id_medalla} xa estaba actualizada`
+            );
           }
-          //obter medallas unha vez que teñan os datos actualizados
-          await this.obterMedallas();
         } catch (error) {
           console.error(
-            `Erro ao actualizar medalla ${medalla.id_medalla}:`,
+            `❌ Erro ao actualizar medalla ${medalla.id_medalla}:`,
             error
           );
         }
       }
+
+      if (algunhaActualizada) {
+        console.log("♻️ Algún cambio detectado, recargando medallas...");
+        await this.obterMedallas();
+      } else {
+        console.log("🟡 Ningún cambio detectado, non se recarga nada");
+      }
     },
-    //obter todas as medallas
+
     async obterMedallas() {
+      console.log("📥 Chamando obterMedallas()");
       try {
         const response = await fetch(
           "https://uplife-final.onrender.com/api/medallas/"
@@ -97,20 +118,19 @@ export default {
 
         if (medallas) {
           this.medallas = medallas.sort((a, b) => a.id_medalla - b.id_medalla);
+          console.log("✅ Medallas cargadas:", this.medallas.length);
 
           const total = medallas.length;
           const tercio = Math.ceil(total / 3);
           this.primeirasMedallas = medallas.slice(0, tercio);
-
           this.segundasMedallas = medallas.slice(tercio, tercio * 2);
           this.terceirasMedallas = medallas.slice(tercio * 2, total);
         }
       } catch (error) {
-        console.error("Error cargando datos de medallas:", error);
+        console.error("❌ Error cargando datos de medallas:", error);
       }
     },
 
-    //obter medallas completadas polo usuario
     medallaCompletadaPorUsuario(medalla) {
       return medalla.completado && medalla.usuarios.includes(this.usuarioId);
     },

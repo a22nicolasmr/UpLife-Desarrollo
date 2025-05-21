@@ -158,9 +158,11 @@ export default {
           this.rAuga >= 365 &&
           this.rTarefas >= 365,
       });
-
+      //mandar valor medallas a app para despois mandarllo a Medallas
       this.valorMedallas = valorMedallas;
       this.$emit("mandarRachas", this.valorMedallas);
+      useUsuarioStore().updateNumeroMedallas();
+      useUsuarioStore().cargarMedallas();
 
       return valorMedallas;
     },

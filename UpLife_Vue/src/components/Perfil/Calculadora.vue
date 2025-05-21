@@ -52,11 +52,9 @@ export default {
     //coller altura e peso do compoñente Calculador
     actualizarAltura(valor) {
       this.alturaSeleccionada = valor;
-      console.log("Altura desde hijo:", valor);
     },
     actualizarPeso(valor) {
       this.pesoSeleccionado = valor;
-      console.log("Peso desde hijo:", valor);
     },
 
     //actualizar valores do usuario cos valores metidos cando se pulsa boton Calcular
