@@ -15,6 +15,7 @@ export default {
       alturaSeleccionada: null,
       pesoSeleccionado: null,
       xenero: "",
+      mensaxeErro: "",
     };
   },
   computed: {
@@ -26,6 +27,28 @@ export default {
   },
 
   methods: {
+    validarFormulario() {
+      const erros = [];
+
+      if (!this.selectedXenero) erros.push("Selecciona un xénero.");
+      if (!this.selectedObxectivo) erros.push("Selecciona un obxectivo.");
+      if (!this.selectedActividade)
+        erros.push("Selecciona un nivel de actividade.");
+      if (!this.idade || this.idade <= 0)
+        erros.push("Introduce unha idade válida.");
+      if (!this.alturaSeleccionada || this.alturaSeleccionada <= 0)
+        erros.push("Introduce unha altura válida.");
+      if (!this.pesoSeleccionado || this.pesoSeleccionado <= 0)
+        erros.push("Introduce un peso válido.");
+
+      if (erros.length > 0) {
+        this.mensaxeErro = erros[0]; // Mostramos só o primeiro erro
+        return false;
+      }
+
+      this.mensaxeErro = ""; // Limpar erros se todo está ben
+      return true;
+    },
     //coller altura e peso do compoñente Calculador
     actualizarAltura(valor) {
       this.alturaSeleccionada = valor;
@@ -38,6 +61,7 @@ export default {
 
     //actualizar valores do usuario cos valores metidos cando se pulsa boton Calcular
     async actualizarApi() {
+      if (!this.validarFormulario()) return;
       // Paso 1: calcular TMB (gasto basal)
       const {
         pesoSeleccionado: peso,
@@ -172,10 +196,17 @@ export default {
         v-model.number="idade"
       />
       <button type="submit" @click.prevent="actualizarApi()">Calcular</button>
+      <span v-if="mensaxeErro" class="error">{{ mensaxeErro }}</span>
     </form>
   </div>
 </template>
 <style scoped>
+.error {
+  color: #ff4d4d;
+  display: block;
+  margin-top: 2%;
+  font-size: medium;
+}
 h1 {
   color: white;
 }
