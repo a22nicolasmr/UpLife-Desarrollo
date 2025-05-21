@@ -96,11 +96,14 @@ class ComidasViewSet(viewsets.ModelViewSet):
 
 class GruposViewSet(viewsets.ModelViewSet):
     queryset = Grupos.objects.all()
-    
-    serializer_class = GruposSerializer
+
+    def get_serializer_class(self):
+        if self.request.method in ["GET", "HEAD", "OPTIONS"]:
+            return GruposDetailSerializer
+        return GruposSerializer
 
     def get_queryset(self):
-        return Grupos.objects.prefetch_related("comidas")  
+        return Grupos.objects.select_related("usuario").prefetch_related("comidas")
 
 
 class UsoPlantillaViewSet(viewsets.ModelViewSet):

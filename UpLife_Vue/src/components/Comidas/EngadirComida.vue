@@ -126,10 +126,7 @@ export default {
           (g) => Number(g.id_grupo) === Number(this.grupoSeleccionado)
         );
 
-        const novaLista = [
-          ...(grupo.comidas || []).map((c) => Number(c.id_comida)),
-          Number(comidaCreada.id_comida),
-        ];
+        const novaLista = [...(grupo.comidas || []), comidaCreada.id_comida];
 
         const resPatch = await fetch(
           `https://uplife-final.onrender.com/api/grupos/${this.grupoSeleccionado}/`,

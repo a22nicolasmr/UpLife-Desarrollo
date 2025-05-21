@@ -114,10 +114,7 @@ export default {
 
           if (!grupo) throw new Error("Grupo non atopado");
 
-          const comidasActualizadas = [
-            ...grupo.comidas.map((c) => c.id_comida),
-            novaComida.id_comida,
-          ];
+          const comidasActualizadas = [...grupo.comidas, novaComida.id_comida];
 
           const patchResponse = await fetch(
             `https://uplife-final.onrender.com/api/grupos/${grupo.id_grupo}/`,
