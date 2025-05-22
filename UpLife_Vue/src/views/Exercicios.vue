@@ -269,7 +269,6 @@ export default {
                 v-for="exercicio in exerciciosHoxe"
                 :key="exercicio.id_exercicio"
               >
-                <!-- Nome -->
                 <td
                   @click="
                     activarEdicion(
@@ -295,7 +294,6 @@ export default {
                   <span v-else>{{ exercicio.nome }}</span>
                 </td>
 
-                <!-- Categoría -->
                 <td
                   @click="
                     activarEdicion(
@@ -333,7 +331,6 @@ export default {
                   }}</span>
                 </td>
 
-                <!-- Repeticións -->
                 <td
                   @click="
                     activarEdicion(
@@ -361,7 +358,6 @@ export default {
                   <span v-else>{{ exercicio.repeticions }}</span>
                 </td>
 
-                <!-- Peso -->
                 <td
                   @click="
                     activarEdicion(
@@ -387,7 +383,6 @@ export default {
                   <span v-else>{{ exercicio.peso }} </span>
                 </td>
 
-                <!-- Eliminar -->
                 <td>
                   <img
                     src="/imaxes/trash.png"
@@ -405,7 +400,6 @@ export default {
           <button @click="componenteActivo = 'engadirE'">+</button>
         </div>
 
-        <!-- NOVA TÁBOA DE PLANTILLAS -->
         <div class="esquerdaAbaixo">
           <h2>Plantillas de hoxe</h2>
           <table>
@@ -613,7 +607,6 @@ h1 {
   margin-bottom: 3vh;
   color: #7f5af0;
 }
-/* Compoñente dereita */
 .dereita {
   width: 40%;
   background-color: #1c1c1c;
@@ -663,7 +656,6 @@ td[colspan="3"] {
   font-style: italic;
 }
 
-/* Estilos para edición */
 .editable {
   cursor: pointer;
   position: relative;
@@ -688,7 +680,6 @@ td[colspan="3"] {
 }
 
 @media (max-width: 768px) {
-  /* CONTENEDORES */
   .exercicios-layout {
     flex-direction: column;
     height: auto !important;
@@ -701,7 +692,7 @@ td[colspan="3"] {
   .dereita {
     width: 100%;
     height: auto !important;
-    overflow: visible !important; /* ✅ Elimina scroll interno */
+    overflow: visible !important;
     padding: 1rem;
     box-sizing: border-box;
   }
@@ -713,7 +704,7 @@ td[colspan="3"] {
   }
   .esquerdaAbaixo {
     width: 100%;
-    overflow-x: auto; /* ✅ Solo scroll horizontal si es necesario */
+    overflow-x: auto;
     padding: 0;
   }
 
@@ -723,10 +714,9 @@ td[colspan="3"] {
     gap: 0.5rem;
   }
 
-  /* TABLAS MÁS COMPACTAS PERO LEGIBLES */
   table {
     width: 100%;
-    min-width: 480px; /* ✅ Previene que el contenido colapse */
+    min-width: 480px;
     border-collapse: collapse;
     background-color: #fff;
     border: 1px solid #ccc;
@@ -745,7 +735,7 @@ td[colspan="3"] {
     padding: 0.5rem;
     text-align: center;
     border-bottom: 1px solid #ddd;
-    font-size: 0.7rem; /* ✅ Más legible */
+    font-size: 0.7rem;
     word-break: break-word;
   }
 
@@ -755,7 +745,6 @@ td[colspan="3"] {
     height: 1.25rem;
   }
 
-  /* BOTÓN ESTILO COMPACTO */
   button {
     width: 100%;
     font-size: 1rem;
@@ -768,7 +757,6 @@ td[colspan="3"] {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
-  /* ICONOS AJUSTADOS */
   .icon,
   .icon2 {
     width: 0.5rem;
@@ -783,7 +771,6 @@ td[colspan="3"] {
     object-fit: contain;
   }
 
-  /* TARXETAS NAVEGACIÓN */
   .tarxetas {
     display: flex;
     width: 100%;
@@ -808,7 +795,6 @@ td[colspan="3"] {
     color: #fff;
   }
 
-  /* TÍTULOS */
   h1 {
     font-size: 1.5rem;
     text-align: center;

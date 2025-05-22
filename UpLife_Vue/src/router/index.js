@@ -29,6 +29,7 @@ import Condicions from "@/views/Condicions.vue";
 import Cambio from "@/components/Formularios/Cambio.vue";
 import Codigo from "@/components/Formularios/Codigo.vue";
 import CorreoCodigo from "@/components/Formularios/CorreoCodigo.vue";
+import EngadirDoHistorial from "@/components/Plantillas/EngadirDoHistorial.vue";
 
 const routes = [
   {
@@ -191,6 +192,11 @@ const routes = [
         path: "novaPlantilla",
         name: "novaPlantilla",
         component: NovaPlantilla,
+      },
+      {
+        path: "engadirExercicioDoHistorial",
+        name: "engadirExercicioDoHistorial",
+        component: EngadirDoHistorial,
       },
     ],
   },

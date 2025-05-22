@@ -45,51 +45,26 @@ export default {
     async comprobarMedallas() {
       await this.comprobarRachas();
       const valorMedallas = [];
+      let seCompletoAlguna = false;
 
-      // Medalla 4
-      valorMedallas.push({
-        id_medalla: 4,
-        completado: true,
-      });
+      const agregarMedalla = (id, completado) => {
+        if (completado) seCompletoAlguna = true;
+        valorMedallas.push({ id_medalla: id, completado });
+      };
 
-      // Medalla 5 - Racha saudable: comidas 7 días seguidos
-      valorMedallas.push({
-        id_medalla: 5,
-        completado: this.rComidas >= 7,
-      });
+      // Medallas base
+      agregarMedalla(4, true);
+      agregarMedalla(5, this.rComidas >= 7);
+      agregarMedalla(6, this.rExercicios >= 5);
+      agregarMedalla(7, this.rAuga >= 7);
+      agregarMedalla(8, this.rTarefas >= 5);
+      agregarMedalla(
+        9,
+        this.rComidas >= 7 && this.rExercicios >= 7 && this.rAuga >= 7
+      );
+      agregarMedalla(10, false); // Lógica pendiente
 
-      // Medalla 6 - No camiño: exercicios 5 días na mesma semana
-      valorMedallas.push({
-        id_medalla: 6,
-        completado: this.rExercicios >= 5,
-      });
-
-      // Medalla 7 - Máster da hidratación: auga 7 días seguidos
-      valorMedallas.push({
-        id_medalla: 7,
-        completado: this.rAuga >= 7,
-      });
-
-      // Medalla 8 - Asasino de tarefas: tarefas 5 días seguidos
-      valorMedallas.push({
-        id_medalla: 8,
-        completado: this.rTarefas >= 5,
-      });
-
-      // Medalla 9 - Semana perfecta: comidas, exercicios e auga 7 días seguidos
-      valorMedallas.push({
-        id_medalla: 9,
-        completado:
-          this.rComidas >= 7 && this.rExercicios >= 7 && this.rAuga >= 7,
-      });
-
-      // Medalla 10 - Rastreador consciente: idem anterior pero antes das 22:00
-      valorMedallas.push({
-        id_medalla: 10,
-        completado: false,
-      });
-
-      // Medalla 11 - Plantillas: 3 plantillas creadas e usadas polo menos 2 veces cada unha
+      // Medalla 11 (plantillas)
       try {
         const [plantillasRes, usosRes] = await Promise.all([
           fetch("https://uplife-final.onrender.com/api/plantillas/"),
@@ -103,66 +78,82 @@ export default {
 
         const idUsuario = useUsuarioStore().id;
 
-        // filtrar plantillas do usuario
         const plantillasUsuario = plantillas.filter(
           (p) => p.usuario === idUsuario
         );
 
-        // agrupar usos por id_plantilla
         const usosPorPlantilla = {};
         usos.forEach((u) => {
           if (u.usuario !== idUsuario) return;
           const id = u.plantilla?.id_plantilla;
           if (!id) return;
-
           if (!usosPorPlantilla[id]) usosPorPlantilla[id] = new Set();
           usosPorPlantilla[id].add(u.data);
         });
 
-        // ver cantas plantillas teñen 2 ou máis usos distintos
         const usadasSuficiente = plantillasUsuario.filter((p) => {
           const usosSet = usosPorPlantilla[p.id_plantilla];
           return usosSet && usosSet.size >= 2;
         });
 
-        const completado = usadasSuficiente.length >= 3;
-
-        valorMedallas.push({
-          id_medalla: 11,
-          completado,
-        });
+        agregarMedalla(11, usadasSuficiente.length >= 3);
       } catch (error) {
-        console.error("Erro ao comprobar medalla de plantillas:", error);
-        valorMedallas.push({
-          id_medalla: 11,
-          completado: false,
-        });
+        console.error("❌ Erro ao comprobar medalla de plantillas:", error);
+        agregarMedalla(11, false);
       }
 
-      // Medalla 12 - Racha perfecta 90 días
-      valorMedallas.push({
-        id_medalla: 12,
-        completado:
-          this.rComidas >= 90 &&
+      agregarMedalla(
+        12,
+        this.rComidas >= 90 &&
           this.rExercicios >= 90 &&
           this.rAuga >= 90 &&
-          this.rTarefas >= 90,
-      });
+          this.rTarefas >= 90
+      );
 
-      // Medalla 13 - Racha perfecta 365 días
-      valorMedallas.push({
-        id_medalla: 13,
-        completado:
-          this.rComidas >= 365 &&
+      agregarMedalla(
+        13,
+        this.rComidas >= 365 &&
           this.rExercicios >= 365 &&
           this.rAuga >= 365 &&
-          this.rTarefas >= 365,
-      });
-      //mandar valor medallas a app para despois mandarllo a Medallas
+          this.rTarefas >= 365
+      );
+
       this.valorMedallas = valorMedallas;
       this.$emit("mandarRachas", this.valorMedallas);
-      useUsuarioStore().updateNumeroMedallas();
-      useUsuarioStore().cargarMedallas();
+
+      const usuarioStore = useUsuarioStore();
+      const medallasPrevias = Array.isArray(usuarioStore.medallas)
+        ? usuarioStore.medallas
+        : Object.values(usuarioStore.medallas || []);
+
+      const medallasMostradas =
+        JSON.parse(localStorage.getItem("medallasMostradas")) || [];
+
+      let nuevasParaMostrar = [];
+
+      for (const nueva of valorMedallas) {
+        const previa = medallasPrevias.find(
+          (m) => m.id_medalla === nueva.id_medalla
+        );
+        const yaEstabaCompletada = previa?.completado;
+        const yaMostrada = medallasMostradas.includes(nueva.id_medalla);
+
+        if (!yaEstabaCompletada && nueva.completado && !yaMostrada) {
+          nuevasParaMostrar.push(nueva.id_medalla);
+        }
+      }
+
+      if (nuevasParaMostrar.length > 0) {
+        this.$emit("abrirVentaMedallas");
+
+        const actualizado = [
+          ...new Set([...medallasMostradas, ...nuevasParaMostrar]),
+        ];
+        localStorage.setItem("medallasMostradas", JSON.stringify(actualizado));
+      }
+
+      usuarioStore.updateNumeroMedallas();
+      usuarioStore.cargarMedallas();
 
       return valorMedallas;
     },

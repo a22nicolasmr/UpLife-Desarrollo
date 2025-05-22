@@ -129,7 +129,7 @@ class Exercicios(models.Model):
 
 class Plantillas(models.Model):
     id_plantilla = models.BigAutoField(primary_key=True)
-    nome = models.CharField(max_length=255, unique=True)
+    nome = models.CharField(max_length=255)
     icona = models.CharField(max_length=255)
     usuario = models.ForeignKey(Usuarios, on_delete=models.CASCADE, null=True, blank=True)
     exercicios = models.ManyToManyField('Exercicios', blank=True)

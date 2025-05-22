@@ -3,6 +3,7 @@ import BarraNavegacion from "./components/BarrasNavegacion/BarraNavegacion.vue";
 import BarraSuperior from "./components/BarrasNavegacion/BarraSuperior.vue";
 import VentaAviso from "./components/BarrasNavegacion/VentaAviso.vue";
 import VentaEliminar from "./components/BarrasNavegacion/VentaEliminar.vue";
+import VentaMedallas from "./components/BarrasNavegacion/VentaMedallas.vue";
 import VentaPechar from "./components/BarrasNavegacion/VentaPechar.vue";
 import { useUsuarioStore } from "@/stores/useUsuario";
 
@@ -16,6 +17,8 @@ export default {
       intervalId: null,
       valorMedallas: [],
       ventaEliminar: false,
+      // ventaMedallas: true,
+      ventaMedallas: false,
     };
   },
   components: {
@@ -24,18 +27,25 @@ export default {
     VentaPechar,
     VentaAviso,
     VentaEliminar,
+    VentaMedallas,
   },
   mounted() {
     // chamar a actualizar medallas de medallas para cargar as medallas
     this.$nextTick(async () => {
       const medallasComp = this.$refs.medallasRef;
       if (medallasComp?.actualizarMedallas) {
-        console.log("⏳ Chamando a actualizarMedallas desde App.vue...");
         await medallasComp.actualizarMedallas();
       }
     });
   },
   methods: {
+    // abrir ventá medallas cando se obtén unha medalla
+    abrirVentaMedallas() {
+      this.ventaMedallas = true;
+      setTimeout(() => {
+        this.ventaMedallas = false;
+      }, 3000);
+    },
     // coller o valor das rachas para enviar a clase Medallas como prop
     mandarRachas(valorMedallas) {
       this.valorMedallas = valorMedallas;
@@ -84,10 +94,7 @@ export default {
       this.ventaEliminar = false;
     },
     async actualizarMedallasStore() {
-      console.log(
-        "📥 Evento recibido: medallasActualizadas → recargando store"
-      );
-      await useUsuarioStore().cargarMedallas(); // 🔁 actualiza o número no store
+      await useUsuarioStore().cargarMedallas();
     },
   },
   watch: {
@@ -182,6 +189,7 @@ export default {
         @eliminarConta="eliminarConta"
         @medallasActualizadas="actualizarMedallasStore"
         ref="medallasRef"
+        @abrirVentaMedallas="abrirVentaMedallas"
       />
     </div>
 
@@ -196,6 +204,8 @@ export default {
       @pecharModalEliminar="pecharModalEliminar"
     >
     </VentaEliminar>
+    <VentaMedallas v-if="ventaMedallas" @ventaMedallas="pecharVentaMedallas">
+    </VentaMedallas>
   </div>
 </template>
 

@@ -1,4 +1,5 @@
 <script>
+import EngadirDoHistorial from "@/components/Plantillas/EngadirDoHistorial.vue";
 import EngadirExercicioPlantilla from "@/components/Plantillas/EngadirExercicioPlantilla.vue";
 import NovaPlantilla from "@/components/Plantillas/NovaPlantilla.vue";
 import { useUsuarioStore } from "@/stores/useUsuario";
@@ -9,6 +10,7 @@ export default {
     NovaPlantilla,
     EngadirExercicioPlantilla,
     draggable,
+    EngadirDoHistorial,
   },
   data() {
     return {
@@ -203,6 +205,13 @@ export default {
       >
         Engadir
       </div>
+      <div
+        class="tarxeta"
+        :class="{ inactiva: componenteActivo !== 'engadirD' }"
+        @click="componenteActivo = 'engadirD'"
+      >
+        Engadir exercicio do historial
+      </div>
     </div>
 
     <div class="plantilla-layout">
@@ -380,6 +389,11 @@ export default {
           @cargarDatos="cargarDatos"
           ref="engadirRef"
         />
+        <EngadirDoHistorial
+          v-if="componenteActivo === 'engadirD'"
+          @cargarDatos="cargarDatos"
+        >
+        </EngadirDoHistorial>
       </div>
     </div>
   </div>

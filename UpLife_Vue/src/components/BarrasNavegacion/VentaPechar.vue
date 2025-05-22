@@ -23,7 +23,7 @@ export default {
     </div>
   </div>
 </template>
-<style>
+<style scoped>
 .buttons {
   display: flex;
   justify-content: space-between;

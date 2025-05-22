@@ -56,9 +56,6 @@ export default {
           }
         );
 
-        const respostaTexto = await response.text();
-        console.log(respostaTexto);
-
         if (!response.ok) {
           throw new Error("Erro ao engadir plantillas");
         }

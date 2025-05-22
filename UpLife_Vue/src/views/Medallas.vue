@@ -14,15 +14,12 @@ export default {
     };
   },
   mounted() {
-    console.log("🚀 Compoñente montado -> executando obterMedallas()");
     this.obterMedallas();
   },
 
   watch: {
-    // ✅ O teu watcher correcto con LOGS
     valorMedallas: {
       async handler(newVal) {
-        console.log("🔄 valorMedallas cambiou:", newVal);
         if (newVal && newVal.length > 0) {
           await this.actualizarMedallas();
           await this.obterMedallas();
@@ -43,9 +40,7 @@ export default {
   methods: {
     // actualizar valores das medallas
     async actualizarMedallas() {
-      console.log("🛠️ Executando actualizarMedallas()");
       if (!this.valorMedallas || this.valorMedallas.length === 0) {
-        console.log("⛔ Non hai medallas que actualizar");
         return;
       }
 
@@ -53,7 +48,6 @@ export default {
       let algunhaActualizada = false;
 
       for (const medalla of this.valorMedallas) {
-        console.log(`🔍 Comprobando medalla ${medalla.id_medalla}`);
         try {
           const res = await fetch(
             `https://uplife-final.onrender.com/api/medallas/${medalla.id_medalla}/`
@@ -66,7 +60,6 @@ export default {
             medallaActual.completado;
 
           if (medalla.completado && !xaIncluido) {
-            console.log(`✅ Actualizando medalla ${medalla.id_medalla}`);
             const patchRes = await fetch(
               `https://uplife-final.onrender.com/api/medallas/${medalla.id_medalla}/`,
               {
@@ -88,10 +81,6 @@ export default {
             }
 
             algunhaActualizada = true;
-          } else {
-            console.log(
-              `🔸 Medalla ${medalla.id_medalla} xa estaba actualizada`
-            );
           }
         } catch (error) {
           console.error(
@@ -101,8 +90,8 @@ export default {
         }
       }
 
+      //actualizar medallas se hai algunha actualización
       if (algunhaActualizada) {
-        console.log("♻️ Algún cambio detectado, recargando medallas...");
         await this.obterMedallas();
         // actualizar medallas na barra superior
         this.$emit("medallasActualizadas");
@@ -111,8 +100,8 @@ export default {
       }
     },
 
+    // obter medallas por grupos
     async obterMedallas() {
-      console.log("📥 Chamando obterMedallas()");
       try {
         const response = await fetch(
           "https://uplife-final.onrender.com/api/medallas/"
@@ -121,7 +110,6 @@ export default {
 
         if (medallas) {
           this.medallas = medallas.sort((a, b) => a.id_medalla - b.id_medalla);
-          console.log("✅ Medallas cargadas:", this.medallas.length);
 
           const total = medallas.length;
           const tercio = Math.ceil(total / 3);
