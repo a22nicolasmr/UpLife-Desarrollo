@@ -55,7 +55,8 @@ a {
 }
 @media (max-width: 768px) {
   .modal-container {
-    width: 85%;
+    width: 87%;
+    height: 9%;
     padding: 15px 20px;
     border-radius: 10px;
   }
