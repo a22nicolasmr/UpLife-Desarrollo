@@ -52,12 +52,25 @@ INSTALLED_APPS = [
     'UpLife_api',
     'rest_framework',
     'corsheaders',
+    'rest_framework_simplejwt',
 ]
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
 
 if not DATABASE_URL:
     raise Exception("DATABASE_URL no está definido en el entorno.")
+
+# para utilizar tokens de autentificación
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework_simplejwt.authentication.JWTAuthentication',
+#     ),
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticated', 
+#     )
+# }
+
+
 MIDDLEWARE = [
     'django.middleware.gzip.GZipMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -80,7 +93,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 # permitir conexions de calquera,
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'UpLife.urls'
 
