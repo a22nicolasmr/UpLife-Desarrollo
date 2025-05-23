@@ -3,6 +3,11 @@ from rest_framework.routers import DefaultRouter
 from . import views
 from .views import login_usuario
 from .views import enviar_codigo_confirmacion
+from django.urls import path
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 router = DefaultRouter()
 router.register(r'usuarios', views.UsuariosViewSet)
 router.register(r'auga', views.AugaViewSet)
@@ -19,4 +24,6 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('login/', login_usuario),
     path("enviar-codigo/", enviar_codigo_confirmacion),
+    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
