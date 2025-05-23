@@ -24,7 +24,7 @@ export default {
       try {
         // Pedimos el token
         const response = await axios.post(
-          "https://uplife-final.onrender.com/api/token/",
+          "https://uplife-final.onrender.com/token/",
           {
             email: this.email,
             password: this.contrasinal,
