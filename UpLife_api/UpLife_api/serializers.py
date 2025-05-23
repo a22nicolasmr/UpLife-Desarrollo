@@ -1,6 +1,18 @@
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 from .models import Usuarios, Auga, Medallas, Tarefas, Categorias, Exercicios, Plantillas, Comidas, Grupos,UsoPlantilla
+# from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+# class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+#     @classmethod
+#     def get_token(cls, user):
+#         token = super().get_token(user)
+#         token['nome_usuario'] = user.nome_usuario
+#         return token
+
+#     def validate(self, attrs):
+#         attrs['username'] = attrs.get('nome_usuario')  # mapeamos nome_usuario → username
+#         return super().validate(attrs)
 
 # facer apis con todos os campos de todos os modelos
 class UsuariosSerializer(serializers.ModelSerializer):

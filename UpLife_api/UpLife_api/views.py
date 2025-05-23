@@ -11,7 +11,14 @@ import json
 from django.http import JsonResponse
 logger = logging.getLogger(__name__)
 from django.views.decorators.csrf import csrf_exempt
+# from rest_framework_simplejwt.views import TokenObtainPairView
+# from .serializers import CustomTokenObtainPairSerializer
 
+
+# class CustomTokenObtainPairView(TokenObtainPairView):
+#     serializer_class = CustomTokenObtainPairSerializer
+    
+    
 # validacion de campos de inicio de sesión
 @api_view(['POST'])
 def login_usuario(request):

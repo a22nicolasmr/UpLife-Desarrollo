@@ -4,6 +4,7 @@ from . import views
 from .views import login_usuario
 from .views import enviar_codigo_confirmacion
 from django.urls import path
+from .views import CustomTokenObtainPairView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -24,6 +25,6 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('login/', login_usuario),
     path("enviar-codigo/", enviar_codigo_confirmacion),
-    path('token/', TokenObtainPairView.as_view(), name='token'),
+    path('token/', CustomTokenObtainPairView.as_view(), name='token'),
     path('token/refresh/', TokenRefreshView.as_view(), name='refresh'),
 ]

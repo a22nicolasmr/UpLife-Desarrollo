@@ -60,6 +60,7 @@ DATABASE_URL = os.environ.get("DATABASE_URL")
 if not DATABASE_URL:
     raise Exception("DATABASE_URL no está definido en el entorno.")
 
+# AUTH_USER_MODEL = 'UpLife_api.Usuarios'
 # para utilizar tokens de autentificación
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
