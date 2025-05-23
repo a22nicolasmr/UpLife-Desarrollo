@@ -21,22 +21,29 @@ export default {
         return;
       }
 
-      //accede a login donde se fai validación dos campos
       try {
+        // Pedimos el token
         const response = await axios.post(
-          "https://uplife-final.onrender.com/login/",
+          "https://uplife-final.onrender.com/api/token/",
           {
-            identificador: this.email,
-            contrasinal: this.contrasinal,
+            email: this.email,
+            password: this.contrasinal,
           }
         );
 
         if (response.status === 200) {
+          const token = response.data.access;
+          const refresh = response.data.refresh;
+
+          // Guarda el token en localStorage
+          localStorage.setItem("token", token);
+          localStorage.setItem("refresh", refresh);
+
           const usuarioStore = useUsuarioStore();
           await usuarioStore.cargarUsuario(this.email);
           await usuarioStore.actualizarDatos();
 
-          //rediríxese a ruta desexada mandando como query o nome do usuario
+          // Redirige
           this.$router.push({
             name: "tarefas",
             query: { nome: this.email },

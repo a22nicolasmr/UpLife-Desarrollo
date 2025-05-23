@@ -16,6 +16,17 @@ export const useUsuarioStore = defineStore("usuario", {
     auga: 0,
   }),
   actions: {
+    cargarToken() {
+      this.token = localStorage.getItem("token");
+    },
+    guardarToken(token) {
+      this.token = token;
+      localStorage.setItem("token", token);
+    },
+    limpiarToken() {
+      this.token = null;
+      localStorage.removeItem("token");
+    },
     // cargar todos os datos de usuario
     async cargarUsuario(nome) {
       try {

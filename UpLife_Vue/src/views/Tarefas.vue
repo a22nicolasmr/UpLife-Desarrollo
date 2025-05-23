@@ -30,6 +30,7 @@ export default {
         comidas: false,
         auga: false,
       },
+      token: "",
     };
   },
 
@@ -38,6 +39,8 @@ export default {
     this.cargarDatasConTarefas();
     this.comprobarRachas();
     this.comprobarMedallas();
+    const usuarioStore = useUsuarioStore();
+    this.token = usuarioStore.token;
   },
 
   methods: {
@@ -67,8 +70,16 @@ export default {
       // Medalla 11 (plantillas)
       try {
         const [plantillasRes, usosRes] = await Promise.all([
-          fetch("https://uplife-final.onrender.com/api/plantillas/"),
-          fetch("https://uplife-final.onrender.com/api/plantillas-uso/"),
+          fetch("https://uplife-final.onrender.com/api/plantillas/", {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }),
+          fetch("https://uplife-final.onrender.com/api/plantillas-uso/", {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }),
         ]);
 
         const [plantillas, usos] = await Promise.all([
@@ -189,7 +200,11 @@ export default {
 
       // procesar augas, comidas, tarefas
       for (const item of urls) {
-        const res = await fetch(item.url);
+        const res = await fetch(item.url, {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+        });
         const data = await res.json();
 
         const userData = data.filter((entry) => {
@@ -296,7 +311,12 @@ export default {
 
       try {
         const response = await fetch(
-          `https://uplife-final.onrender.com/api/tarefas/`
+          `https://uplife-final.onrender.com/api/tarefas/`,
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
         );
         const tarefas = await response.json();
 
@@ -389,7 +409,12 @@ export default {
       const idUsuario = usuarioStore.id;
       try {
         const response = await fetch(
-          `https://uplife-final.onrender.com/api/tarefas/`
+          `https://uplife-final.onrender.com/api/tarefas/`,
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`, // pones el token en la petición
+            },
+          }
         );
         const tarefas = await response.json();
 
