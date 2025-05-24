@@ -30,7 +30,7 @@ export default {
       console.log("Content-Type:", axios.defaults.headers);
       try {
         const response = await axios.post(
-          "https://uplife-final.onrender.com/api/login",
+          "https://uplife-final.onrender.com/api/login/",
           {
             username: this.email,
             password: this.contrasinal,
