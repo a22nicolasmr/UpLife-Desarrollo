@@ -18,6 +18,7 @@ export default {
       componenteActivo: "lista",
       dataSeleccionada: new Date(),
       attrs: [],
+      token: "",
       valorMedallas: [
         {
           id_medalla: 4,
@@ -30,7 +31,6 @@ export default {
         comidas: false,
         auga: false,
       },
-      token: "",
     };
   },
 
@@ -39,8 +39,7 @@ export default {
     this.cargarDatasConTarefas();
     this.comprobarRachas();
     this.comprobarMedallas();
-    const usuarioStore = useUsuarioStore();
-    this.token = usuarioStore.token;
+    this.token = localStorage.getItem("token");
   },
 
   methods: {

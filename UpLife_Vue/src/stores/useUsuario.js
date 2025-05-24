@@ -14,6 +14,7 @@ export const useUsuarioStore = defineStore("usuario", {
     idade: 0,
     calorias: 0,
     auga: 0,
+    token: localStorage.getItem("token"),
   }),
   actions: {
     cargarToken() {
@@ -29,9 +30,16 @@ export const useUsuarioStore = defineStore("usuario", {
     },
     // cargar todos os datos de usuario
     async cargarUsuario(nome) {
+      console.log("token", this.token);
+
       try {
         const response = await fetch(
-          "https://uplife-final.onrender.com/api/usuarios/"
+          "https://uplife-final.onrender.com/api/usuarios/",
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
         );
         const usuarios = await response.json();
         const usuario = usuarios.find((u) => u.nome_usuario === nome);
@@ -63,7 +71,12 @@ export const useUsuarioStore = defineStore("usuario", {
     async cargarMedallas() {
       try {
         const medallasRes = await fetch(
-          "https://uplife-final.onrender.com/api/medallas/"
+          "https://uplife-final.onrender.com/api/medallas/",
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
         );
         const medallas = await medallasRes.json();
         this.medallas = medallas.filter(
@@ -119,7 +132,12 @@ export const useUsuarioStore = defineStore("usuario", {
       if (this.id) {
         try {
           const response = await fetch(
-            `https://uplife-final.onrender.com/api/usuarios/${this.id}/`
+            `https://uplife-final.onrender.com/api/usuarios/${this.id}/`,
+            {
+              headers: {
+                Authorization: `Bearer ${this.token}`,
+              },
+            }
           );
           const data = await response.json();
 
@@ -144,7 +162,11 @@ export const useUsuarioStore = defineStore("usuario", {
 
     //actualizar numero de medallas filtradas por se están ou non completadas
     async updateNumeroMedallas() {
-      fetch("https://uplife-final.onrender.com/api/medallas/")
+      fetch("https://uplife-final.onrender.com/api/medallas/", {
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      })
         .then((res) => res.json())
         .then((data) => {
           const completadas = data.filter(

@@ -45,7 +45,6 @@ export default {
         console.log("🟢 Login correcto:", response.data);
 
         const token = response.data.access;
-        const refresh = response.data.refresh;
 
         localStorage.setItem("token", token);
         // localStorage.setItem("refresh", refresh);
