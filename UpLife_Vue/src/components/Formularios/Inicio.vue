@@ -14,6 +14,7 @@ export default {
     //mandar formulario se os datos estan correctos
     async mandarFormulario() {
       this.erro = "";
+      console.log("🟡 Enviando login con:", this.email, this.contrasinal);
 
       if (!this.email || !this.contrasinal) {
         this.erro = "Completa todos os campos";
@@ -22,35 +23,32 @@ export default {
       }
 
       try {
-        // Pedimos el token
         const response = await axios.post(
-          "https://uplife-final.onrender.com/token/",
+          "https://uplife-final.onrender.com/api/login",
           {
-            nome_usuario: this.email,
+            username: this.email,
             password: this.contrasinal,
           }
         );
 
-        if (response.status === 200) {
-          const token = response.data.access;
-          const refresh = response.data.refresh;
+        console.log("🟢 Login correcto:", response.data);
 
-          // Guarda el token en localStorage
-          localStorage.setItem("token", token);
-          localStorage.setItem("refresh", refresh);
+        const token = response.data.access;
+        const refresh = response.data.refresh;
 
-          const usuarioStore = useUsuarioStore();
-          await usuarioStore.cargarUsuario(this.email);
-          await usuarioStore.actualizarDatos();
+        localStorage.setItem("token", token);
+        // localStorage.setItem("refresh", refresh);
 
-          // Redirige
-          this.$router.push({
-            name: "tarefas",
-            query: { nome: this.email },
-          });
-        }
+        const usuarioStore = useUsuarioStore();
+        await usuarioStore.cargarUsuario(this.email);
+        await usuarioStore.actualizarDatos();
+
+        this.$router.push({
+          name: "tarefas",
+          query: { nome: this.email },
+        });
       } catch (error) {
-        console.error("Erro ao iniciar sesión:", error);
+        console.error("🔴 Erro ao iniciar sesión:", error);
         if (error.response?.status === 401 || error.response?.status === 404) {
           this.erro = "Nome de usuario ou contrasinal incorrecto";
         } else {

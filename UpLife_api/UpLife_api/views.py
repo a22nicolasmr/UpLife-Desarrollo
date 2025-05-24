@@ -11,8 +11,42 @@ import json
 from django.http import JsonResponse
 logger = logging.getLogger(__name__)
 from django.views.decorators.csrf import csrf_exempt
+import jwt
+from datetime import datetime, timedelta
+from django.conf import settings
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+class CustomLoginView(APIView):
 
-    
+    def post(self, request):
+        username = request.data.get("username")
+        password = request.data.get("password")
+
+        if not username or not password:
+            return Response({"detail": "Username and password required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user = Usuarios.objects.get(nome_usuario=username)
+        except Usuarios.DoesNotExist:
+            return Response({"detail": "Invalid username or password"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        if not user.check_password(password):
+            return Response({"detail": "Invalid username or password"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        # Generar token JWT simple:
+        payload = {
+            "user_id": user.id_usuario,
+            "username": user.nome_usuario,
+            "exp": datetime.utcnow() + timedelta(hours=24),  # Expira en 24h
+        }
+        token = jwt.encode(payload, settings.SECRET_KEY, algorithm="HS256")
+
+        return Response({
+            "access": token,
+        })
+        
+        
 # validacion de campos de inicio de sesión
 @api_view(['POST'])
 def login_usuario(request):

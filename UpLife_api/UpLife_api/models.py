@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.hashers import make_password
 from django.dispatch import receiver
 import os
+from django.contrib.auth.hashers import check_password
 from cloudinary.uploader import destroy
 from cloudinary.models import CloudinaryField
 from django.db.models.signals import pre_save
@@ -10,7 +11,6 @@ MODO_CHOICES = [
     ('C', 'Claro'),
     ('E', 'Escuro'),
 ]
-
 class Usuarios(models.Model):
     id_usuario = models.BigAutoField(primary_key=True)
     nome=models.CharField(max_length=100)
@@ -27,14 +27,37 @@ class Usuarios(models.Model):
     calorias_diarias=models.IntegerField(null=True, blank=True)
     auga_diaria=models.IntegerField(null=True, blank=True)
     modo_aplicacion=models.CharField(max_length=1,choices=MODO_CHOICES)
+    
+    def set_password(self, raw_password):
+        self.contrasinal = make_password(raw_password)
 
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.contrasinal = make_password(self.contrasinal)
-        super().save(*args, **kwargs)
+    def check_password(self, raw_password):
+        return check_password(raw_password, self.contrasinal)
+    
+# class Usuarios(models.Model):
+#     id_usuario = models.BigAutoField(primary_key=True)
+#     nome=models.CharField(max_length=100)
+#     nome_usuario=models.CharField(max_length=100,unique=True)
+#     email=models.EmailField(max_length=255, unique=True)
+#     contrasinal=models.CharField(max_length=100)
+#     imaxe_perfil= CloudinaryField('image', blank=True, null=True)
+#     xenero=models.CharField(max_length=7, null=True, blank=True)
+#     altura=models.IntegerField(null=True, blank=True)
+#     peso=models.IntegerField(null=True, blank=True)
+#     obxectivo=models.CharField(max_length=30, null=True, blank=True)
+#     actividade=models.CharField(max_length=30,null=True, blank=True)
+#     idade=models.IntegerField(null=True, blank=True)
+#     calorias_diarias=models.IntegerField(null=True, blank=True)
+#     auga_diaria=models.IntegerField(null=True, blank=True)
+#     modo_aplicacion=models.CharField(max_length=1,choices=MODO_CHOICES)
 
-    def __str__(self):
-        return f"nome={self.nome}, nome_usuario={self.nome_usuario}, email={self.email}, contrasinal={self.contrasinal}, imaxe_perfil={self.imaxe_perfil}, altura={self.altura}, peso={self.peso}, obxectivo={self.obxectivo}, actividade={self.actividade}, idade={self.idade}, calorias_diarias={self.calorias_diarias}, auga_diaria={self.auga_diaria}, modo_aplicacion={self.modo_aplicacion}"
+#     def save(self, *args, **kwargs):
+#         if not self.pk:
+#             self.contrasinal = make_password(self.contrasinal)
+#         super().save(*args, **kwargs)
+
+#     def __str__(self):
+#         return f"nome={self.nome}, nome_usuario={self.nome_usuario}, email={self.email}, contrasinal={self.contrasinal}, imaxe_perfil={self.imaxe_perfil}, altura={self.altura}, peso={self.peso}, obxectivo={self.obxectivo}, actividade={self.actividade}, idade={self.idade}, calorias_diarias={self.calorias_diarias}, auga_diaria={self.auga_diaria}, modo_aplicacion={self.modo_aplicacion}"
 
 # cando se actualiza a imaxe de perfil , borrase a existente e actualizase ca nova
 # @receiver(models.signals.pre_save, sender=Usuarios)
