@@ -30,8 +30,6 @@ export const useUsuarioStore = defineStore("usuario", {
     },
     // cargar todos os datos de usuario
     async cargarUsuario(nome) {
-      console.log("token", this.token);
-
       try {
         const response = await fetch(
           "https://uplife-final.onrender.com/api/usuarios/",
