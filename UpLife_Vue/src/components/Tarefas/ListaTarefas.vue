@@ -15,12 +15,12 @@ export default {
     };
   },
   computed: {
-    //obter id de usuario do store
+    // obter id de usuario do store
     usuarioStore() {
       return useUsuarioStore();
     },
 
-    //filtrar tarefas por data
+    // filtrar tarefas por data
     tarefasFiltradasPorData() {
       const result = {};
       for (const [data, tarefas] of Object.entries(this.tarefasPorData)) {
@@ -34,7 +34,7 @@ export default {
   },
 
   watch: {
-    //cargar tareas cando cambia 'dataSeleccionada'
+    // cargar tarefas cando cambia 'dataSeleccionada'
     dataSeleccionada: {
       immediate: true,
       handler(novaData) {
@@ -47,7 +47,7 @@ export default {
         });
       },
     },
-    //tarefas cando cambia o usuario
+    // tarefas cando cambia o usuario
     "usuarioStore.id": {
       immediate: true,
       handler() {
@@ -65,7 +65,7 @@ export default {
       this.$emit("datas-con-tarefas", tarefasConHora);
     },
 
-    //cando se fai click nunha data con tarefas, facer scroll ata as tarefas
+    // cando se fai click nunha data con tarefas, facer scroll ata as tarefas
     scrollAtaData(data) {
       this.$nextTick(() => {
         const dataISO = new Date(data).toLocaleDateString("en-CA");
@@ -89,16 +89,22 @@ export default {
       });
     },
 
-    //cargar as tarefas por data
+    // cargar as tarefas por data
     async cargarTarefas(data) {
       const usuarioStore = useUsuarioStore();
       const idUsuario = usuarioStore.id;
-      if (!data) return;
+      const token = usuarioStore.token;
+      if (!data || !token) return;
       const dataISO = new Date(data).toLocaleDateString("en-CA");
 
       try {
         const response = await fetch(
-          `https://uplife-final.onrender.com/api/tarefas/`
+          `https://uplife-final.onrender.com/api/tarefas/`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         if (!response.ok) throw new Error("Erro ao cargar tarefas");
         const tarefas = await response.json();
@@ -122,11 +128,15 @@ export default {
       }
     },
 
-    //borrrar tarefa por id
+    // borrar tarefa por id
     async borrarTarefa(id) {
+      const token = useUsuarioStore().token;
       try {
         await fetch(`https://uplife-final.onrender.com/api/tarefas/${id}/`, {
           method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
 
         for (const data in this.tarefasPorData) {
@@ -134,21 +144,21 @@ export default {
             (t) => t.id_tarefa !== id
           );
 
-          // se o array esta vacío, eliminar o obxecto
+          // se o array está baleiro, eliminar o obxecto
           if (this.tarefasPorData[data].length === 0) {
             delete this.tarefasPorData[data];
             this.emitirDatasConTarefas();
           }
           this.$emit("cargarDatasConTarefas");
-          // this.$emit("comprobarRachas");
         }
       } catch (error) {
         console.error("Erro ao borrar tarefa:", error);
       }
     },
 
-    //marcar tarefa como completada
+    // marcar tarefa como completada
     async marcarCompletado(tarefa) {
+      const token = useUsuarioStore().token;
       try {
         const updated = { completado: !tarefa.completado };
         const response = await fetch(
@@ -157,6 +167,7 @@ export default {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(updated),
           }
@@ -169,7 +180,7 @@ export default {
       }
     },
 
-    //formatear a data
+    // formatear a data
     formatoData(dataISO) {
       const [ano, mes, dia] = dataISO.split("-");
       return `${dia}/${mes}/${ano}`;

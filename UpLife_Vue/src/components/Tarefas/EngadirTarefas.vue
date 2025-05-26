@@ -16,13 +16,13 @@ export default {
     };
   },
   computed: {
-    //obter id de usuario do storage
+    // obter id de usuario do store
     idUsuario() {
       const store = useUsuarioStore();
       return store.id;
     },
 
-    //formatear data
+    // formatear data
     dataFormateada() {
       return this.dataSeleccionada
         .toLocaleDateString("gl-ES", {
@@ -34,7 +34,7 @@ export default {
         .toUpperCase();
     },
 
-    //obter hora
+    // obter hora mínima
     minHora() {
       const now = new Date();
       const hojeISO = now.toISOString().split("T")[0];
@@ -64,10 +64,9 @@ export default {
           parseInt(horaStr, 10) * 60 + parseInt(minutoStr, 10);
 
         const ahora = new Date();
-        const minutosAhora = ahora.getHours() * 60 + ahora.getMinutes();
+        const minutosAgora = ahora.getHours() * 60 + ahora.getMinutes();
 
-        if (minutosIntroducidos < minutosAhora) {
-          console.log(minutosIntroducidos, minutosAhora);
+        if (minutosIntroducidos < minutosAgora) {
           this.erro =
             "Non podes engadir unha tarefa para unha hora pasada de hoxe.";
           return;
@@ -82,6 +81,12 @@ export default {
         usuario: this.idUsuario,
       };
 
+      const token = useUsuarioStore().token;
+      if (!token) {
+        this.erro = "Sesión expirada. Inicia sesión de novo.";
+        return;
+      }
+
       try {
         const response = await fetch(
           "https://uplife-final.onrender.com/api/tarefas/",
@@ -89,6 +94,7 @@ export default {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(payload),
           }
@@ -96,7 +102,7 @@ export default {
 
         if (!response.ok) throw new Error("Erro ao engadir tarefa");
 
-        const resultado = await response.json();
+        await response.json();
 
         this.tarefa = "";
         this.hora = "";

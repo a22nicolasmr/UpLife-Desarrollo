@@ -18,7 +18,6 @@ export default {
       componenteActivo: "lista",
       dataSeleccionada: new Date(),
       attrs: [],
-      token: "",
       valorMedallas: [
         {
           id_medalla: 4,
@@ -36,30 +35,35 @@ export default {
 
   // cando se carga a vista, cargar as datas con tarefas, comprobar rachas e medallas do usuario
   async mounted() {
-    this.token = localStorage.getItem("token");
-    if (!this.token) {
-      console.warn("🔴 Token no encontrado, redirigiendo al login...");
+    const usuarioStore = useUsuarioStore();
+    useUsuarioStore().cargarToken();
+    console.log("🔍 Token desde store:", useUsuarioStore().token);
+
+    if (!usuarioStore.token) {
+      console.warn("🔴 Token non dispoñible. Redirixindo ao login...");
       this.$router.push({ name: "login" });
       return;
     }
+
     await this.cargarDatasConTarefas();
     await this.comprobarRachas();
     await this.comprobarMedallas();
   },
 
   methods: {
-    // comprobar se os requerimentos das medallas se cumplen
+    // comprobar se os requerementos das medallas se cumpren
     async comprobarMedallas() {
       await this.comprobarRachas();
       const valorMedallas = [];
       let seCompletoAlguna = false;
+      const token = useUsuarioStore().token;
 
       const agregarMedalla = (id, completado) => {
         if (completado) seCompletoAlguna = true;
         valorMedallas.push({ id_medalla: id, completado });
       };
 
-      // Medallas base
+      // medallas base
       agregarMedalla(4, true);
       agregarMedalla(5, this.rComidas >= 7);
       agregarMedalla(6, this.rExercicios >= 5);
@@ -69,20 +73,16 @@ export default {
         9,
         this.rComidas >= 7 && this.rExercicios >= 7 && this.rAuga >= 7
       );
-      agregarMedalla(10, false); // Lógica pendiente
+      agregarMedalla(10, false); // lóxica pendente
 
-      // Medalla 11 (plantillas)
+      // medalla 11 (plantillas)
       try {
         const [plantillasRes, usosRes] = await Promise.all([
           fetch("https://uplife-final.onrender.com/api/plantillas/", {
-            headers: {
-              Authorization: `Bearer ${this.token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
           }),
           fetch("https://uplife-final.onrender.com/api/plantillas-uso/", {
-            headers: {
-              Authorization: `Bearer ${this.token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
           }),
         ]);
 
@@ -113,10 +113,11 @@ export default {
 
         agregarMedalla(11, usadasSuficiente.length >= 3);
       } catch (error) {
-        console.error("❌ Erro ao comprobar medalla de plantillas:", error);
+        console.error("❌ erro ao comprobar medalla de plantillas:", error);
         agregarMedalla(11, false);
       }
 
+      // medallas de racha longa
       agregarMedalla(
         12,
         this.rComidas >= 90 &&
@@ -144,25 +145,24 @@ export default {
       const medallasMostradas =
         JSON.parse(localStorage.getItem("medallasMostradas")) || [];
 
-      let nuevasParaMostrar = [];
+      let novasParaMostrar = [];
 
-      for (const nueva of valorMedallas) {
+      for (const nova of valorMedallas) {
         const previa = medallasPrevias.find(
-          (m) => m.id_medalla === nueva.id_medalla
+          (m) => m.id_medalla === nova.id_medalla
         );
-        const yaEstabaCompletada = previa?.completado;
-        const yaMostrada = medallasMostradas.includes(nueva.id_medalla);
+        const xaEstaba = previa?.completado;
+        const xaMostrada = medallasMostradas.includes(nova.id_medalla);
 
-        if (!yaEstabaCompletada && nueva.completado && !yaMostrada) {
-          nuevasParaMostrar.push(nueva.id_medalla);
+        if (!xaEstaba && nova.completado && !xaMostrada) {
+          novasParaMostrar.push(nova.id_medalla);
         }
       }
 
-      if (nuevasParaMostrar.length > 0) {
+      if (novasParaMostrar.length > 0) {
         this.$emit("abrirVentaMedallas");
-
         const actualizado = [
-          ...new Set([...medallasMostradas, ...nuevasParaMostrar]),
+          ...new Set([...medallasMostradas, ...novasParaMostrar]),
         ];
         localStorage.setItem("medallasMostradas", JSON.stringify(actualizado));
       }
@@ -172,11 +172,12 @@ export default {
 
       return valorMedallas;
     },
-    // comprobar as rachas do usuario en función das datas anteriores a data actual
-    // en Tarefas tamén comproba se están completadas
+
+    // comprobar as rachas do usuario en función das datas anteriores á data actual
     async comprobarRachas() {
       const usuarioStore = useUsuarioStore();
       const idUsuario = usuarioStore.id;
+      const token = usuarioStore.token;
 
       const urls = [
         {
@@ -196,31 +197,27 @@ export default {
         },
       ];
 
-      // reiniciar rachas
       this.rAuga = 0;
       this.rComidas = 0;
       this.rExercicios = 0;
       this.rTarefas = 0;
 
-      // procesar augas, comidas, tarefas
       for (const item of urls) {
         const res = await fetch(item.url, {
-          headers: {
-            Authorization: `Bearer ${this.token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
 
         const userData = data.filter((entry) => {
           const esUsuario = entry.usuario === idUsuario;
-          const tieneFechaValida =
+          const tenDataValida =
             entry.data &&
             entry.data.trim() !== "" &&
             entry.data <= new Date().toISOString().split("T")[0];
           const estaCompletado =
             item.key !== "tarefas" || entry.completado === true;
 
-          return esUsuario && tieneFechaValida && estaCompletado;
+          return esUsuario && tenDataValida && estaCompletado;
         });
 
         const fechas = [...new Set(userData.map((entry) => entry.data))]
@@ -228,17 +225,15 @@ export default {
           .reverse();
 
         let racha = 0;
-        let hoy = new Date().toISOString().split("T")[0];
+        let hoxe = new Date().toISOString().split("T")[0];
 
-        const hayHoy = userData.some(
-          (entry) => entry.data === new Date().toISOString().split("T")[0]
-        );
-        this.advertencias[item.key] = !hayHoy;
+        const hayHoxe = userData.some((entry) => entry.data === hoxe);
+        this.advertencias[item.key] = !hayHoxe;
 
-        for (const fecha of fechas) {
-          if (fecha === hoy) {
+        for (const data of fechas) {
+          if (data === hoxe) {
             racha++;
-            hoy = new Date(new Date(hoy).getTime() - 86400000)
+            hoxe = new Date(new Date(hoxe).getTime() - 86400000)
               .toISOString()
               .split("T")[0];
           } else {
@@ -249,18 +244,13 @@ export default {
         this[item.var] = racha;
       }
 
-      // calcular rExercicios usando exercicios + plantillas de exercicios
       try {
         const [resEx, resUso] = await Promise.all([
           fetch("https://uplife-final.onrender.com/api/exercicios/", {
-            headers: {
-              Authorization: `Bearer ${this.token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
           }),
           fetch("https://uplife-final.onrender.com/api/plantillas-uso/", {
-            headers: {
-              Authorization: `Bearer ${this.token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
           }),
         ]);
 
@@ -288,19 +278,18 @@ export default {
           .map((u) => u.data);
 
         const todasFechas = new Set([...exerciciosValidos, ...usosValidos]);
-        const fechasUnicasOrdenadas = [...todasFechas].sort().reverse();
+        const ordenadas = [...todasFechas].sort().reverse();
 
-        // calcular racha consecutiva
         let rachaEx = 0;
-        let hoy = new Date().toISOString().split("T")[0];
+        let hoxe = new Date().toISOString().split("T")[0];
 
-        const hayHoy = [...exerciciosValidos, ...usosValidos].includes(hoy);
-        this.advertencias.exercicios = !hayHoy;
+        const hayHoxe = [...exerciciosValidos, ...usosValidos].includes(hoxe);
+        this.advertencias.exercicios = !hayHoxe;
 
-        for (const fecha of fechasUnicasOrdenadas) {
-          if (fecha === hoy) {
+        for (const data of ordenadas) {
+          if (data === hoxe) {
             rachaEx++;
-            hoy = new Date(new Date(hoy).getTime() - 86400000)
+            hoxe = new Date(new Date(hoxe).getTime() - 86400000)
               .toISOString()
               .split("T")[0];
           } else {
@@ -311,23 +300,23 @@ export default {
         this.rExercicios = rachaEx;
       } catch (error) {
         console.error(
-          "Erro ao comprobar exercicios e usos de plantillas:",
+          "erro ao comprobar exercicios e usos de plantillas:",
           error
         );
       }
     },
+
     // comprobar se hai tarefas para unha data
     async comprobarTarefasNaData(date) {
       const usuarioStore = useUsuarioStore();
       const idUsuario = usuarioStore.id;
+      const token = usuarioStore.token;
 
       try {
         const response = await fetch(
-          `https://uplife-final.onrender.com/api/tarefas/`,
+          "https://uplife-final.onrender.com/api/tarefas/",
           {
-            headers: {
-              Authorization: `Bearer ${this.token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
           }
         );
         const tarefas = await response.json();
@@ -342,37 +331,32 @@ export default {
           tarefasNaData.length > 0 &&
           tarefasNaData.every((t) => t.completado === true);
 
-        if (tarefasNaData.length === 0 || todasCompletadas) {
-          this.componenteActivo = "engadir";
-        } else {
-          this.componenteActivo = "lista";
-        }
+        this.componenteActivo =
+          todasCompletadas || tarefasNaData.length === 0 ? "engadir" : "lista";
       } catch (error) {
-        console.error("Erro ao comprobar tarefas na data", error);
+        console.error("erro ao comprobar tarefas na data", error);
       }
     },
-    // enviar as tarefas que teñen hora a App para executar VentáAviso de App
+
+    // enviar as tarefas que teñen hora á app para executar VentáAviso de App
     reenviarTarefasConHora(tarefas) {
       this.$emit("emitirDatasConTarefas", tarefas);
     },
 
-    // obter fechas deshabilitadas
+    // obter datas deshabilitadas (anteriores a hoxe)
     getFechasDeshabilitadas({ date }) {
-      const hoy = new Date();
-      hoy.setHours(0, 0, 0, 0);
-
+      const hoxe = new Date();
+      hoxe.setHours(0, 0, 0, 0);
       const comparar = new Date(date);
       comparar.setHours(0, 0, 0, 0);
-
-      return comparar < hoy;
+      return comparar < hoxe;
     },
 
     // seleccionar data no calendario
     seleccionarData(dia) {
-      const hoy = new Date();
-      hoy.setHours(0, 0, 0, 0); //eliminar horas para comparar só a data
-
-      if (dia.date < hoy) return;
+      const hoxe = new Date();
+      hoxe.setHours(0, 0, 0, 0);
+      if (dia.date < hoxe) return;
 
       this.dataSeleccionada = dia.date;
       this.comprobarTarefasNaData(this.dataSeleccionada);
@@ -387,47 +371,53 @@ export default {
 
     // os días que teñan tarefas serán marcados cunha cor azul claro usando attrs de vc-calendar
     actualizarDatasConTarefas(datas) {
-      const today = new Date();
-      const todayISO = today.toISOString().split("T")[0];
+      const hoxe = new Date();
+      const hoxeISO = hoxe.toISOString().split("T")[0];
 
       const todayAttr = {
         key: "today",
-        highlight: {
-          color: "#003366",
-          fillMode: "solid",
-        },
-        dates: today,
+        highlight: { color: "#003366", fillMode: "solid" },
+        dates: hoxe,
         order: 100,
         customData: { esHoy: true },
       };
 
       const taskAttrs = datas
-        .filter((date) => date !== todayISO)
+        .filter((date) => date !== hoxeISO)
         .map((date) => ({
           key: `task-${date}`,
-          highlight: {
-            color: "#add8e6",
-            fillMode: "light",
-          },
+          highlight: { color: "#add8e6", fillMode: "light" },
           dates: new Date(date),
           order: 1,
         }));
 
       this.attrs = [todayAttr, ...taskAttrs];
     },
+
     // obter as tarefas filtradas por usuario e data
     async cargarDatasConTarefas() {
       const usuarioStore = useUsuarioStore();
       const idUsuario = usuarioStore.id;
+      const token = usuarioStore.token;
+
+      if (!token) {
+        console.warn("🔴 Token non dispoñible. Redirixindo ao login...");
+        this.$router.push({ name: "login" });
+        return;
+      }
+
       try {
         const response = await fetch(
           `https://uplife-final.onrender.com/api/tarefas/`,
           {
             headers: {
-              Authorization: `Bearer ${this.token}`,
+              Authorization: `Bearer ${token}`,
             },
           }
         );
+
+        if (!response.ok) throw new Error("Token inválido ou expirado");
+
         const tarefas = await response.json();
 
         const datasUnicas = [
@@ -439,10 +429,15 @@ export default {
         this.actualizarDatasConTarefas(datasUnicas);
         this.componenteActivo = "lista";
       } catch (error) {
-        console.error("Erro ao cargar datas con tarefas", error);
+        console.error("erro ao cargar datas con tarefas:", error);
+        if (error.message.includes("Token")) {
+          usuarioStore.cerrarSesion();
+          this.$router.push({ name: "login" });
+        }
       }
     },
   },
+
   computed: {
     // deshabilitar todas aquelas datas por debaixo da data de hoxe
     disabledDates() {

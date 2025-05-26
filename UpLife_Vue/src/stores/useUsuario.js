@@ -14,22 +14,31 @@ export const useUsuarioStore = defineStore("usuario", {
     idade: 0,
     calorias: 0,
     auga: 0,
-    token: localStorage.getItem("token"),
+    token: localStorage.getItem("token") || null, // cargar token dende localStorage ao iniciar
   }),
+
   actions: {
+    // cargar o token dende localStorage
     cargarToken() {
       this.token = localStorage.getItem("token");
     },
+
+    // gardar o token no estado e no localStorage
     guardarToken(token) {
       this.token = token;
       localStorage.setItem("token", token);
     },
+
+    // limpar o token do estado e do localStorage
     limpiarToken() {
       this.token = null;
       localStorage.removeItem("token");
     },
-    // cargar todos os datos de usuario
+
+    // cargar todos os datos do usuario a partir do nome de usuario
     async cargarUsuario(nome) {
+      if (!this.token) return;
+
       try {
         const response = await fetch(
           "https://uplife-final.onrender.com/api/usuarios/",
@@ -45,11 +54,10 @@ export const useUsuarioStore = defineStore("usuario", {
 
         this.id = usuario.id_usuario;
         this.nome = usuario.nome;
+        this.imagen =
+          usuario.imaxe_perfil || "image/upload/v1747728142/usuario_xotela.png";
 
-        const ruta = usuario.imaxe_perfil;
-        this.imagen = ruta || "image/upload/v1747728142/usuario_xotela.png";
-
-        //gardar solo o necesario en localStorage
+        // gardar datos básicos no localStorage
         localStorage.setItem(
           "usuario",
           JSON.stringify({
@@ -58,15 +66,17 @@ export const useUsuarioStore = defineStore("usuario", {
           })
         );
 
-        //cargar medallas de usuario
+        // cargar medallas do usuario
         await this.cargarMedallas();
       } catch (error) {
-        console.error("Error cargando datos del usuario:", error);
+        console.error("erro cargando datos do usuario:", error);
       }
     },
 
-    //cargar medallas de usuario
+    // cargar medallas completadas do usuario
     async cargarMedallas() {
+      if (!this.token || !this.id) return;
+
       try {
         const medallasRes = await fetch(
           "https://uplife-final.onrender.com/api/medallas/",
@@ -81,11 +91,11 @@ export const useUsuarioStore = defineStore("usuario", {
           (m) => m.usuarios.includes(this.id) && m.completado
         ).length;
       } catch (error) {
-        console.error("Error cargando medallas:", error);
+        console.error("erro cargando medallas:", error);
       }
     },
 
-    //cargar datos de usuario desde localStorage
+    // cargar datos do usuario dende o localStorage se existen
     cargarDesdeStorage() {
       const datos = localStorage.getItem("usuario");
       if (datos) {
@@ -96,7 +106,7 @@ export const useUsuarioStore = defineStore("usuario", {
       }
     },
 
-    //gardar datos actualizados do usuario
+    // gardar datos actualizados do usuario no localStorage
     guardarUsuarioActualizado() {
       localStorage.setItem(
         "usuario",
@@ -116,65 +126,82 @@ export const useUsuarioStore = defineStore("usuario", {
       );
     },
 
-    //eliminar datos do usuario cando se pecha a sesion
+    // eliminar todos os datos do usuario cando se pecha a sesión
     cerrarSesion() {
       localStorage.removeItem("usuario");
+      localStorage.removeItem("token");
+      this.token = null;
       this.id = null;
       this.nome = "";
-      this.imagen = "/imaxes/usuario.png";
+      this.imagen = "image/upload/v1747728142/usuario_xotela.png";
       this.medallas = 0;
+      this.altura = 0;
+      this.peso = 0;
+      this.xenero = "";
+      this.obxectivo = "";
+      this.actividade = "";
+      this.idade = 0;
+      this.calorias = 0;
+      this.auga = 0;
     },
 
-    //actualizar datos usuario
+    // actualizar os datos do usuario coa API
     async actualizarDatos() {
-      if (this.id) {
-        try {
-          const response = await fetch(
-            `https://uplife-final.onrender.com/api/usuarios/${this.id}/`,
-            {
-              headers: {
-                Authorization: `Bearer ${this.token}`,
-              },
-            }
-          );
-          const data = await response.json();
+      if (!this.id || !this.token) return;
 
-          this.imagen =
-            data.imaxe_perfil || "image/upload/v1747728142/usuario_xotela.png";
-          this.nome = data.nome;
-          this.altura = data.altura;
-          this.peso = data.peso;
-          this.xenero = data.xenero;
-          this.obxectivo = data.obxectivo;
-          this.actividade = data.actividade;
-          this.idade = data.idade;
-          this.calorias = data.calorias_diarias;
-          this.auga = data.auga_diaria;
+      try {
+        const response = await fetch(
+          `https://uplife-final.onrender.com/api/usuarios/${this.id}/`,
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
+        );
+        const data = await response.json();
 
-          this.guardarUsuarioActualizado();
-        } catch (error) {
-          console.error("Erro ao actualizar datos:", error);
-        }
+        this.imagen =
+          data.imaxe_perfil || "image/upload/v1747728142/usuario_xotela.png";
+        this.nome = data.nome;
+        this.altura = data.altura;
+        this.peso = data.peso;
+        this.xenero = data.xenero;
+        this.obxectivo = data.obxectivo;
+        this.actividade = data.actividade;
+        this.idade = data.idade;
+        this.calorias = data.calorias_diarias;
+        this.auga = data.auga_diaria;
+
+        this.guardarUsuarioActualizado();
+      } catch (error) {
+        console.error("erro ao actualizar datos:", error);
       }
     },
 
-    //actualizar numero de medallas filtradas por se están ou non completadas
+    // actualizar o número de medallas completadas
     async updateNumeroMedallas() {
-      fetch("https://uplife-final.onrender.com/api/medallas/", {
-        headers: {
-          Authorization: `Bearer ${this.token}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          const completadas = data.filter(
-            (m) => m.usuarios.includes(this.id) && m.completado
-          );
-          this.medallas = completadas.length;
-        })
-        .catch((err) => console.error("Erro cargando medallas:", err));
+      if (!this.token || !this.id) return;
+
+      try {
+        const res = await fetch(
+          "https://uplife-final.onrender.com/api/medallas/",
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
+        );
+        const data = await res.json();
+        const completadas = data.filter(
+          (m) => m.usuarios.includes(this.id) && m.completado
+        );
+        this.medallas = completadas.length;
+      } catch (err) {
+        console.error("erro cargando medallas:", err);
+      }
     },
   },
-  //cargar datos desde localStorage se existen
+
+  // activar persistencia do estado no localStorage
   persist: true,
 });
