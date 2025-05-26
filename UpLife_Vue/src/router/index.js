@@ -205,6 +205,11 @@ const routes = [
     name: "condicions",
     component: Condicions,
   },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "not-found",
+    component: () => import("@/views/NotFound.vue"), // crea este archivo
+  },
 ];
 
 // creacion do router coas rutas

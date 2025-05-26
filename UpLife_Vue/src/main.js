@@ -12,6 +12,6 @@ pinia.use(piniaPersistedState);
 app.use(pinia); // usar pinia
 app.use(router); // usar router
 app.use(VCalendar, {
-  componentPrefix: "vc", // Usa <vc-calendar /> en lugar de <v-calendar />
+  componentPrefix: "vc", // usar <vc-calendar /> en lugar de <v-calendar />
 });
 app.mount("#app");
