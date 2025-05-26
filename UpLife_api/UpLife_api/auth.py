@@ -8,35 +8,47 @@ import logging
 logger = logging.getLogger(__name__)
 logger.warning("⚠️ Aquí estamos dentro de CustomJWTAuthentication")
 
+import logging
+import jwt
+from django.conf import settings
+from rest_framework.authentication import BaseAuthentication
+from rest_framework.exceptions import AuthenticationFailed
+from .models import Usuarios
+
+logger = logging.getLogger(__name__)
+
 class CustomJWTAuthentication(BaseAuthentication):
     def authenticate(self, request):
+        logger.warning("⚠️ Dentro de CustomJWTAuthentication")
+
         auth_header = request.headers.get("Authorization")
-        print("🟡 Authorization header recibido:", auth_header)
+        logger.warning(f"🔍 Header recibido: {auth_header}")
 
         if not auth_header or not auth_header.startswith("Bearer "):
+            logger.warning("⛔ Header vacío ou mal formado")
             return None
 
         token = auth_header.split(" ")[1]
-        print("🔐 Token extraído:", token)
+        logger.warning(f"🔐 Token extraído: {token}")
 
         try:
             payload = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
-            print("✅ Payload decodificado:", payload)
+            logger.warning(f"✅ Token decodificado: {payload}")
         except jwt.ExpiredSignatureError:
-            print("❌ Token expirado")
+            logger.warning("❌ Token expirado")
             raise AuthenticationFailed("Token expirado")
         except jwt.InvalidTokenError as e:
-            print("❌ Token inválido:", str(e))
+            logger.warning(f"❌ Token inválido: {str(e)}")
             raise AuthenticationFailed("Token inválido")
 
         try:
-            user = Usuarios.objects.get(id_usuario=payload["user_id"])
-            print("✅ Usuario atopado:", user)
+            user_id = payload.get("user_id")
+            logger.warning(f"🔎 Buscando usuario con ID: {user_id}")
+            user = Usuarios.objects.get(id_usuario=user_id)
+            logger.warning(f"✅ Usuario encontrado: {user}")
         except Usuarios.DoesNotExist:
+            logger.warning(f"❌ Usuario non atopado con ID: {user_id}")
             raise AuthenticationFailed("Usuario non atopado")
 
-        # 💥 FALTABA ISTO
-        
+        logger.warning("🟢 Autenticación completada correctamente")
         return (user, token)
-
-
