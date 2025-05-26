@@ -36,9 +36,9 @@ export default {
   // cando se carga a vista, cargar as datas con tarefas, comprobar rachas e medallas do usuario
   async mounted() {
     const usuarioStore = useUsuarioStore();
-    useUsuarioStore.cargarToken();
-    console.log("🔍 Token desde store:", useUsuarioStore().token);
+    usuarioStore.cargarToken();
 
+    console.log("🟢 Token cargado no store:", usuarioStore.token);
     if (!usuarioStore.token) {
       console.warn("🔴 Token non dispoñible. Redirixindo ao login...");
       this.$router.push({ name: "login" });
@@ -406,17 +406,24 @@ export default {
         return;
       }
 
+      console.log("📤 Enviando token no fetch:", token);
+
       try {
         const response = await fetch(
           `https://uplife-final.onrender.com/api/tarefas/`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
             },
           }
         );
 
-        if (!response.ok) throw new Error("Token inválido ou expirado");
+        if (!response.ok) {
+          const text = await response.text();
+          console.error("❌ Resposta non OK:", text);
+          throw new Error("Token inválido ou expirado");
+        }
 
         const tarefas = await response.json();
 
@@ -429,7 +436,7 @@ export default {
         this.actualizarDatasConTarefas(datasUnicas);
         this.componenteActivo = "lista";
       } catch (error) {
-        console.error("erro ao cargar datas con tarefas:", error);
+        console.error("💥 Erro ao cargar datas con tarefas:", error);
         if (error.message.includes("Token")) {
           usuarioStore.cerrarSesion();
           this.$router.push({ name: "login" });
