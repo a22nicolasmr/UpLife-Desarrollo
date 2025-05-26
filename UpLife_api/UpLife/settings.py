@@ -67,12 +67,13 @@ if not DATABASE_URL:
 # para utilizar tokens de autentificación
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'UpLife_api.views.CustomJWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated', 
+        'rest_framework.permissions.IsAuthenticated',
     )
 }
+
 
 
 MIDDLEWARE = [
