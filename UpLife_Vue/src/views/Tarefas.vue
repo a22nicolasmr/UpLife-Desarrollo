@@ -36,7 +36,7 @@ export default {
   // cando se carga a vista, cargar as datas con tarefas, comprobar rachas e medallas do usuario
   async mounted() {
     const usuarioStore = useUsuarioStore();
-    useUsuarioStore().cargarToken();
+    useUsuarioStore.cargarToken();
     console.log("🔍 Token desde store:", useUsuarioStore().token);
 
     if (!usuarioStore.token) {

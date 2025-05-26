@@ -78,23 +78,25 @@ class Usuarios(models.Model):
 #         except Exception as e:
 #             print(f"Error eliminando archivo anterior: {e}")
 
-@receiver(pre_save, sender=Usuarios)
-def auto_delete_old_file_on_change(sender, instance, **kwargs):
-    if not instance.pk:
-        return
 
-    try:
-        old_file = sender.objects.get(pk=instance.pk).imaxe_perfil
-    except sender.DoesNotExist:
-        return
+# BORRAR ARCHIVO CLOUDINARY
+# @receiver(pre_save, sender=Usuarios)
+# def auto_delete_old_file_on_change(sender, instance, **kwargs):
+#     if not instance.pk:
+#         return
 
-    new_file = instance.imaxe_perfil
+#     try:
+#         old_file = sender.objects.get(pk=instance.pk).imaxe_perfil
+#     except sender.DoesNotExist:
+#         return
 
-    if old_file and old_file != new_file:
-        try:
-            destroy(old_file.public_id)
-        except Exception as e:
-            print(f"Error eliminando archivo anterior: {e}")
+#     new_file = instance.imaxe_perfil
+
+#     if old_file and old_file != new_file:
+#         try:
+#             destroy(old_file.public_id)
+#         except Exception as e:
+#             print(f"Error eliminando archivo anterior: {e}")
             
 
             
