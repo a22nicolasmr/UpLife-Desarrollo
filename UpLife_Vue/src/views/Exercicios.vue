@@ -28,14 +28,17 @@ export default {
     };
   },
   mounted() {
+    // cargar exercicios e plantillas ao montar o compoñente
     this.cargarExerciciosHoxe();
     this.cargarPlantillasHoxe();
     document.addEventListener("click", this.cancelarEdicionAoFora);
   },
   beforeUnmount() {
+    // quitar o listener ao desmontar o compoñente
     document.removeEventListener("click", this.cancelarEdicionAoFora);
   },
   methods: {
+    // activar a edición dun campo concreto
     activarEdicion(id, campo, valor) {
       this.editando = { id, campo, valor };
       this.$nextTick(() => {
@@ -44,6 +47,7 @@ export default {
       });
     },
 
+    // gardar un campo editado mediante chamada PATCH
     async guardarCampoEditado(id, campo) {
       const token = useUsuarioStore().token;
       const novoValor = this.editando.valor;
@@ -63,6 +67,7 @@ export default {
       }
     },
 
+    // cancelar edición se se fai click fóra da celda editable
     cancelarEdicionAoFora(e) {
       const path = e.composedPath?.() || e.path || [];
       const clickedInsideInput = path.some((el) =>
@@ -73,10 +78,12 @@ export default {
       }
     },
 
+    // devolver nome da categoría segundo o seu id
     nomeCategoriaPorId(id) {
       return this.categoriasMap[id] || "Descoñecida";
     },
 
+    // cargar exercicios feitos polo usuario na data actual
     async cargarExerciciosHoxe() {
       const idUsuario = useUsuarioStore().id;
       const token = useUsuarioStore().token;
@@ -98,6 +105,7 @@ export default {
       }
     },
 
+    // cargar plantillas usadas polo usuario na data actual
     async cargarPlantillasHoxe() {
       const idUsuario = useUsuarioStore().id;
       const token = useUsuarioStore().token;
@@ -111,10 +119,12 @@ export default {
         );
         const usos = await response.json();
 
+        // filtrar só as plantillas do usuario no día de hoxe
         const usosFiltrados = usos.filter(
           (uso) => uso.usuario === idUsuario && uso.data === hoxe
         );
 
+        // cargar os datos das plantillas asociadas
         const plantillasCompletas = await Promise.all(
           usosFiltrados.map(async (uso) => {
             const plantillaResponse = await fetch(
@@ -138,6 +148,7 @@ export default {
       }
     },
 
+    // eliminar unha plantilla usada hoxe
     async eliminarPlantilla(id_plantilla) {
       const idUsuario = useUsuarioStore().id;
       const token = useUsuarioStore().token;
@@ -151,6 +162,7 @@ export default {
         );
         const usos = await response.json();
 
+        // atopar o rexistro de uso correspondente á plantilla de hoxe
         const uso = usos.find(
           (u) =>
             u.plantilla === id_plantilla &&
@@ -175,6 +187,7 @@ export default {
       }
     },
 
+    // engadir unha plantilla usada hoxe polo usuario
     async engadirPlantilla(nomePlantilla) {
       const idUsuario = useUsuarioStore().id;
       const token = useUsuarioStore().token;
@@ -211,6 +224,7 @@ export default {
       }
     },
 
+    // eliminar un exercicio polo seu ID
     async eliminarExercicio(id) {
       const token = useUsuarioStore().token;
       try {

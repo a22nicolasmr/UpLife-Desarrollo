@@ -286,7 +286,6 @@ export default {
                       v-for="ex in plantilla.exercicios"
                       :key="ex.id_exercicio"
                     >
-                      <!-- NOME -->
                       <td @click="activarEdicion(ex.id_exercicio, 'nome')">
                         <input
                           v-if="
@@ -303,7 +302,6 @@ export default {
                         <span v-else>{{ ex.nome }}</span>
                       </td>
 
-                      <!-- REPETICIONS -->
                       <td
                         @click="activarEdicion(ex.id_exercicio, 'repeticions')"
                       >
@@ -324,7 +322,6 @@ export default {
                         <span v-else>{{ ex.repeticions }}</span>
                       </td>
 
-                      <!-- PESO -->
                       <td @click="activarEdicion(ex.id_exercicio, 'peso')">
                         <input
                           v-if="
@@ -342,7 +339,6 @@ export default {
                         <span v-else>{{ ex.peso }}</span>
                       </td>
 
-                      <!-- CATEGORIA -->
                       <td @click="activarEdicion(ex.id_exercicio, 'categoria')">
                         <select
                           v-if="
@@ -371,7 +367,6 @@ export default {
                         }}</span>
                       </td>
 
-                      <!-- BORRAR -->
                       <td>
                         <img
                           src="/imaxes/trash.png"

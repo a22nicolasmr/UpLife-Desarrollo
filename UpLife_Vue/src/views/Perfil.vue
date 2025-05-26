@@ -304,7 +304,7 @@ body {
     flex-direction: column;
     align-items: center;
     max-height: none;
-    gap: 0; /* para que estén pegados */
+    gap: 0;
   }
 
   .datos,

@@ -23,12 +23,15 @@ export default {
     };
   },
   computed: {
+    // obter o id do usuario desde o store
     idUsuario() {
       return useUsuarioStore().id;
     },
+    // obter as calorías necesarias desde o store
     caloriasTotaisNecesarias() {
       return useUsuarioStore().calorias;
     },
+    // calcular as calorías inxeridas polo usuario no día actual
     caloriasInxeridasHoxe() {
       const total = this.grupos.reduce((sum, grupo) => {
         return (
@@ -43,12 +46,14 @@ export default {
       }, 0);
       return Math.ceil(total);
     },
+    // calcular a porcentaxe de calorías consumidas
     porcentaxeCalorias() {
       const total = this.caloriasTotaisNecesarias;
       const inxerida = this.caloriasInxeridasHoxe;
       if (!total || total <= 0) return 0;
       return Math.min(Math.round((inxerida / total) * 100), 100);
     },
+    // calcular as calorías restantes para chegar ao obxectivo
     caloriasRestantes() {
       const necesarias = this.caloriasTotaisNecesarias;
       const inxeridas = this.caloriasInxeridasHoxe;
@@ -58,9 +63,11 @@ export default {
     },
   },
   mounted() {
+    // cargar datos ao montar o compoñente
     this.cargarDatos();
   },
   methods: {
+    // cargar os grupos de comida do usuario e filtrar as comidas de hoxe
     async cargarDatos() {
       const hoxe = new Date().toISOString().split("T")[0];
       const usuarioStore = useUsuarioStore();
@@ -93,6 +100,7 @@ export default {
       }
     },
 
+    // eliminar un grupo e todas as comidas asociadas a ese grupo
     async borrarGrupo(id) {
       const usuarioStore = useUsuarioStore();
       usuarioStore.cargarToken();
@@ -103,6 +111,7 @@ export default {
         if (!grupo) throw new Error("Grupo no encontrado");
 
         const comidas = grupo.comidas || [];
+        // eliminar todas as comidas dentro do grupo
         for (const comida of comidas) {
           const res = await fetch(
             `https://uplife-final.onrender.com/api/comidas/${comida.id_comida}/`,
@@ -117,6 +126,7 @@ export default {
             throw new Error(`Error al eliminar comida ${comida.id_comida}`);
         }
 
+        // eliminar o grupo unha vez eliminadas as comidas
         const response = await fetch(
           `https://uplife-final.onrender.com/api/grupos/${id}/`,
           {
@@ -137,6 +147,7 @@ export default {
       }
     },
 
+    // eliminar unha comida concreta polo seu ID
     async borrarComida(idComida) {
       const usuarioStore = useUsuarioStore();
       usuarioStore.cargarToken();
@@ -165,6 +176,7 @@ export default {
       }
     },
 
+    // expandir ou contraer visualmente un grupo
     toggleExpand(id) {
       if (this.expandedGrupos.includes(id)) {
         this.expandedGrupos = this.expandedGrupos.filter((gid) => gid !== id);
@@ -173,11 +185,13 @@ export default {
       }
     },
 
+    // calcular valor total dun nutriente segundo peso
     calcular(valorPor100, peso) {
       if (!valorPor100 || !peso) return 0;
       return ((valorPor100 / 100) * peso).toFixed(1);
     },
 
+    // activar modo edición para un campo concreto dunha comida
     activarEdicion(id, campo) {
       const comida = this.grupos
         .flatMap((g) => g.comidas || [])
@@ -194,6 +208,7 @@ export default {
       });
     },
 
+    // gardar un campo editado dunha comida mediante PATCH
     async guardarCampoEditado(id, campo) {
       const usuarioStore = useUsuarioStore();
       usuarioStore.cargarToken();

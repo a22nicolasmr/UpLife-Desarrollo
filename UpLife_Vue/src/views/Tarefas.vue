@@ -175,10 +175,12 @@ export default {
 
     // comprobar as rachas do usuario en función das datas anteriores á data actual
     async comprobarRachas() {
+      // cargar usuario e token de autenticación
       const usuarioStore = useUsuarioStore();
       const idUsuario = usuarioStore.id;
       const token = usuarioStore.token;
 
+      // definición das fontes de datos a analizar para rachas
       const urls = [
         {
           key: "auga",
@@ -197,17 +199,20 @@ export default {
         },
       ];
 
+      // reiniciar contadores de racha
       this.rAuga = 0;
       this.rComidas = 0;
       this.rExercicios = 0;
       this.rTarefas = 0;
 
+      // comprobar rachas para auga, comidas e tarefas
       for (const item of urls) {
         const res = await fetch(item.url, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
 
+        // filtrar entradas válidas do usuario para o día actual ou anteriores
         const userData = data.filter((entry) => {
           const esUsuario = entry.usuario === idUsuario;
           const tenDataValida =
@@ -216,10 +221,10 @@ export default {
             entry.data <= new Date().toISOString().split("T")[0];
           const estaCompletado =
             item.key !== "tarefas" || entry.completado === true;
-
           return esUsuario && tenDataValida && estaCompletado;
         });
 
+        // ordenar datas en orde inversa
         const fechas = [...new Set(userData.map((entry) => entry.data))]
           .sort()
           .reverse();
@@ -227,9 +232,11 @@ export default {
         let racha = 0;
         let hoxe = new Date().toISOString().split("T")[0];
 
+        // marcar advertencia se hoxe non ten rexistro
         const hayHoxe = userData.some((entry) => entry.data === hoxe);
         this.advertencias[item.key] = !hayHoxe;
 
+        // calcular a racha diaria continua
         for (const data of fechas) {
           if (data === hoxe) {
             racha++;
@@ -245,6 +252,7 @@ export default {
       }
 
       try {
+        // cargar exercicios e usos de plantillas
         const [resEx, resUso] = await Promise.all([
           fetch("https://uplife-final.onrender.com/api/exercicios/", {
             headers: { Authorization: `Bearer ${token}` },
@@ -259,6 +267,7 @@ export default {
           resUso.json(),
         ]);
 
+        // filtrar rexistros válidos
         const exerciciosValidos = exercicios
           .filter(
             (e) =>
@@ -277,15 +286,18 @@ export default {
           )
           .map((u) => u.data);
 
+        // agrupar todas as datas únicas e ordealas
         const todasFechas = new Set([...exerciciosValidos, ...usosValidos]);
         const ordenadas = [...todasFechas].sort().reverse();
 
         let rachaEx = 0;
         let hoxe = new Date().toISOString().split("T")[0];
 
+        // marcar advertencia se hoxe non hai rexistro
         const hayHoxe = [...exerciciosValidos, ...usosValidos].includes(hoxe);
         this.advertencias.exercicios = !hayHoxe;
 
+        // calcular racha de exercicios + plantillas
         for (const data of ordenadas) {
           if (data === hoxe) {
             rachaEx++;
@@ -305,7 +317,6 @@ export default {
         );
       }
     },
-
     // comprobar se hai tarefas para unha data
     async comprobarTarefasNaData(date) {
       const usuarioStore = useUsuarioStore();
@@ -582,8 +593,8 @@ export default {
 #divXeral {
   display: flex;
   flex-direction: column;
-  min-height: 100%; /* Esto cubre la ventana completa */
-  box-sizing: border-box; /* <-- Muy útil si usas paddings/margins */
+  min-height: 100%;
+  box-sizing: border-box;
 }
 
 .divsArriba img {
@@ -668,7 +679,6 @@ h1 {
   margin-bottom: 0;
   color: #7f5af0;
 }
-/* Compoñente lateral */
 .lateral {
   width: 40%;
   background-color: #1c1c1c;
@@ -676,7 +686,6 @@ h1 {
   box-sizing: border-box;
 }
 
-/* v-calendar estilos */
 .vc-container {
   width: 100% !important;
   font-size: medium !important;

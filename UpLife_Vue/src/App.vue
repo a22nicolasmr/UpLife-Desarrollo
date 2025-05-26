@@ -17,7 +17,6 @@ export default {
       intervalId: null,
       valorMedallas: [],
       ventaEliminar: false,
-      // ventaMedallas: true,
       ventaMedallas: false,
     };
   },
@@ -90,9 +89,12 @@ export default {
       this.ventaEliminar = true;
     },
 
+    // pechar venta eliminar conta
     pecharModalEliminar() {
       this.ventaEliminar = false;
     },
+
+    // actualizar as medallas no store global
     async actualizarMedallasStore() {
       await useUsuarioStore().cargarMedallas();
     },
