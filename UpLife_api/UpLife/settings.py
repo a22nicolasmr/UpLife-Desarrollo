@@ -84,6 +84,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5174",
     "https://uplife-final.onrender.com",
     "https://uplife-vue-final.onrender.com",
+    "https://uplife.site"
 ]
 
 # permitir conexions de calquera,
