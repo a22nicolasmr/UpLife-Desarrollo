@@ -4,6 +4,9 @@ from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 from django.conf import settings
 from .models import Usuarios  # ou o teu modelo real
+import logging
+logger = logging.getLogger(__name__)
+logger.warning("⚠️ Aquí estamos dentro de CustomJWTAuthentication")
 
 class CustomJWTAuthentication(BaseAuthentication):
     def authenticate(self, request):
@@ -33,6 +36,7 @@ class CustomJWTAuthentication(BaseAuthentication):
             raise AuthenticationFailed("Usuario non atopado")
 
         # 💥 FALTABA ISTO
+        
         return (user, token)
 
 
