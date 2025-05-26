@@ -19,19 +19,23 @@ export default {
     };
   },
   computed: {
-    //obter usuario do storage
+    // obter usuario do storage
     idUsuario() {
-      const store = useUsuarioStore();
-      return store.id;
+      return useUsuarioStore().id;
     },
 
-    //obter e formater a data de hoxe
+    // obter e formatear a data de hoxe
     dataHoxeISO() {
       return new Date().toISOString().split("T")[0];
     },
+
+    // obter token do usuario
+    token() {
+      return useUsuarioStore().token;
+    },
   },
   methods: {
-    //engadir unha plantilla nova
+    // engadir unha plantilla nova
     async engadirNovaPlantilla() {
       this.erro = "";
 
@@ -53,6 +57,7 @@ export default {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${this.token}`,
             },
             body: JSON.stringify(payload),
           }
@@ -68,7 +73,7 @@ export default {
         this.nome = "";
         this.icona = "";
 
-        //cargar datos en Plantillas
+        // cargar datos en Plantillas
         this.$emit("cargarDatos");
       } catch (error) {
         this.erro = "Houbo un erro ao engadir plantillas.";
@@ -76,7 +81,7 @@ export default {
     },
   },
   watch: {
-    //seleccionar plantilla
+    // seleccionar plantilla
     seleccionada(nova) {
       this.icona = nova;
     },

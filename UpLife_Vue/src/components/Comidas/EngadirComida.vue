@@ -19,6 +19,7 @@ export default {
     };
   },
   watch: {
+    // actualizar grupo seleccionado cando se recibe prop
     grupoSeleccionadoMandar: {
       immediate: true,
       handler(novoValor) {
@@ -29,22 +30,33 @@ export default {
     },
   },
   mounted() {
-    //cargar datos cando se monta o compoñente
+    // cargar datos cando se monta o compoñente
     this.cargarDatos();
   },
+  computed: {
+    // obter token do usuario do store
+    token() {
+      return useUsuarioStore().token;
+    },
+  },
   methods: {
-    //obter data de hoxe
+    // obter data de hoxe en formato ISO
     dataHoxeISO() {
       return new Date().toISOString().split("T")[0];
     },
 
-    //cargar datos filtrando por id de usuario
+    // cargar grupos filtrados polo id de usuario
     async cargarDatos() {
       try {
         const usuarioStore = useUsuarioStore();
         const idUsuario = usuarioStore.id;
         const response = await fetch(
-          `https://uplife-final.onrender.com/api/grupos/`
+          `https://uplife-final.onrender.com/api/grupos/`,
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
         );
         if (!response.ok) throw new Error("Erro ao cargar grupos");
         const grupos = await response.json();
@@ -54,26 +66,9 @@ export default {
       }
     },
 
-    //validar campos do formulario
+    // validar campos obrigatorios do formulario
     comprobarCampos() {
       this.erro = "";
-      console.log(
-        "grupo",
-        this.grupoSeleccionado,
-        "nome",
-        this.nomeComida,
-        "peso",
-        this.peso,
-        "graxas",
-        this.graxas,
-        "carbohi",
-        this.carbohidratos,
-        "proteinas",
-        this.proteinas,
-        "calorias",
-        this.calorias
-      );
-
       if (
         !this.grupoSeleccionado ||
         !this.nomeComida.trim() ||
@@ -88,7 +83,7 @@ export default {
       }
     },
 
-    //engadir nova comida
+    // engadir nova comida e asociar ao grupo correspondente
     async engadirComida() {
       this.comprobarCampos();
       if (this.erro) return;
@@ -114,6 +109,7 @@ export default {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${this.token}`,
             },
             body: JSON.stringify(comidaPayload),
           }
@@ -134,6 +130,7 @@ export default {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${this.token}`,
             },
             body: JSON.stringify({ comidas: novaLista }),
           }
@@ -141,7 +138,7 @@ export default {
 
         if (!resPatch.ok) throw new Error("Erro ao engadir comida ao grupo");
 
-        //resetear campos
+        // resetear campos
         this.nomeComida = "";
         this.peso = null;
         this.graxas = null;

@@ -11,22 +11,35 @@ export default {
     };
   },
   computed: {
+    // obter id do usuario desde o store
     idUsuario() {
       return useUsuarioStore().id;
     },
+    // obter token do usuario desde o store
+    token() {
+      return useUsuarioStore().token;
+    },
+    // obter data de hoxe en formato ISO
     dataHoxeISO() {
       return new Date().toISOString().split("T")[0];
     },
   },
   async mounted() {
+    // cargar plantillas e exercicios ao montar o compoñente
     await this.cargarPlantillasUsuario();
     this.cargarExercicios();
   },
   methods: {
+    // cargar plantillas do usuario
     async cargarPlantillasUsuario() {
       try {
         const res = await fetch(
-          "https://uplife-final.onrender.com/api/plantillas/"
+          "https://uplife-final.onrender.com/api/plantillas/",
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
         );
         const data = await res.json();
         this.plantillasUsuario = data.filter(
@@ -37,11 +50,20 @@ export default {
       }
     },
 
+    // cargar exercicios e usos de plantillas dos últimos 7 días
     async cargarExercicios() {
       try {
         const [resEx, resUsoPl] = await Promise.all([
-          fetch("https://uplife-final.onrender.com/api/exercicios/"),
-          fetch("https://uplife-final.onrender.com/api/plantillas-uso/"),
+          fetch("https://uplife-final.onrender.com/api/exercicios/", {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }),
+          fetch("https://uplife-final.onrender.com/api/plantillas-uso/", {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }),
         ]);
 
         if (!resEx.ok || !resUsoPl.ok) throw new Error("Erro ao cargar datos");
@@ -65,7 +87,12 @@ export default {
             .map(async (uso) => {
               try {
                 const plantillaResponse = await fetch(
-                  `https://uplife-final.onrender.com/api/plantillas/${uso.plantilla}/`
+                  `https://uplife-final.onrender.com/api/plantillas/${uso.plantilla}/`,
+                  {
+                    headers: {
+                      Authorization: `Bearer ${this.token}`,
+                    },
+                  }
                 );
                 const plantillaData = await plantillaResponse.json();
                 return {
@@ -110,6 +137,7 @@ export default {
       }
     },
 
+    // engadir novo exercicio
     async engadirExercicio(exercicio) {
       const payload = {
         nome: exercicio.nome,
@@ -124,7 +152,10 @@ export default {
           "https://uplife-final.onrender.com/api/exercicios/",
           {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${this.token}`,
+            },
             body: JSON.stringify(payload),
           }
         );
@@ -135,34 +166,36 @@ export default {
       }
     },
 
+    // engadir exercicio a unha plantilla
     async engadirExercicioAPlantilla(exercicio, idPlantilla) {
       try {
-        // 1. Obtener la plantilla actual
         const plantillaRes = await fetch(
-          `https://uplife-final.onrender.com/api/plantillas/${idPlantilla}/`
+          `https://uplife-final.onrender.com/api/plantillas/${idPlantilla}/`,
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
         );
         if (!plantillaRes.ok)
           throw new Error("Non se puido cargar a plantilla");
 
         const plantilla = await plantillaRes.json();
-
-        // 2. Obtener solo los IDs de los ejercicios existentes
         const idsExerciciosExistentes = plantilla.exercicios.map((e) =>
           typeof e === "object" ? e.id_exercicio : e
         );
 
-        // 3. Añadir el nuevo ID si no está ya
         if (!idsExerciciosExistentes.includes(exercicio.id_exercicio)) {
           idsExerciciosExistentes.push(exercicio.id_exercicio);
         }
 
-        // 4. Enviar PATCH con los IDs
         const patchRes = await fetch(
           `https://uplife-final.onrender.com/api/plantillas/${idPlantilla}/`,
           {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${this.token}`,
             },
             body: JSON.stringify({
               exercicios: idsExerciciosExistentes,
@@ -180,6 +213,8 @@ export default {
         console.error("❗Erro ao engadir exercicio á plantilla:", error);
       }
     },
+
+    // rexistrar uso dunha plantilla
     async engadirPlantilla(plantilla) {
       const payload = {
         plantilla: plantilla.id_plantilla,
@@ -191,7 +226,10 @@ export default {
           "https://uplife-final.onrender.com/api/plantillas-uso/",
           {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${this.token}`,
+            },
             body: JSON.stringify(payload),
           }
         );
@@ -202,6 +240,7 @@ export default {
       }
     },
 
+    // obter nome da categoría segundo o id
     nomeCategoria(idCategoria) {
       const mapa = {
         1: "Perna",
@@ -219,7 +258,7 @@ export default {
 
 <template>
   <div id="divXeral">
-    <h2>Historial</h2>
+    <h2>Historial de exercicios</h2>
     <div class="historial-scroll">
       <div
         v-for="(actividades, data) in actividadesPorDia"

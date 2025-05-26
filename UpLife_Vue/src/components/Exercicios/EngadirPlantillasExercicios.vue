@@ -10,24 +10,33 @@ export default {
     };
   },
   mounted() {
-    //cargar plantillas cando se monte o compoñente
+    // cargar plantillas cando se monte o compoñente
     this.cargarPlantillas();
   },
   computed: {
-    //obter id usuario do sotore
+    // obter id usuario do store
     idUsuario() {
       return useUsuarioStore().id;
+    },
+    // obter token do usuario desde o store
+    token() {
+      return useUsuarioStore().token;
     },
   },
 
   methods: {
-    //cargar plantillas filtradas por id de usuario
+    // cargar plantillas filtradas por id de usuario
     async cargarPlantillas() {
       const idUsuario = useUsuarioStore().id;
 
       try {
         const response = await fetch(
-          "https://uplife-final.onrender.com/api/plantillas/"
+          "https://uplife-final.onrender.com/api/plantillas/",
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
         );
         if (!response.ok) throw new Error("Erro ao cargar plantillas");
 
@@ -39,7 +48,7 @@ export default {
       }
     },
 
-    //engadir plantilla nova
+    // engadir plantilla nova
     async engadirPlantilla() {
       this.error = "";
       if (!this.plantillaSeleccionada) {
@@ -57,6 +66,7 @@ export default {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${this.token}`,
             },
             body: JSON.stringify({
               usuario: idUsuario,

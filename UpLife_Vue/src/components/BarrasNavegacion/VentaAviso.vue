@@ -1,4 +1,6 @@
 <script>
+import { useUsuarioStore } from "@/stores/useUsuario";
+
 export default {
   props: {
     tarefaActual: Object,
@@ -6,11 +8,14 @@ export default {
   data() {
     return {};
   },
-  mounted() {},
   methods: {
-    //establecer a hora da tarefa 10 minutos despois da hora indicada incialmente
+    // establecer a hora da tarefa 10 minutos despois da hora indicada inicialmente
     async posporTarefa() {
       try {
+        const usuarioStore = useUsuarioStore();
+        usuarioStore.cargarToken(); // asegurar que o token está cargado
+        const token = usuarioStore.token;
+
         const [horas, minutos] = this.tarefaActual.hora.split(":").map(Number);
         const tarefaDate = new Date();
         tarefaDate.setHours(horas, minutos + 10);
@@ -27,21 +32,23 @@ export default {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(payload),
           }
         );
 
-        if (!response.ok) throw new Error("Erro ao pospor tarefa");
+        if (!response.ok) throw new Error("erro ao pospor tarefa");
 
         window.location.reload();
       } catch (error) {
-        console.error("Erro ao pospor tarefa:", error);
+        console.error("erro ao pospor tarefa:", error);
       }
     },
   },
 };
 </script>
+
 <template>
   <div class="modal-mask">
     <div class="modal-container">

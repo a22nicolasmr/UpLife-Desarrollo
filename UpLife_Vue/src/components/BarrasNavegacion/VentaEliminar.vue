@@ -12,26 +12,38 @@ export default {
     },
   },
   methods: {
+    // eliminar conta do usuario actual
     async eliminarConta() {
       try {
+        const usuarioStore = useUsuarioStore();
+        usuarioStore.cargarToken();
+        const token = usuarioStore.token;
+
         const response = await fetch(
           `https://uplife-final.onrender.com/api/usuarios/${this.id}/`,
           {
             method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
+
         this.$emit("pecharModalEliminar");
+
         if (!response.ok) {
-          throw new Error("Erro ao eliminar a conta.");
+          throw new Error("erro ao eliminar a conta.");
         }
+
         this.$router.push("/formularios/rexistro");
       } catch (error) {
-        console.error("Erro ao subir imaxe:", error);
+        console.error("erro ao eliminar conta:", error);
       }
     },
   },
 };
 </script>
+
 <template>
   <div class="modal-mask">
     <div class="modal-container">

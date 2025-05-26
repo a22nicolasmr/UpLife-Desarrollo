@@ -7,10 +7,13 @@ const usuarioStore = useUsuarioStore();
 const route = useRoute();
 
 watch(
-  //cargar novo nome de usuario
+  // cargar novo nome de usuario
   () => route.query.nome,
   (novoNome) => {
-    if (novoNome) usuarioStore.cargarUsuario(novoNome);
+    if (novoNome) {
+      usuarioStore.cargarToken(); // cargar token primeiro
+      usuarioStore.cargarUsuario(novoNome);
+    }
   },
   { immediate: true }
 );

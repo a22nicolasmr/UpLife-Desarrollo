@@ -28,6 +28,9 @@ class Usuarios(models.Model):
     auga_diaria=models.IntegerField(null=True, blank=True)
     modo_aplicacion=models.CharField(max_length=1,choices=MODO_CHOICES)
     
+    def __str__(self):
+        return f"nome={self.nome}, nome_usuario={self.nome_usuario}, email={self.email}, contrasinal={self.contrasinal}, imaxe_perfil={self.imaxe_perfil}, altura={self.altura}, peso={self.peso}, obxectivo={self.obxectivo}, actividade={self.actividade}, idade={self.idade}, calorias_diarias={self.calorias_diarias}, auga_diaria={self.auga_diaria}, modo_aplicacion={self.modo_aplicacion}"
+
     @property
     def is_authenticated(self):
         return True

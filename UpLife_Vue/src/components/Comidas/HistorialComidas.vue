@@ -11,26 +11,36 @@ export default {
     };
   },
   computed: {
-    //obter usuario do storage e data de hoxe
+    // obter id do usuario desde o store
     idUsuario() {
       const store = useUsuarioStore();
       return store.id;
     },
+    // obter data de hoxe en formato ISO
     dataHoxeISO() {
       return new Date().toISOString().split("T")[0];
     },
+    // obter token de sesión desde o store
+    token() {
+      return useUsuarioStore().token;
+    },
   },
   async mounted() {
-    //cagar grupos e comidas cando se monta o compoñente
+    // cagar grupos e comidas cando se monta o compoñente
     this.cargarComidas();
     this.cargarGrupos();
   },
   methods: {
-    //cagar comidas filtradas por id de usuario e agrupadas por data
+    // cargar comidas filtradas por id de usuario e agrupadas por data
     async cargarComidas() {
       try {
         const response = await fetch(
-          "https://uplife-final.onrender.com/api/comidas/"
+          "https://uplife-final.onrender.com/api/comidas/",
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
         );
         if (!response.ok) throw new Error("Erro ao cargar comidas");
 
@@ -56,11 +66,16 @@ export default {
       }
     },
 
-    //cargar grupos filtrados por id de usuario
+    // cargar grupos filtrados por id de usuario
     async cargarGrupos() {
       try {
         const response2 = await fetch(
-          "https://uplife-final.onrender.com/api/grupos/"
+          "https://uplife-final.onrender.com/api/grupos/",
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
         );
         const grupos = await response2.json();
 
@@ -74,7 +89,7 @@ export default {
       }
     },
 
-    //engadir nova comida
+    // engadir nova comida ao grupo correspondente
     async engadirComida(comida) {
       this.error = "";
       const grupoSeleccionado =
@@ -99,6 +114,7 @@ export default {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${this.token}`,
               },
               body: JSON.stringify(payload),
             }
@@ -122,6 +138,7 @@ export default {
               method: "PATCH",
               headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${this.token}`,
               },
               body: JSON.stringify({ comidas: comidasActualizadas }),
             }
@@ -129,10 +146,10 @@ export default {
 
           if (!patchResponse.ok) throw new Error("Erro ao actualizar grupo");
 
-          //cargar datos en Comidas
+          // cargar datos en Comidas
           this.$emit("cargarDatos");
 
-          //volver a cargar comidas e grupos tras a actualización
+          // volver a cargar comidas e grupos tras a actualización
           this.cargarComidas();
           this.cargarGrupos();
           this.gruposSeleccionadosPorComida = [];

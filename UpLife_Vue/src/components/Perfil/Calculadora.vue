@@ -19,14 +19,20 @@ export default {
     };
   },
   computed: {
-    //obter o id do store
+    // obter o id do usuario do store
     id() {
       const store = useUsuarioStore();
       return store.id;
     },
+
+    // obter o token de autenticación
+    token() {
+      return useUsuarioStore().token;
+    },
   },
 
   methods: {
+    // validar os campos do formulario
     validarFormulario() {
       const erros = [];
 
@@ -42,25 +48,28 @@ export default {
         erros.push("Introduce un peso válido.");
 
       if (erros.length > 0) {
-        this.mensaxeErro = erros[0]; // Mostramos só o primeiro erro
+        this.mensaxeErro = erros[0]; // mostrar só o primeiro erro
         return false;
       }
 
-      this.mensaxeErro = ""; // Limpar erros se todo está ben
+      this.mensaxeErro = ""; // limpar erros se todo está ben
       return true;
     },
-    //coller altura e peso do compoñente Calculador
+
+    // actualizar altura desde Calculador
     actualizarAltura(valor) {
       this.alturaSeleccionada = valor;
     },
+
+    // actualizar peso desde Calculador
     actualizarPeso(valor) {
       this.pesoSeleccionado = valor;
     },
 
-    //actualizar valores do usuario cos valores metidos cando se pulsa boton Calcular
+    // actualizar datos do usuario na API
     async actualizarApi() {
       if (!this.validarFormulario()) return;
-      // Paso 1: calcular TMB (gasto basal)
+
       const {
         pesoSeleccionado: peso,
         alturaSeleccionada: altura,
@@ -70,6 +79,7 @@ export default {
         selectedObxectivo: obxectivo,
       } = this;
 
+      // calcular gasto basal
       let tmb = 0;
       if (xenero === "Home") {
         tmb = 10 * peso + 6.25 * altura - 5 * idade + 5;
@@ -77,7 +87,7 @@ export default {
         tmb = 10 * peso + 6.25 * altura - 5 * idade - 161;
       }
 
-      // Paso 2: factor de actividade
+      // aplicar factor de actividade
       const factoresActividad = {
         Sedentario: 1.2,
         "Pouco activo": 1.375,
@@ -87,7 +97,7 @@ export default {
       };
       const factorActividad = factoresActividad[actividade] || 1.55;
 
-      // Paso 3: ajustar por obxectivo
+      // aplicar axuste segundo obxectivo
       const ajustesObjetivo = {
         "Perder graxa agresivamente": 0.75,
         "Perder graxa lentamente": 0.9,
@@ -101,10 +111,10 @@ export default {
         tmb * factorActividad * ajusteObjetivo
       );
 
-      // Paso 4: calcular a auga diaria (35 ml por kg)
+      // calcular auga diaria (35 ml por kg)
       const auga_diaria = Math.round(peso * 35);
 
-      // Paso 5: Enviar PATCH
+      // preparar datos para actualizar
       const datos = {
         xenero,
         altura,
@@ -123,6 +133,7 @@ export default {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${this.token}`,
             },
             body: JSON.stringify(datos),
           }
@@ -130,7 +141,7 @@ export default {
 
         const resultado = await response.json();
 
-        //actualizar datos no Perfil
+        // emitir evento para actualizar datos no compoñente pai
         this.$emit("actualizarDatos");
       } catch (error) {
         console.error("Erro ao facer PATCH cos datos:", error);
@@ -139,6 +150,7 @@ export default {
   },
 };
 </script>
+
 <template>
   <div id="principal">
     <h3>Calculadora IMC</h3>

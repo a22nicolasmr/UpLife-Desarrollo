@@ -21,6 +21,10 @@ export default {
     dataHoxeISO() {
       return new Date().toISOString().split("T")[0];
     },
+    //obter token desde o store
+    token() {
+      return useUsuarioStore().token;
+    },
   },
   methods: {
     //validar formulario
@@ -96,6 +100,7 @@ export default {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${this.token}`,
             },
             body: JSON.stringify(exercicioPayload),
           }

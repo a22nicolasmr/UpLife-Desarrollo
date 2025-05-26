@@ -28,46 +28,41 @@ export default {
     };
   },
   mounted() {
-    //cargar exercicios e plantillas cando se monta o compoñente
     this.cargarExerciciosHoxe();
     this.cargarPlantillasHoxe();
-
-    //engadir listener para cancelar edición das celas se se fai click en calquer lado do documento
     document.addEventListener("click", this.cancelarEdicionAoFora);
   },
   beforeUnmount() {
-    //borrar listener cando se desmonta o compoñente
     document.removeEventListener("click", this.cancelarEdicionAoFora);
   },
   methods: {
-    //activa a edición do elemento pasando id do campo , campo e o valor
     activarEdicion(id, campo, valor) {
       this.editando = { id, campo, valor };
-
-      //dalle o foco ao campo cando o DOM se actualice
       this.$nextTick(() => {
         const input = this.$el.querySelector("input:focus, select:focus");
         if (input) input.focus();
       });
     },
 
-    //gardar o valor do campo editado
     async guardarCampoEditado(id, campo) {
+      const token = useUsuarioStore().token;
       const novoValor = this.editando.valor;
       this.editando = { id: null, campo: null, valor: "" };
       try {
         await fetch(`https://uplife-final.onrender.com/api/exercicios/${id}/`, {
           method: "PATCH",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
           body: JSON.stringify({ [campo]: novoValor }),
         });
-        this.cargarExerciciosHoxe(); // recargar lista
+        this.cargarExerciciosHoxe();
       } catch (error) {
         console.error("Erro ao actualizar exercicio:", error);
       }
     },
 
-    //cancelar edición
     cancelarEdicionAoFora(e) {
       const path = e.composedPath?.() || e.path || [];
       const clickedInsideInput = path.some((el) =>
@@ -78,18 +73,20 @@ export default {
       }
     },
 
-    //devolver nome da categoría por id da categoría
     nomeCategoriaPorId(id) {
       return this.categoriasMap[id] || "Descoñecida";
     },
 
-    //cargar exercicios filtrados pola data de hoxe e id de usuario
     async cargarExerciciosHoxe() {
       const idUsuario = useUsuarioStore().id;
+      const token = useUsuarioStore().token;
       const hoxe = new Date().toISOString().split("T")[0];
       try {
         const response = await fetch(
-          "https://uplife-final.onrender.com/api/exercicios/"
+          "https://uplife-final.onrender.com/api/exercicios/",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
         );
         const exercicios = await response.json();
         this.exerciciosHoxe = exercicios
@@ -101,13 +98,16 @@ export default {
       }
     },
 
-    //cargar plantillas de hoxe filtradas pola data de hoxe e id de usuario
     async cargarPlantillasHoxe() {
       const idUsuario = useUsuarioStore().id;
+      const token = useUsuarioStore().token;
       const hoxe = new Date().toISOString().split("T")[0];
       try {
         const response = await fetch(
-          "https://uplife-final.onrender.com/api/plantillas-uso/"
+          "https://uplife-final.onrender.com/api/plantillas-uso/",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
         );
         const usos = await response.json();
 
@@ -115,11 +115,13 @@ export default {
           (uso) => uso.usuario === idUsuario && uso.data === hoxe
         );
 
-        //cargar los detalles de cada plantilla por su ID
         const plantillasCompletas = await Promise.all(
           usosFiltrados.map(async (uso) => {
             const plantillaResponse = await fetch(
-              `https://uplife-final.onrender.com/api/plantillas/${uso.plantilla}/`
+              `https://uplife-final.onrender.com/api/plantillas/${uso.plantilla}/`,
+              {
+                headers: { Authorization: `Bearer ${token}` },
+              }
             );
             const plantillaData = await plantillaResponse.json();
             return {
@@ -130,20 +132,22 @@ export default {
           })
         );
         this.plantillasHoxe = plantillasCompletas;
-
         this.$refs.historialRef?.cargarExercicios();
       } catch (error) {
         console.error("Erro cargando plantillas hoxe:", error);
       }
     },
 
-    //eliminar plantilla por id de plantilla
     async eliminarPlantilla(id_plantilla) {
       const idUsuario = useUsuarioStore().id;
+      const token = useUsuarioStore().token;
       const hoxe = new Date().toISOString().split("T")[0];
       try {
         const response = await fetch(
-          "https://uplife-final.onrender.com/api/plantillas-uso/"
+          "https://uplife-final.onrender.com/api/plantillas-uso/",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
         );
         const usos = await response.json();
 
@@ -160,6 +164,7 @@ export default {
           `https://uplife-final.onrender.com/api/plantillas-uso/${uso.id}/`,
           {
             method: "DELETE",
+            headers: { Authorization: `Bearer ${token}` },
           }
         );
 
@@ -170,26 +175,28 @@ export default {
       }
     },
 
-    //engadir nova plantilla
     async engadirPlantilla(nomePlantilla) {
       const idUsuario = useUsuarioStore().id;
+      const token = useUsuarioStore().token;
       const hoxe = new Date().toISOString().split("T")[0];
       try {
         const response = await fetch(
-          "https://uplife-final.onrender.com/api/plantillas/"
+          "https://uplife-final.onrender.com/api/plantillas/",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
         );
         const plantillas = await response.json();
         const plantilla = plantillas.find(
           (p) => p.usuario === idUsuario && p.nome === nomePlantilla
         );
-        console.log("id plantilla", plantilla.id_plantilla);
 
         await fetch("https://uplife-final.onrender.com/api/plantillas-uso/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
-
           body: JSON.stringify({
             usuario: idUsuario,
             plantilla: plantilla.id_plantilla,
@@ -204,11 +211,12 @@ export default {
       }
     },
 
-    //eliminar plantilla por id
     async eliminarExercicio(id) {
+      const token = useUsuarioStore().token;
       try {
         await fetch(`https://uplife-final.onrender.com/api/exercicios/${id}/`, {
           method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
         });
         this.cargarExerciciosHoxe();
         this.cargarPlantillasHoxe();

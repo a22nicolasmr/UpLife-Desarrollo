@@ -19,17 +19,22 @@ export default {
     };
   },
   computed: {
-    //obter usuario do storage e data de hoxe
+    // obter id do usuario desde o store
     idUsuario() {
       const store = useUsuarioStore();
       return store.id;
     },
+    // obter data de hoxe en formato ISO
     dataHoxeISO() {
       return new Date().toISOString().split("T")[0];
     },
+    // obter token do usuario desde o store
+    token() {
+      return useUsuarioStore().token;
+    },
   },
   methods: {
-    //engadir grupo novo
+    // engadir novo grupo para comidas
     async engadirNovoGrupo() {
       this.erro = "";
 
@@ -51,6 +56,7 @@ export default {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${this.token}`,
             },
             body: JSON.stringify(payload),
           }
@@ -60,6 +66,7 @@ export default {
           throw new Error("Erro ao engadir plantillas");
         }
 
+        // resetear campos
         this.nome = "";
         this.icona = "";
         this.$emit("cargarDatos");
@@ -69,6 +76,7 @@ export default {
     },
   },
   watch: {
+    // actualizar icona seleccionada cando cambia o valor
     seleccionada(nova) {
       this.icona = nova;
     },

@@ -18,10 +18,11 @@ export default {
     plantillaSeleccionadaMandar: "",
   },
   mounted() {
-    //cargar datos cando se monta o compoñente
+    // cargar datos cando se monta o compoñente
     this.cargarDatos();
   },
   watch: {
+    // sincronizar valor recibido por prop coa selección local
     plantillaSeleccionadaMandar: {
       immediate: true,
       handler(novoValor) {
@@ -31,8 +32,14 @@ export default {
       },
     },
   },
+  computed: {
+    // obter token do usuario
+    token() {
+      return useUsuarioStore().token;
+    },
+  },
   methods: {
-    //engadir novo exercicio
+    // engadir novo exercicio
     async engadirExercicio() {
       this.comprobarCampos();
       if (this.erro) return;
@@ -55,6 +62,7 @@ export default {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${this.token}`,
             },
             body: JSON.stringify(exercicioPayload),
           }
@@ -80,6 +88,7 @@ export default {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${this.token}`,
             },
             body: JSON.stringify({ exercicios: novaLista }),
           }
@@ -88,19 +97,19 @@ export default {
         if (!resPatch.ok)
           throw new Error("Erro ao engadir exercicio á plantilla");
 
-        const responsePatchData = await resPatch.json();
+        await resPatch.json();
 
-        //recargar datos para actualizar a lista de plantillas
+        // recargar datos para actualizar a lista de plantillas
         await this.cargarDatos();
 
-        //resetear os campos
+        // resetear os campos
         this.nomeExercicio = "";
         this.repeticions = "";
         this.peso = null;
         this.categoriaSeleccionada = "";
         this.erro = "";
 
-        //cargar datos en Plantillas
+        // cargar datos en Plantillas
         this.$emit("cargarDatos");
       } catch (error) {
         console.error("❌ Erro engadindo exercicio:", error);
@@ -108,13 +117,19 @@ export default {
       }
     },
 
-    //cargar datos de plantillas
+    // cargar datos de plantillas e categorías filtradas por usuario
     async cargarDatos() {
       try {
         const usuarioStore = useUsuarioStore();
         const idUsuario = usuarioStore.id;
+
         const response = await fetch(
-          `https://uplife-final.onrender.com/api/plantillas/`
+          `https://uplife-final.onrender.com/api/plantillas/`,
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
         );
 
         if (!response.ok) throw new Error("Erro ao cargar plantillas");
@@ -123,7 +138,12 @@ export default {
         this.plantillas = plantillas.filter((p) => p.usuario === idUsuario);
 
         const response2 = await fetch(
-          `https://uplife-final.onrender.com/api/categorias/`
+          `https://uplife-final.onrender.com/api/categorias/`,
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
         );
         if (!response2.ok) throw new Error("Erro ao cargar categorias");
         const categorias = await response2.json();
@@ -133,7 +153,7 @@ export default {
       }
     },
 
-    //comprobar campos do formulario
+    // comprobar que todos os campos obrigatorios están cubertos
     comprobarCampos() {
       console.log(
         this.plantillaSeleccionada,

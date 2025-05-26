@@ -23,17 +23,12 @@ export default {
     };
   },
   computed: {
-    //cargar id de usuario do store
     idUsuario() {
       return useUsuarioStore().id;
     },
-
-    //cargar calorías do store
     caloriasTotaisNecesarias() {
       return useUsuarioStore().calorias;
     },
-
-    //calcular as calorías inxeridas según o peso es as calorías por 100g dos alimentos
     caloriasInxeridasHoxe() {
       const total = this.grupos.reduce((sum, grupo) => {
         return (
@@ -48,38 +43,38 @@ export default {
       }, 0);
       return Math.ceil(total);
     },
-
-    //calcular porcentaxe das calorías inxeridas
     porcentaxeCalorias() {
       const total = this.caloriasTotaisNecesarias;
       const inxerida = this.caloriasInxeridasHoxe;
       if (!total || total <= 0) return 0;
-
       return Math.min(Math.round((inxerida / total) * 100), 100);
     },
-
-    //establecer un mínimo de 0 a calorías necesarias
     caloriasRestantes() {
       const necesarias = this.caloriasTotaisNecesarias;
       const inxeridas = this.caloriasInxeridasHoxe;
-
       if (!necesarias || necesarias <= 0) return 0;
-
       const restantes = necesarias - inxeridas;
       return restantes > 0 ? restantes : 0;
     },
   },
-  //cargar datos cando se monta o compoñente
   mounted() {
     this.cargarDatos();
   },
   methods: {
-    //cargar datos dos grupos filtrado por id de usuario e mapeado por comidas
     async cargarDatos() {
       const hoxe = new Date().toISOString().split("T")[0];
+      const usuarioStore = useUsuarioStore();
+      usuarioStore.cargarToken();
+      const token = usuarioStore.token;
+
       try {
         const response = await fetch(
-          "https://uplife-final.onrender.com/api/grupos/"
+          "https://uplife-final.onrender.com/api/grupos/",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         if (!response.ok) throw new Error("Erro ao cargar grupos");
         const grupos = await response.json();
@@ -98,8 +93,11 @@ export default {
       }
     },
 
-    //borrar grupo por id e todas as comidas asociadas
     async borrarGrupo(id) {
+      const usuarioStore = useUsuarioStore();
+      usuarioStore.cargarToken();
+      const token = usuarioStore.token;
+
       try {
         const grupo = this.grupos.find((g) => g.id_grupo === id);
         if (!grupo) throw new Error("Grupo no encontrado");
@@ -108,7 +106,12 @@ export default {
         for (const comida of comidas) {
           const res = await fetch(
             `https://uplife-final.onrender.com/api/comidas/${comida.id_comida}/`,
-            { method: "DELETE" }
+            {
+              method: "DELETE",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
           );
           if (!res.ok)
             throw new Error(`Error al eliminar comida ${comida.id_comida}`);
@@ -116,7 +119,12 @@ export default {
 
         const response = await fetch(
           `https://uplife-final.onrender.com/api/grupos/${id}/`,
-          { method: "DELETE" }
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         if (!response.ok) throw new Error("Erro ao eliminar grupo");
 
@@ -129,12 +137,20 @@ export default {
       }
     },
 
-    //borrar comida por id
     async borrarComida(idComida) {
+      const usuarioStore = useUsuarioStore();
+      usuarioStore.cargarToken();
+      const token = usuarioStore.token;
+
       try {
         const response = await fetch(
           `https://uplife-final.onrender.com/api/comidas/${idComida}/`,
-          { method: "DELETE" }
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         if (!response.ok) throw new Error("Erro ao eliminar comida");
 
@@ -149,7 +165,6 @@ export default {
       }
     },
 
-    //expandir ou comprimir grupo por id
     toggleExpand(id) {
       if (this.expandedGrupos.includes(id)) {
         this.expandedGrupos = this.expandedGrupos.filter((gid) => gid !== id);
@@ -158,13 +173,11 @@ export default {
       }
     },
 
-    //calcular valor por peso
     calcular(valorPor100, peso) {
       if (!valorPor100 || !peso) return 0;
       return ((valorPor100 / 100) * peso).toFixed(1);
     },
 
-    //activar edición de celas por id e campo
     activarEdicion(id, campo) {
       const comida = this.grupos
         .flatMap((g) => g.comidas || [])
@@ -173,7 +186,6 @@ export default {
 
       this.editando = { id, campo, valor: comida[campo] };
 
-      //poñer o foco no input unha vez cargado no DOM
       this.$nextTick(() => {
         const input = this.$refs.editInput;
         if (input && input.focus) {
@@ -182,14 +194,20 @@ export default {
       });
     },
 
-    //actualizar elemento editado
     async guardarCampoEditado(id, campo) {
+      const usuarioStore = useUsuarioStore();
+      usuarioStore.cargarToken();
+      const token = usuarioStore.token;
+
       const novoValor = this.editando.valor;
       this.editando = { id: null, campo: null, valor: "" };
       try {
         await fetch(`https://uplife-final.onrender.com/api/comidas/${id}/`, {
           method: "PATCH",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
           body: JSON.stringify({ [campo]: novoValor }),
         });
         this.cargarDatos();

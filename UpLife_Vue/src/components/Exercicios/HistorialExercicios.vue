@@ -9,25 +9,38 @@ export default {
     };
   },
   computed: {
-    //obter id do usuario do store e data de hoxe
+    // obter id do usuario do store
     idUsuario() {
       return useUsuarioStore().id;
     },
+    // obter token do usuario do store
+    token() {
+      return useUsuarioStore().token;
+    },
+    // obter data de hoxe en formato ISO
     dataHoxeISO() {
       return new Date().toISOString().split("T")[0];
     },
   },
   async mounted() {
-    //cargar exercicios cando se monta o compoñente
+    // cargar exercicios cando se monta o compoñente
     this.cargarExercicios();
   },
   methods: {
-    //cargar exercicios filtrados por id de usuario e data
+    // cargar exercicios e usos de plantilla dos últimos 7 días
     async cargarExercicios() {
       try {
         const [resEx, resUsoPl] = await Promise.all([
-          fetch("https://uplife-final.onrender.com/api/exercicios/"),
-          fetch("https://uplife-final.onrender.com/api/plantillas-uso/"),
+          fetch("https://uplife-final.onrender.com/api/exercicios/", {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }),
+          fetch("https://uplife-final.onrender.com/api/plantillas-uso/", {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }),
         ]);
 
         if (!resEx.ok || !resUsoPl.ok) {
@@ -53,7 +66,12 @@ export default {
             .map(async (uso) => {
               try {
                 const plantillaResponse = await fetch(
-                  `https://uplife-final.onrender.com/api/plantillas/${uso.plantilla}/`
+                  `https://uplife-final.onrender.com/api/plantillas/${uso.plantilla}/`,
+                  {
+                    headers: {
+                      Authorization: `Bearer ${this.token}`,
+                    },
+                  }
                 );
                 if (!plantillaResponse.ok)
                   throw new Error("Non se puido cargar a plantilla");
@@ -104,7 +122,7 @@ export default {
       }
     },
 
-    //engadir novo exercicio
+    // engadir novo exercicio
     async engadirExercicio(exercicio) {
       const payload = {
         nome: exercicio.nome,
@@ -122,6 +140,7 @@ export default {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${this.token}`,
             },
             body: JSON.stringify(payload),
           }
@@ -136,7 +155,7 @@ export default {
       }
     },
 
-    //engadir nova plantilla
+    // engadir nova plantilla
     async engadirPlantilla(plantilla) {
       const payload = {
         plantilla: plantilla.id_plantilla,
@@ -151,6 +170,7 @@ export default {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${this.token}`,
             },
             body: JSON.stringify(payload),
           }
@@ -164,7 +184,7 @@ export default {
       }
     },
 
-    //obter nome de categoría por id
+    // obter nome de categoría por id
     nomeCategoria(idCategoria) {
       const mapa = {
         1: "Perna",

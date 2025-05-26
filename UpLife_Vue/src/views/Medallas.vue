@@ -31,26 +31,33 @@ export default {
   },
 
   computed: {
+    // variables globais do id de usuario e do token
     usuarioId() {
-      const store = useUsuarioStore();
-      return store.id;
+      return useUsuarioStore().id;
+    },
+    token() {
+      return useUsuarioStore().token;
     },
   },
 
   methods: {
     // actualizar valores das medallas
     async actualizarMedallas() {
-      if (!this.valorMedallas || this.valorMedallas.length === 0) {
-        return;
-      }
+      if (!this.valorMedallas || this.valorMedallas.length === 0) return;
 
       const usuarioId = this.usuarioId;
+      const token = this.token;
       let algunhaActualizada = false;
 
       for (const medalla of this.valorMedallas) {
         try {
           const res = await fetch(
-            `https://uplife-final.onrender.com/api/medallas/${medalla.id_medalla}/`
+            `https://uplife-final.onrender.com/api/medallas/${medalla.id_medalla}/`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
           );
           if (!res.ok) throw new Error("Erro ao obter medalla");
 
@@ -66,6 +73,7 @@ export default {
                 method: "PATCH",
                 headers: {
                   "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify({
                   completado: true,
@@ -90,21 +98,25 @@ export default {
         }
       }
 
-      //actualizar medallas se hai algunha actualización
       if (algunhaActualizada) {
         await this.obterMedallas();
-        // actualizar medallas na barra superior
         this.$emit("medallasActualizadas");
       } else {
         console.log("🟡 Ningún cambio detectado, non se recarga nada");
       }
     },
 
-    // obter medallas por grupos
+    // obter medallas obtidas polo usuario
     async obterMedallas() {
+      const token = this.token;
       try {
         const response = await fetch(
-          "https://uplife-final.onrender.com/api/medallas/"
+          "https://uplife-final.onrender.com/api/medallas/",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         const medallas = await response.json();
 
@@ -122,6 +134,7 @@ export default {
       }
     },
 
+    //comprobar se a medalla está completada
     medallaCompletadaPorUsuario(medalla) {
       return medalla.completado && medalla.usuarios.includes(this.usuarioId);
     },

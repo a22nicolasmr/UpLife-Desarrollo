@@ -23,22 +23,29 @@ export default {
     };
   },
   computed: {
+    // variables globais do id de usuario e do token
     id() {
-      const store = useUsuarioStore();
-      return store.id;
+      return useUsuarioStore().id;
+    },
+    token() {
+      return useUsuarioStore().token;
     },
   },
   methods: {
-    // actualizar datos do usuario
+    // actualizar datos do perfil
     async actualizarDatos() {
       if (this.id) {
         try {
           const response = await fetch(
-            `https://uplife-final.onrender.com/api/usuarios/${this.id}/`
+            `https://uplife-final.onrender.com/api/usuarios/${this.id}/`,
+            {
+              headers: {
+                Authorization: `Bearer ${this.token}`,
+              },
+            }
           );
           const data = await response.json();
 
-          // actualizar os datos no compoñente
           this.imagen =
             data.imaxe_perfil || "image/upload/v1747728142/usuario_xotela.png";
           this.nome = data.nome;
@@ -53,7 +60,6 @@ export default {
           this.calorias = data.calorias_diarias;
           this.auga = data.auga_diaria;
 
-          // gardar os datos no store e en localStorage
           const store = useUsuarioStore();
           store.imagen = this.imagen;
           store.nome = this.nome;
@@ -66,7 +72,6 @@ export default {
           store.calorias = this.calorias;
           store.auga = this.auga;
 
-          // gardar no localStorage
           store.guardarUsuarioActualizado();
         } catch (error) {
           console.error("Erro ao actualizar datos:", error);
@@ -74,7 +79,7 @@ export default {
       }
     },
 
-    // cambiar imaxe de usuario cando click enriba da imaxe de usuario
+    //cambiar imaxe
     cambiarImagen() {
       this.$refs.fileInput.click();
     },
@@ -92,6 +97,9 @@ export default {
           `https://uplife-final.onrender.com/api/usuarios/${this.id}/`,
           {
             method: "PATCH",
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
             body: formData,
           }
         );
@@ -106,7 +114,8 @@ export default {
       }
     },
   },
-  // actualizar datos ao montar o compoñente
+
+  // actualizar datos cando se monta o compoñente
   mounted() {
     this.actualizarDatos();
   },

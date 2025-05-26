@@ -13,21 +13,24 @@ export default {
   },
 
   computed: {
-    //calcular o total dos macros e porcentaxes de cada un
+    // calcular a suma total dos macros
     totalMacros() {
       return this.proteinaTotal + this.graxaTotal + this.carbohidratoTotal || 1;
     },
+    // calcular porcentaxe real de proteínas
     proteinaPorcentaxeReal() {
       return (this.proteinaTotal / this.totalMacros) * 100;
     },
+    // calcular porcentaxe real de graxas
     graxaPorcentaxeReal() {
       return (this.graxaTotal / this.totalMacros) * 100;
     },
+    // calcular porcentaxe real de carbohidratos
     carboPorcentaxeReal() {
       return (this.carbohidratoTotal / this.totalMacros) * 100;
     },
 
-    //redondear porcentaxes
+    // redondear porcentaxes
     proteinaPorcentaxe() {
       return Math.round(this.proteinaPorcentaxeReal);
     },
@@ -37,20 +40,30 @@ export default {
     carboPorcentaxe() {
       return Math.round(this.carboPorcentaxeReal);
     },
+
+    // obter token do store
+    token() {
+      return useUsuarioStore().token;
+    },
   },
 
   mounted() {
-    //cargar datos ao montar o compoñente
+    // cargar datos ao montar o compoñente
     this.cargarDatos();
   },
   methods: {
-    //cargar comidas filtradas por usuario e data
+    // cargar comidas filtradas por usuario e data actual
     async cargarDatos() {
       const usuarioStore = useUsuarioStore();
       const idUsuario = usuarioStore.id;
       try {
         const response = await fetch(
-          "https://uplife-final.onrender.com/api/comidas/"
+          "https://uplife-final.onrender.com/api/comidas/",
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
         );
         if (!response.ok) throw new Error("Erro ao cargar comidas");
         const comidas = await response.json();
@@ -71,7 +84,7 @@ export default {
           const totalMacros100g =
             item.proteinas + item.graxas + item.carbohidratos;
 
-          //calcular cantidades
+          // calcular cantidades axustadas
           const factor = totalMacros100g > 100 ? 100 / totalMacros100g : 1;
 
           this.pesoTotal += peso;

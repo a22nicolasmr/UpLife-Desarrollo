@@ -17,7 +17,7 @@ export default {
   },
 
   computed: {
-    //cargar o id a data de hoxe e a auga necesaria polo usuario
+    // cargar o id a data de hoxe e a auga necesaria polo usuario
     idUsuario() {
       return useUsuarioStore().id;
     },
@@ -28,12 +28,12 @@ export default {
       return useUsuarioStore().auga;
     },
 
-    //calcular o total de auga inxerida o día de hoxe
+    // calcular o total de auga inxerida o día de hoxe
     augaInxeridaHoxe() {
       return this.augaHoxe.reduce((total, a) => total + a.cantidade, 0);
     },
 
-    //calcular porcentaxe de auga en función a auga necesitada e a auga inxerida
+    // calcular porcentaxe de auga en función a auga necesitada e a auga inxerida
     porcentaxeAuga() {
       const total = this.augaTotalNecesaria;
       const inxerida = this.augaInxeridaHoxe;
@@ -43,7 +43,7 @@ export default {
       return Math.min(Math.round((inxerida / total) * 100), 100);
     },
 
-    //establecer un mínimo de 0 a auga necesaria
+    // establecer un mínimo de 0 a auga necesaria
     augaRestante() {
       const necesaria = this.augaTotalNecesaria;
       const inxerida = this.augaInxeridaHoxe;
@@ -58,7 +58,7 @@ export default {
     this.cargarAugaHoxe();
   },
   methods: {
-    //activar edición por id e campo
+    // activar edición por id e campo
     activarEdicion(id, campo) {
       const entrada = this.augaHoxe.find((a) => a.id_auga === id);
       if (!entrada) return;
@@ -71,14 +71,20 @@ export default {
       });
     },
 
-    //gardar campo editado cos novos datos
+    // gardar campo editado cos novos datos
     async guardarCampoEditado(id, campo) {
+      const usuarioStore = useUsuarioStore();
+      usuarioStore.cargarToken();
+      const token = usuarioStore.token;
       const novoValor = this.editando.valor;
       this.editando = { id: null, campo: null, valor: "" };
       try {
         await fetch(`https://uplife-final.onrender.com/api/auga/${id}/`, {
           method: "PATCH",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
           body: JSON.stringify({ [campo]: novoValor }),
         });
         this.cargarAugaHoxe();
@@ -88,11 +94,19 @@ export default {
       }
     },
 
-    //cargar a auga inxerida na fecha actual
+    // cargar a auga inxerida na fecha actual
     async cargarAugaHoxe() {
+      const usuarioStore = useUsuarioStore();
+      usuarioStore.cargarToken();
+      const token = usuarioStore.token;
       try {
         const response = await fetch(
-          "https://uplife-final.onrender.com/api/auga/"
+          "https://uplife-final.onrender.com/api/auga/",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         if (!response.ok) throw new Error("Erro ao cargar auga");
 
@@ -107,13 +121,19 @@ export default {
       }
     },
 
-    //eliminar rexistro de auga por id
+    // eliminar rexistro de auga por id
     async eliminarAuga(id) {
+      const usuarioStore = useUsuarioStore();
+      usuarioStore.cargarToken();
+      const token = usuarioStore.token;
       try {
         const response = await fetch(
           `https://uplife-final.onrender.com/api/auga/${id}/`,
           {
             method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
         if (!response.ok) throw new Error("Erro ao eliminar auga");

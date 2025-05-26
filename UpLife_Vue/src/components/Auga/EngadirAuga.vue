@@ -10,17 +10,23 @@ export default {
     };
   },
   computed: {
-    //obter id de usuario do store e data de hoxe
+    // obter id de usuario do store
     idUsuario() {
-      const store = useUsuarioStore();
-      return store.id;
+      return useUsuarioStore().id;
     },
+
+    // obter a data de hoxe en formato ISO
     dataHoxeISO() {
-      return new Date().toISOString().split("T")[0]; // formato YYYY-MM-DD
+      return new Date().toISOString().split("T")[0];
+    },
+
+    // obter token do usuario
+    token() {
+      return useUsuarioStore().token;
     },
   },
   methods: {
-    //engadir auga
+    // engadir rexistro de auga
     async engadirAuga() {
       this.erro = "";
 
@@ -37,15 +43,13 @@ export default {
       };
 
       try {
-        const usuarioStore = useUsuarioStore();
-        await usuarioStore.cargarUsuario(this.idUsuario);
-        await usuarioStore.actualizarDatos();
         const response = await fetch(
           "https://uplife-final.onrender.com/api/auga/",
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${this.token}`,
             },
             body: JSON.stringify(payload),
           }
@@ -55,12 +59,12 @@ export default {
           throw new Error("Erro ao engadir auga");
         }
 
-        const resultado = await response.json();
+        await response.json();
 
         this.cantidade = "";
         this.hora = "";
 
-        //cargar auga de hoxe en Auga
+        // cargar auga de hoxe en Auga
         this.$emit("cargarAugaHoxe");
       } catch (error) {
         console.error("❗Erro no try-catch:", error);
