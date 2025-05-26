@@ -6,25 +6,33 @@ from django.conf import settings
 from .models import Usuarios  # ou o teu modelo real
 
 class CustomJWTAuthentication(BaseAuthentication):
-    class CustomJWTAuthentication(BaseAuthentication):
-        def authenticate(self, request):
-            auth_header = request.headers.get("Authorization")
-            print("🟡 Authorization header recibido:", auth_header)
+    def authenticate(self, request):
+        auth_header = request.headers.get("Authorization")
+        print("🟡 Authorization header recibido:", auth_header)
 
-            if not auth_header or not auth_header.startswith("Bearer "):
-                return None
+        if not auth_header or not auth_header.startswith("Bearer "):
+            return None
 
-            token = auth_header.split(" ")[1]
-            print("🔐 Token extraído:", token)
+        token = auth_header.split(" ")[1]
+        print("🔐 Token extraído:", token)
 
-            try:
-                payload = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
-                print("✅ Payload decodificado:", payload)
-            except jwt.ExpiredSignatureError:
-                print("❌ Token expirado")
-                raise AuthenticationFailed("Token expirado")
-            except jwt.InvalidTokenError as e:
-                print("❌ Token inválido:", str(e))
-                raise AuthenticationFailed("Token inválido")
+        try:
+            payload = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
+            print("✅ Payload decodificado:", payload)
+        except jwt.ExpiredSignatureError:
+            print("❌ Token expirado")
+            raise AuthenticationFailed("Token expirado")
+        except jwt.InvalidTokenError as e:
+            print("❌ Token inválido:", str(e))
+            raise AuthenticationFailed("Token inválido")
+
+        try:
+            user = Usuarios.objects.get(id_usuario=payload["user_id"])
+            print("✅ Usuario atopado:", user)
+        except Usuarios.DoesNotExist:
+            raise AuthenticationFailed("Usuario non atopado")
+
+        # 💥 FALTABA ISTO
+        return (user, token)
 
 
