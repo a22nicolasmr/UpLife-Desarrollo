@@ -28,6 +28,10 @@ class Usuarios(models.Model):
     auga_diaria=models.IntegerField(null=True, blank=True)
     modo_aplicacion=models.CharField(max_length=1,choices=MODO_CHOICES)
     
+    @property
+    def is_authenticated(self):
+        return True
+    
     def set_password(self, raw_password):
         self.contrasinal = make_password(raw_password)
 
