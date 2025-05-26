@@ -35,11 +35,16 @@ export default {
   },
 
   // cando se carga a vista, cargar as datas con tarefas, comprobar rachas e medallas do usuario
-  mounted() {
-    this.cargarDatasConTarefas();
-    this.comprobarRachas();
-    this.comprobarMedallas();
+  async mounted() {
     this.token = localStorage.getItem("token");
+    if (!this.token) {
+      console.warn("🔴 Token no encontrado, redirigiendo al login...");
+      this.$router.push({ name: "login" });
+      return;
+    }
+    await this.cargarDatasConTarefas();
+    await this.comprobarRachas();
+    await this.comprobarMedallas();
   },
 
   methods: {
@@ -247,8 +252,16 @@ export default {
       // calcular rExercicios usando exercicios + plantillas de exercicios
       try {
         const [resEx, resUso] = await Promise.all([
-          fetch("https://uplife-final.onrender.com/api/exercicios/"),
-          fetch("https://uplife-final.onrender.com/api/plantillas-uso/"),
+          fetch("https://uplife-final.onrender.com/api/exercicios/", {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }),
+          fetch("https://uplife-final.onrender.com/api/plantillas-uso/", {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }),
         ]);
 
         const [exercicios, usos] = await Promise.all([
@@ -411,7 +424,7 @@ export default {
           `https://uplife-final.onrender.com/api/tarefas/`,
           {
             headers: {
-              Authorization: `Bearer ${this.token}`, // pones el token en la petición
+              Authorization: `Bearer ${this.token}`,
             },
           }
         );
