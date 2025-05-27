@@ -72,7 +72,7 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .animation h1 {
     font-size: 5rem;
   }

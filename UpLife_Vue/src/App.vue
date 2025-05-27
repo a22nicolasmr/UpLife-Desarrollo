@@ -293,4 +293,29 @@ body {
     padding: 0 !important;
   }
 }
+
+@media (max-width: 1370px) {
+  .vista {
+    margin: 0;
+    margin-top: 8%;
+    margin-right: 5%;
+    padding: 3%;
+    width: 94%;
+    overflow-y: auto;
+  }
+
+  .layout {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    min-height: 100vh;
+  }
+
+  .sin-barras {
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
 </style>

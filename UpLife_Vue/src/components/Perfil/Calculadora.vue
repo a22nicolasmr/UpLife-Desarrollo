@@ -278,4 +278,13 @@ h1 {
   text-align: left;
   color: white;
 }
+
+@media (max-width: 1370px) {
+  h3 {
+    font-size: 2rem;
+  }
+  form {
+    font-size: 1.75rem;
+  }
+}
 </style>

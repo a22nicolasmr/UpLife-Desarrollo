@@ -395,7 +395,6 @@ table {
   background-color: #d8d8d8;
   color: black;
   border-radius: 8px;
-
   overflow: hidden;
 }
 
@@ -527,6 +526,92 @@ button {
 
   .titulo {
     font-size: 1.5rem;
+    text-align: center;
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 1370px) {
+  .auga-layout {
+    flex-direction: column;
+    height: auto;
+    width: 100%;
+    overflow: visible;
+    margin: 0;
+  }
+
+  .esquerda,
+  .dereita {
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+    box-sizing: border-box;
+    overflow: visible;
+  }
+
+  .grafico-auga {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .circular-chart {
+    max-width: 40%;
+    max-height: 40%;
+  }
+
+  .info-auga p {
+    font-size: 1rem;
+  }
+
+  .tarxetas {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    flex-direction: row;
+    gap: 1%;
+    margin-top: 1rem;
+  }
+
+  .tarxeta {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+    box-shadow: none;
+    margin: 0;
+  }
+
+  .tarxeta.inactiva {
+    background-color: #ccc;
+    color: #fff;
+  }
+
+  table {
+    width: 100%;
+    font-size: 0.9rem;
+    overflow-x: auto;
+  }
+
+  tr {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  td,
+  th {
+    padding: 0.5rem;
+  }
+
+  button#engadirA {
+    width: 100%;
+    font-size: 1.5rem;
+    padding: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .titulo {
+    font-size: 2rem;
     text-align: center;
     margin-top: 1rem;
   }

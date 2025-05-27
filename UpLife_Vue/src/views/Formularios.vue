@@ -183,4 +183,51 @@ body,
     flex-wrap: wrap;
   }
 }
+
+@media (max-width: 1370px) {
+  .contenedor {
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  .izquierda {
+    display: none;
+  }
+
+  .derecha {
+    width: 100%;
+    padding: 8% 6%;
+    height: 115vh;
+    border-radius: 0 0 8px 8px;
+    overflow-y: auto;
+  }
+
+  .formulario {
+    max-width: 100%;
+    width: 100%;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .formulario h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .formulario input,
+  .formulario button {
+    font-size: 1rem;
+    padding: 1rem;
+  }
+
+  .formulario p {
+    font-size: 1rem;
+    margin-top: 2rem;
+  }
+
+  .checkbox-condicions {
+    font-size: 0.95rem;
+    flex-wrap: wrap;
+  }
+}
 </style>

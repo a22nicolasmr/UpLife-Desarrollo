@@ -275,4 +275,58 @@ export default {
     height: 50%;
   }
 }
+@media (max-width: 1370px) {
+  .imc-wrapper {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    width: 100%;
+    font-size: 1.5rem;
+  }
+
+  .inputs {
+    width: 100%;
+    height: 100%;
+    gap: 2rem;
+  }
+
+  .input-box {
+    width: 100%;
+    border-radius: 15px;
+    padding: 1rem;
+  }
+
+  .resultado {
+    width: 100%;
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+
+  .valor-imc {
+    font-size: 3rem;
+  }
+
+  .etiqueta {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .barra-imc {
+    height: 1rem;
+    border-radius: 10px;
+  }
+
+  .indicador {
+    width: 2px;
+    height: 1.5rem;
+  }
+
+  .valores {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+  }
+  .range-control button {
+    width: 6%;
+  }
+}
 </style>

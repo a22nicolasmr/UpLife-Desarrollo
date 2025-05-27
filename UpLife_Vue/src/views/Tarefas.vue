@@ -605,6 +605,7 @@ export default {
 .divsArriba {
   display: flex;
   flex: 0.5;
+  margin: 0;
   justify-content: space-between;
   margin-right: 4%;
   margin-bottom: 2%;
@@ -753,6 +754,90 @@ h1 {
     margin: 0.2rem 0;
     text-align: center;
     font-size: 0.9rem;
+  }
+  #exercicio div:nth-of-type(1),
+  #auga div:nth-of-type(1),
+  #comidas div:nth-of-type(1) {
+    margin-top: 4%;
+  }
+  #izquierda p:nth-of-type(2),
+  #exercicio p:nth-of-type(2),
+  #auga p:nth-of-type(2),
+  #comidas p:nth-of-type(2) {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #4880ff;
+  }
+
+  .advertencia {
+    font-size: 0.75rem;
+    color: #ff4d4d;
+    margin-top: 0.3rem;
+  }
+
+  .tarxetas {
+    justify-content: center;
+  }
+
+  .tarxeta {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+  }
+
+  .tarxeta.inactiva {
+    background-color: #ccc;
+    color: #fff;
+  }
+
+  html,
+  body {
+    overflow-x: hidden;
+  }
+}
+
+@media (max-width: 1370px) {
+  .tarefas-layout {
+    flex-direction: column;
+    height: auto;
+    margin-right: 0;
+  }
+
+  .calendario,
+  .lateral {
+    width: 100%;
+    height: auto;
+  }
+
+  .divsArriba {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 0;
+    margin-bottom: 2%;
+  }
+
+  .divsArriba > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .divsArriba img {
+    height: 5.5vh;
+    width: 5.5vh;
+    margin-top: 0.5rem;
+  }
+
+  .divsArriba p {
+    margin: 0.2rem 0;
+    text-align: center;
+    font-size: 1.3rem;
   }
   #exercicio div:nth-of-type(1),
   #auga div:nth-of-type(1),

@@ -283,4 +283,12 @@ ul {
   text-decoration: line-through;
   color: #aaa;
 }
+@media (max-width: 1370px) {
+  h2 {
+    font-size: 2rem;
+  }
+  div {
+    font-size: 1.5rem;
+  }
+}
 </style>

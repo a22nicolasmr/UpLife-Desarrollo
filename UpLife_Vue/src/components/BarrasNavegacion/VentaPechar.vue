@@ -91,4 +91,31 @@ export default {
     padding: 8px 12px;
   }
 }
+@media (max-width: 1370px) {
+  .modal-container {
+    width: 40%;
+    padding: 15px 20px;
+    border-radius: 10px;
+  }
+
+  .modal-container h1 {
+    font-size: xx-large;
+    text-align: center;
+  }
+
+  .buttons {
+    margin-top: 10%;
+    flex-direction: row;
+    gap: 0.75rem;
+    align-items: stretch;
+    height: 40%;
+  }
+
+  #pechar,
+  #cancelar {
+    width: 20%;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+  }
+}
 </style>

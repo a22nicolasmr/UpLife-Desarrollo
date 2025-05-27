@@ -66,4 +66,17 @@ a {
     text-align: center;
   }
 }
+@media (max-width: 1370px) {
+  .modal-container {
+    width: 87%;
+    height: 9%;
+    padding: 15px 20px;
+    border-radius: 10px;
+  }
+
+  .modal-container h1 {
+    font-size: xx-large;
+    text-align: center;
+  }
+}
 </style>

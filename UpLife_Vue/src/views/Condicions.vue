@@ -213,4 +213,46 @@ button:hover {
     margin-top: 3vh;
   }
 }
+@media (max-width: 1370px) {
+  .terminos-container {
+    width: 95%;
+    padding: 6vh 6vw;
+    max-height: 100vh;
+    border-radius: 12px;
+    box-shadow: none;
+    font-size: 0.95rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 2vh;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+    margin-top: 1.5vh;
+    margin-bottom: 1vh;
+  }
+
+  .intro {
+    font-size: 1rem;
+  }
+
+  ul {
+    padding-left: 1.2rem;
+    margin-bottom: 1.5vh;
+  }
+
+  li {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  button {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    margin-top: 3vh;
+  }
+}
 </style>

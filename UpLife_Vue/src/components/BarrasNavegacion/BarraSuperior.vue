@@ -105,4 +105,28 @@ watch(
     font-size: 0.75rem;
   }
 }
+@media (max-width: 1370px) {
+  .barra-superior {
+    padding: 0.4rem 0.8rem;
+    height: auto;
+  }
+
+  .usuario-info {
+    margin-right: 15%;
+  }
+
+  .usuario-imagen {
+    width: 6vh;
+    height: 6vh;
+    margin-right: 1vh;
+  }
+
+  .usuario-nombre {
+    font-size: 1.5rem;
+  }
+
+  .usuario-medallas {
+    font-size: 1.1rem;
+  }
+}
 </style>

@@ -236,4 +236,55 @@ hr {
     margin: 0.5rem 0;
   }
 }
+@media (max-width: 1370px) {
+  nav {
+    width: 20%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    z-index: 9999;
+    padding-top: 20%;
+    transform: translateX(-100%);
+  }
+
+  nav.abierto {
+    transform: translateX(0);
+  }
+
+  .hamburguesa {
+    display: block;
+    top: -1.4%;
+    font-size: 2.5em;
+  }
+
+  .menu-superior {
+    flex-grow: 0;
+    margin-bottom: 30%;
+  }
+
+  .menu-superior ul,
+  .menu-inferior ul {
+    gap: 2%;
+  }
+
+  .menu-superior li,
+  .menu-inferior li {
+    padding: 0.4rem 0.6rem;
+    font-size: larger;
+  }
+
+  .menu-inferior {
+    margin-top: 100%;
+  }
+
+  li.activo {
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+  }
+
+  hr {
+    margin: 0.5rem 0;
+  }
+}
 </style>
