@@ -275,7 +275,7 @@ export default {
     height: 50%;
   }
 }
-@media (max-width: 1370px) {
+@media (min-width: 769px) and (max-width: 1370px) {
   .imc-wrapper {
     flex-direction: column;
     gap: 2rem;

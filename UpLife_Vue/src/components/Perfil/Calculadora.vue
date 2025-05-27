@@ -279,7 +279,7 @@ h1 {
   color: white;
 }
 
-@media (max-width: 1370px) {
+@media (min-width: 769px) and (max-width: 1370px) {
   h3 {
     font-size: 2rem;
   }

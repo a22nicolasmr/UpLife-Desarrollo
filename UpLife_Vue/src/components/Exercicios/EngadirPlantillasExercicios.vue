@@ -214,7 +214,7 @@ select {
     text-align: center;
   }
 }
-@media (max-width: 1370px) {
+@media (min-width: 769px) and (max-width: 1370px) {
   .engadir-container {
     height: auto;
     width: 100%;

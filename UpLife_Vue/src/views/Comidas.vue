@@ -831,7 +831,7 @@ button {
     margin-right: 5%;
   }
 }
-@media (max-width: 1370px) {
+@media (min-width: 769px) and (max-width: 1370px) {
   .plantilla-layout {
     flex-direction: column;
     height: auto;

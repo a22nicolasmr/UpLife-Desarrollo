@@ -125,7 +125,7 @@ export default {
     padding: 8px 12px;
   }
 }
-@media (max-width: 1370px) {
+@media (min-width: 769px) and (max-width: 1370px) {
   .modal-container {
     width: 40%;
     padding: 15px 20px;

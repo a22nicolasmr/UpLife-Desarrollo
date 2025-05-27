@@ -828,7 +828,7 @@ td[colspan="3"] {
     margin: 0.75rem 0 0.5rem;
   }
 }
-@media (max-width: 1370px) {
+@media (min-width: 769px) and (max-width: 1370px) {
   .exercicios-layout {
     flex-direction: column;
     height: auto !important;

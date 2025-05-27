@@ -14,6 +14,7 @@ export const useUsuarioStore = defineStore("usuario", {
     idade: 0,
     calorias: 0,
     auga: 0,
+    modo_aplicacion: "C",
     token: localStorage.getItem("token") || null, // cargar token dende localStorage ao iniciar
   }),
 
@@ -122,6 +123,7 @@ export const useUsuarioStore = defineStore("usuario", {
           idade: this.idade,
           calorias: this.calorias,
           auga: this.auga,
+          modo_aplicacion: this.modo_aplicacion,
         })
       );
     },
@@ -143,6 +145,7 @@ export const useUsuarioStore = defineStore("usuario", {
       this.idade = 0;
       this.calorias = 0;
       this.auga = 0;
+      this.modo_aplicacion = "C";
     },
 
     // actualizar os datos do usuario coa API
@@ -171,6 +174,7 @@ export const useUsuarioStore = defineStore("usuario", {
         this.idade = data.idade;
         this.calorias = data.calorias_diarias;
         this.auga = data.auga_diaria;
+        this.modo_aplicacion = data.modo_aplicacion;
 
         this.guardarUsuarioActualizado();
       } catch (error) {

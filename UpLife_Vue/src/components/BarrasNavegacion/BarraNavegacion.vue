@@ -236,7 +236,7 @@ hr {
     margin: 0.5rem 0;
   }
 }
-@media (max-width: 1370px) {
+@media (min-width: 769px) and (max-width: 1370px) {
   nav {
     width: 20%;
     height: 100%;

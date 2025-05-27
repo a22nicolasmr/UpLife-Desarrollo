@@ -5,12 +5,7 @@ from .views import login_usuario
 from .views import enviar_codigo_confirmacion
 from django.urls import path
 from .views import CustomLoginView
-# from .views import CustomTokenObtainPairView
-# from rest_framework_simplejwt.views import (
-#     TokenObtainPairView,
-#     TokenRefreshView,
-# )
-# from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
 
 router = DefaultRouter()
 router.register(r'usuarios', views.UsuariosViewSet)
@@ -29,7 +24,5 @@ urlpatterns = [
     path('login/', login_usuario),
     path("enviar-codigo/", enviar_codigo_confirmacion),
     path('api/login/', CustomLoginView.as_view(), name='custom-login'),
-    # path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    # path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    
+    path('enviar-recordatorio/', views.enviar_recordatorio),
 ]

@@ -66,7 +66,7 @@ a {
     text-align: center;
   }
 }
-@media (max-width: 1370px) {
+@media (min-width: 769px) and (max-width: 1370px) {
   .modal-container {
     width: 87%;
     height: 9%;

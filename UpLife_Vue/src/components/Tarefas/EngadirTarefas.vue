@@ -244,4 +244,35 @@ button:hover {
     margin-top: 1.5%;
   }
 }
+@media (min-width: 769px) and (max-width: 1370px) {
+  .formulario {
+    margin-top: 4vh;
+    padding: 5vw;
+  }
+
+  h2 {
+    font-size: 1.7rem;
+  }
+
+  .data {
+    font-size: 0.95rem;
+  }
+
+  label {
+    font-size: 1.1rem;
+    margin-top: 5%;
+  }
+
+  input,
+  select,
+  button {
+    font-size: 1.2rem;
+    padding: 2.5% 3%;
+  }
+
+  .error {
+    font-size: 0.85rem;
+    margin-top: 1.5%;
+  }
+}
 </style>

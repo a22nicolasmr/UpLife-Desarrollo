@@ -191,3 +191,28 @@ def enviar_codigo_confirmacion(request):
             logger.error(f"Error sending email: {str(e)}")
             return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
     return JsonResponse({'status': 'error', 'message': 'Invalid method'}, status=405)
+
+@csrf_exempt
+def enviar_recordatorio(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            email = data.get('email')
+            tarefa_nome = data.get('tarefa')
+            hora = data.get('hora')
+
+            send_mail(
+                subject="Lembranza tarefa - UpLife",
+                message=(
+                    f"Lembranza: A tarefa '{tarefa_nome}' está programada para as {hora}. "
+                    f"Faltan 2 minutos!"
+                ),
+                from_email="uplifedaw@gmail.com",
+                recipient_list=[email],
+                fail_silently=False,
+            )
+            return JsonResponse({'status': 'success'})
+        except Exception as e:
+            logger.error(f"Erro enviando recordatorio: {str(e)}")
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+    return JsonResponse({'status': 'error', 'message': 'Invalid method'}, status=405)

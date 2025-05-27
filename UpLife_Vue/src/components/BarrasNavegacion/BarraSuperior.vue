@@ -105,7 +105,7 @@ watch(
     font-size: 0.75rem;
   }
 }
-@media (max-width: 1370px) {
+@media (min-width: 769px) and (max-width: 1370px) {
   .barra-superior {
     padding: 0.4rem 0.8rem;
     height: auto;

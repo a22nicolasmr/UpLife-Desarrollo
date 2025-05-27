@@ -60,21 +60,54 @@ export default {
 
     // comprobar se a hora dunha tarefa coincide coa hora actual
     // true = abrir ventá aviso
-    comprobarHoras() {
+    // mandar correo de alerta se o usuario indicou que quere recibir notificacións
+    async comprobarHoras() {
       const agora = new Date();
-      const horaActual = agora.toTimeString().slice(0, 5);
 
       for (const tarefa of this.tarefasConHora) {
-        if (
-          tarefa.hora &&
-          tarefa.hora.slice(0, 5) === horaActual &&
-          !tarefa.notificada &&
-          !tarefa.completada
-        ) {
-          this.tarefaActual = tarefa;
-          this.avisoActivo = true;
+        if (!tarefa.hora || tarefa.completada || tarefa.notificada) continue;
+
+        const tarefaHora = new Date();
+        const [hora, minutos] = tarefa.hora.split(":");
+        tarefaHora.setHours(hora, minutos, 0, 0);
+
+        const diffMs = tarefaHora - agora;
+        const diffMin = Math.floor(diffMs / 60000);
+
+        if (diffMin === 1) {
           tarefa.notificada = true;
-          return;
+          console.log(true);
+
+          // se o usuario ten activadas as notificacións (modo_aplicacion = 'E')
+          console.log("modo aplicacion", useUsuarioStore().modo_aplicacion);
+
+          if (useUsuarioStore().modo_aplicacion === "E") {
+            console.log("enviando correo");
+            console.log("Comprobando tarefas...");
+            console.log("Tarefas con hora:", this.tarefasConHora);
+
+            try {
+              const res = await fetch(
+                "https://uplife-final.onrender.com/enviar-recordatorio/",
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    email: useUsuarioStore().email,
+                    tarefa: tarefa.nome,
+                    hora: tarefa.hora,
+                  }),
+                }
+              );
+
+              const result = await res.json();
+              console.log("Resposta do servidor:", result);
+            } catch (error) {
+              console.error("Erro ao enviar correo de recordatorio:", error);
+            }
+          }
         }
       }
     },
@@ -294,7 +327,7 @@ body {
   }
 }
 
-@media (max-width: 1370px) {
+@media (min-width: 769px) and (max-width: 1370px) {
   .vista {
     margin: 0;
     margin-top: 8%;

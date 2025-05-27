@@ -305,7 +305,7 @@ export default {
     height: auto;
   }
 }
-@media (max-width: 1370px) {
+@media (min-width: 769px) and (max-width: 1370px) {
   .total-container {
     margin-top: 1rem;
     padding: 1rem;

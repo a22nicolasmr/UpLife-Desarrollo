@@ -20,6 +20,7 @@ export default {
       idade: 0,
       calorias: 0,
       auga: 0,
+      modoAplicacion: "C",
     };
   },
   computed: {
@@ -59,6 +60,7 @@ export default {
           this.idade = data.idade || "non especificado";
           this.calorias = data.calorias_diarias;
           this.auga = data.auga_diaria;
+          this.modoAplicacion = data.modo_aplicacion || "C";
 
           const store = useUsuarioStore();
           store.imagen = this.imagen;
@@ -113,6 +115,26 @@ export default {
         console.error("Erro ao subir imaxe:", error);
       }
     },
+    async actualizarModoAplicacion() {
+      try {
+        await fetch(
+          `https://uplife-final.onrender.com/api/usuarios/${this.id}/`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${this.token}`,
+            },
+            body: JSON.stringify({ modo_aplicacion: this.modoAplicacion }),
+          }
+        );
+        console.log("Modo de aplicación actualizado:", this.modoAplicacion);
+        const store = useUsuarioStore();
+        store.modo_aplicacion = this.modoAplicacion;
+      } catch (error) {
+        console.error("Erro ao actualizar modo de aplicación:", error);
+      }
+    },
   },
 
   // actualizar datos cando se monta o compoñente
@@ -133,6 +155,27 @@ export default {
             <p><strong>Nome:</strong> {{ nome }}</p>
             <p><strong>Email:</strong> {{ email }}</p>
             <p><strong>Nome de usuario:</strong> {{ nomeUsuario }}</p>
+            <p>Desexa recibir notificacións das súas tarefas?</p>
+            <label>
+              Si:
+              <input
+                type="radio"
+                name="opcion"
+                value="E"
+                v-model="modoAplicacion"
+                @change="actualizarModoAplicacion"
+              />
+            </label>
+            <label>
+              Non:
+              <input
+                type="radio"
+                name="opcion"
+                value="C"
+                v-model="modoAplicacion"
+                @change="actualizarModoAplicacion"
+              />
+            </label>
           </div>
 
           <div class="imaxe-perfil">
@@ -355,7 +398,7 @@ body {
     flex-direction: column;
   }
 }
-@media (max-width: 1370px) {
+@media (min-width: 769px) and (max-width: 1370px) {
   #eliminar {
     width: 18%;
     font-size: large;

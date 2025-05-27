@@ -61,7 +61,7 @@ export default {
     },
   },
   methods: {
-    emitirDatasConTarefas(tarefasConHora) {
+    emitirDatasConTarefas(tarefasConHora = []) {
       this.$emit("datas-con-tarefas", tarefasConHora);
     },
 
@@ -283,7 +283,7 @@ ul {
   text-decoration: line-through;
   color: #aaa;
 }
-@media (max-width: 1370px) {
+@media (min-width: 769px) and (max-width: 1370px) {
   h2 {
     font-size: 2rem;
   }
