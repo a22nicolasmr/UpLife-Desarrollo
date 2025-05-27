@@ -8,6 +8,7 @@ export const useUsuarioStore = defineStore("usuario", {
     medallas: 0,
     altura: 0,
     peso: 0,
+    email: "",
     xenero: "",
     obxectivo: "",
     actividade: "",
@@ -55,6 +56,7 @@ export const useUsuarioStore = defineStore("usuario", {
 
         this.id = usuario.id_usuario;
         this.nome = usuario.nome;
+        this.email = usuario.email;
         this.imagen =
           usuario.imaxe_perfil || "image/upload/v1747728142/usuario_xotela.png";
 
@@ -100,9 +102,10 @@ export const useUsuarioStore = defineStore("usuario", {
     cargarDesdeStorage() {
       const datos = localStorage.getItem("usuario");
       if (datos) {
-        const { id, nome } = JSON.parse(datos);
+        const { id, nome, email } = JSON.parse(datos);
         this.id = id;
         this.nome = nome;
+        this.email = email || "";
         this.cargarMedallas();
       }
     },
@@ -117,6 +120,7 @@ export const useUsuarioStore = defineStore("usuario", {
           imagen: this.imagen,
           altura: this.altura,
           peso: this.peso,
+          email: this.email,
           xenero: this.xenero,
           obxectivo: this.obxectivo,
           actividade: this.actividade,
@@ -139,6 +143,7 @@ export const useUsuarioStore = defineStore("usuario", {
       this.medallas = 0;
       this.altura = 0;
       this.peso = 0;
+      this.email = "";
       this.xenero = "";
       this.obxectivo = "";
       this.actividade = "";
@@ -170,6 +175,7 @@ export const useUsuarioStore = defineStore("usuario", {
         this.peso = data.peso;
         this.xenero = data.xenero;
         this.obxectivo = data.obxectivo;
+        this.email = data.email;
         this.actividade = data.actividade;
         this.idade = data.idade;
         this.calorias = data.calorias_diarias;

@@ -18,12 +18,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import AllowAny
-from rest_framework.authentication import BaseAuthentication
-from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import IsAuthenticated
 from .auth import CustomJWTAuthentication
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.core.mail import EmailMessage
 
 class CustomLoginView(APIView):
     permission_classes = [AllowAny]
@@ -181,7 +180,7 @@ def enviar_codigo_confirmacion(request):
             
             send_mail(
                 subject="Código de confirmación - UpLife",
-                message=f"Tu código de confirmación es: {codigo}",
+                message=f"O teu código de confirmación é: {codigo}",
                 from_email="uplifedaw@gmail.com",
                 recipient_list=[email],
                 fail_silently=False,
@@ -201,18 +200,33 @@ def enviar_recordatorio(request):
             tarefa_nome = data.get('tarefa')
             hora = data.get('hora')
 
-            send_mail(
-                subject="Lembranza tarefa - UpLife",
-                message=(
-                    f"Lembranza: A tarefa '{tarefa_nome}' está programada para as {hora}. "
-                    f"Faltan 2 minutos!"
-                ),
+            asunto = "🔔 Lembranza de tarefa - UpLife"
+            corpo_html = f"""
+                <html>
+                  <body style="font-family: Arial, sans-serif; line-height: 1.6;">
+                    <h2 style="color: #4CAF50;">🔔 Recordatorio de tarefa</h2>
+                    <p><strong>Tarefa:</strong> {tarefa_nome}</p>
+                    <p><strong>Hora:</strong> {hora}</p>
+                    <p style="color: #ff5722;"><strong>⚠️ Faltan só 2 minutos!</strong></p>
+                    <hr/>
+                    <p style="font-size: 0.9em; color: #777;">UpLife - Xestiona o teu día con éxito 🚀</p>
+                  </body>
+                </html>
+            """
+
+            email_msg = EmailMessage(
+                subject=asunto,
+                body=corpo_html,
                 from_email="uplifedaw@gmail.com",
-                recipient_list=[email],
-                fail_silently=False,
+                to=[email],
             )
+            email_msg.content_subtype = "html"  # Importante: indicar que é HTML
+
+            email_msg.send(fail_silently=False)
+
             return JsonResponse({'status': 'success'})
         except Exception as e:
             logger.error(f"Erro enviando recordatorio: {str(e)}")
             return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+
     return JsonResponse({'status': 'error', 'message': 'Invalid method'}, status=405)
