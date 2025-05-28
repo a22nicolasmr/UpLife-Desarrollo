@@ -25,6 +25,12 @@ class UsuariosSerializer(serializers.ModelSerializer):
         if 'contrasinal' in validated_data:
             validated_data['contrasinal'] = make_password(validated_data['contrasinal'])
         return super().update(instance, validated_data)
+    
+    def create(self, validated_data):
+        if 'contrasinal' in validated_data:
+            validated_data['contrasinal'] = make_password(validated_data['contrasinal'])
+        return super().create(validated_data)
+
 
 class AugaSerializer(serializers.ModelSerializer):
     class Meta:

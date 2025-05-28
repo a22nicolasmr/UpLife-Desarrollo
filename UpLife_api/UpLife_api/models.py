@@ -36,6 +36,7 @@ class Usuarios(models.Model):
 
     def check_password(self, raw_password):
         return check_password(raw_password, self.contrasinal)
+
     
 # class Usuarios(models.Model):
 #     id_usuario = models.BigAutoField(primary_key=True)
