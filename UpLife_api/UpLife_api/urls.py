@@ -23,5 +23,5 @@ urlpatterns = [
     path('api/login/', CustomLoginView.as_view(), name='custom-login'),
     path('enviar-recordatorio/', views.enviar_recordatorio),
     path("comprobar-email/", views.comprobar_email_existente),
-
+    path("obter-usuario-id/", views.obter_usuario_por_email),
 ]

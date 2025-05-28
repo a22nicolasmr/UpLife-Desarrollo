@@ -20,6 +20,7 @@ from django.core.mail import EmailMessage
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny,IsAuthenticated
 
+# comprobar se un email existe sen necesidade de acceder a api
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def comprobar_email_existente(request):
@@ -29,6 +30,22 @@ def comprobar_email_existente(request):
 
     existe = Usuarios.objects.filter(email=email).exists()
     return Response({"existe": existe})
+
+
+# obter un usuario específico sen necesidade de acceder a api
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def obter_usuario_por_email(request):
+    email = request.data.get("email")
+    if not email:
+        return Response({"error": "Email requerido"}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        usuario = Usuarios.objects.get(email=email)
+        return Response({"id_usuario": usuario.id_usuario})
+    except Usuarios.DoesNotExist:
+        return Response({"error": "Usuario non atopado"}, status=status.HTTP_404_NOT_FOUND)
+
 class CustomLoginView(APIView):
     permission_classes = [AllowAny]
 

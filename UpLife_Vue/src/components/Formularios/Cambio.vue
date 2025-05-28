@@ -32,21 +32,25 @@ export default {
 
       try {
         const res = await fetch(
-          "https://uplife-final.onrender.com/api/usuarios/"
+          "https://uplife-final.onrender.com/obter-usuario-id/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email: correo }),
+          }
         );
-        const usuarios = await res.json();
 
-        const usuario = usuarios.find(
-          (u) => u.email.toLowerCase() === correo.toLowerCase()
-        );
+        const data = await res.json();
 
-        if (!usuario) {
+        if (!res.ok || !data.id_usuario) {
           this.erro = "Usuario non atopado.";
           return;
         }
 
         const response = await fetch(
-          `https://uplife-final.onrender.com/api/usuarios/${usuario.id_usuario}/`,
+          `https://uplife-final.onrender.com/api/usuarios/${data.id_usuario}/`,
           {
             method: "PATCH",
             headers: {
