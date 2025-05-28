@@ -151,6 +151,11 @@ export default {
           }
           this.$emit("cargarDatasConTarefas");
         }
+        const tarefasRestantes = Object.values(this.tarefasPorData).flat();
+        const tarefasConHora = tarefasRestantes.filter(
+          (t) => t.hora && !t.completada
+        );
+        this.$emit("tarefasActualizadas", tarefasConHora);
       } catch (error) {
         console.error("Erro ao borrar tarefa:", error);
       }

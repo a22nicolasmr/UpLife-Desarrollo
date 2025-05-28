@@ -18,6 +18,7 @@ export default {
       valorMedallas: [],
       ventaEliminar: false,
       ventaMedallas: false,
+      tarefasNotificadasAnticipadas: new Set(),
     };
   },
   components: {
@@ -36,6 +37,21 @@ export default {
         await medallasComp.actualizarMedallas();
       }
     });
+    // cando se monta a aplicación , cargar o usuario
+    const usuarioStore = useUsuarioStore();
+    usuarioStore.cargarDesdeStorage();
+
+    // se non hai id de usuario e nome de usuario redirixir ao formulario de inicio
+    if (!usuarioStore.id || !usuarioStore.nome) {
+      this.$router.push("/formularios/inicio");
+    }
+    if (!usuarioStore.email) {
+      usuarioStore.cargarUsuario(usuarioStore.nome);
+    }
+
+    // executar comprobación hora cada segundo
+    this.intervalId = setInterval(this.comprobarHoras, 1000);
+    // this.intervalId = setInterval(this.comprobarHoras, 5000);
   },
   methods: {
     // abrir ventá medallas cando se obtén unha medalla
@@ -63,16 +79,17 @@ export default {
     // mandar correo de alerta se o usuario indicou que quere recibir notificacións
     async comprobarHoras() {
       const agora = new Date();
+      const horaActual = agora.toTimeString().slice(0, 5);
+
+      // Inicializa el set si no existe
+      if (!this.tarefasNotificadasAnticipadas) {
+        this.tarefasNotificadasAnticipadas = new Set();
+      }
 
       for (const tarefa of this.tarefasConHora) {
-        // Validación general: tarea debe tener hora y estar pendiente
         if (!tarefa.hora || tarefa.completada) continue;
 
-        // Inicializa la propiedad local si no existe aún
-        if (typeof tarefa.notificadaAnticipada === "undefined") {
-          tarefa.notificadaAnticipada = false;
-        }
-
+        // Calcular minutos de diferencia con la hora actual
         const tarefaHora = new Date();
         const [hora, minutos] = tarefa.hora.split(":");
         tarefaHora.setHours(hora, minutos, 0, 0);
@@ -80,15 +97,20 @@ export default {
         const diffMs = tarefaHora - agora;
         const diffMin = Math.floor(diffMs / 60000);
 
-        // ⏱️ Si faltan 2 minutos y aún no fue notificada anticipadamente
-        if (diffMin === 2 && !tarefa.notificadaAnticipada) {
-          tarefa.notificadaAnticipada = true;
+        // Notificación anticipada (a 1 minuto)
+        if (
+          diffMin === 1 &&
+          !this.tarefasNotificadasAnticipadas.has(tarefa.id)
+        ) {
+          this.tarefasNotificadasAnticipadas.add(tarefa.id);
 
           console.log("⏳ Notificación anticipada para:", tarefa.titulo);
 
-          if (useUsuarioStore().modo_aplicacion === "E") {
+          const store = useUsuarioStore();
+          const email = store.email;
+
+          if (store.modo_aplicacion === "E" && email) {
             try {
-              const hora = tarefa.hora.substring(0, 5);
               const res = await fetch(
                 "https://uplife-final.onrender.com/enviar-recordatorio/",
                 {
@@ -97,19 +119,34 @@ export default {
                     "Content-Type": "application/json",
                   },
                   body: JSON.stringify({
-                    email: useUsuarioStore().email,
+                    email,
                     tarefa: tarefa.titulo,
-                    hora: hora,
+                    hora: tarefa.hora.substring(0, 5),
                   }),
                 }
               );
 
               const result = await res.json();
               console.log("📧 Correo enviado:", result);
+              console.log("mail", email);
             } catch (error) {
               console.error("❌ Erro ao enviar correo:", error);
             }
+          } else {
+            console.log("Modo aplicación non é E ou email non dispoñible");
           }
+        }
+
+        // Notificación puntual
+        if (
+          tarefa.hora.slice(0, 5) === horaActual &&
+          !tarefa.notificada &&
+          !tarefa.completada
+        ) {
+          this.tarefaActual = tarefa;
+          this.avisoActivo = true;
+          tarefa.notificada = true;
+          return;
         }
       }
     },
@@ -177,20 +214,6 @@ export default {
       return store.id;
     },
   },
-  mounted() {
-    // cando se monta a aplicación , cargar o usuario
-    const usuarioStore = useUsuarioStore();
-    usuarioStore.cargarDesdeStorage();
-
-    // se non hai id de usuario e nome de usuario redirixir ao formulario de inicio
-    if (!usuarioStore.id || !usuarioStore.nome) {
-      this.$router.push("/formularios/inicio");
-    }
-
-    // executar comprobación hora cada segundo
-    this.intervalId = setInterval(this.comprobarHoras, 1000);
-    // this.intervalId = setInterval(this.comprobarHoras, 5000);
-  },
   // quitar o intervalo para que non siga comprobando unha vez desmontado o compoñente
   beforeUnmount() {
     if (this.intervalId) {
@@ -222,7 +245,7 @@ export default {
       <router-view
         @mandarRachas="mandarRachas"
         :valorMedallas="valorMedallas"
-        @emitirDatasConTarefas="emitirDatasConTarefas"
+        @emitirDatasConTarefas="tarefasConHora = $event"
         @eliminarConta="eliminarConta"
         @medallasActualizadas="actualizarMedallasStore"
         ref="medallasRef"

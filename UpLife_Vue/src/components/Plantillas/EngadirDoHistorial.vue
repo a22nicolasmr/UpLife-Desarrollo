@@ -8,6 +8,7 @@ export default {
       actividadesPorDia: {},
       plantillasUsuario: [],
       plantillaSeleccionada: {},
+      erro: "",
     };
   },
   computed: {
@@ -30,6 +31,15 @@ export default {
     this.cargarExercicios();
   },
   methods: {
+    // validar formulario
+    comprobarErro(idExercicio) {
+      if (!this.plantillaSeleccionada[idExercicio]) {
+        this.erro = "Completa todos os campos";
+        return true;
+      }
+      this.erro = ""; // limpiamos si todo está correcto
+      return false;
+    },
     // cargar plantillas do usuario
     async cargarPlantillasUsuario() {
       try {
@@ -50,26 +60,20 @@ export default {
       }
     },
 
-    // cargar exercicios e usos de plantillas dos últimos 7 días
+    // cargar exercicios  dos últimos 7 días
     async cargarExercicios() {
       try {
-        const [resEx, resUsoPl] = await Promise.all([
+        const [resEx] = await Promise.all([
           fetch("https://uplife-final.onrender.com/api/exercicios/", {
-            headers: {
-              Authorization: `Bearer ${this.token}`,
-            },
-          }),
-          fetch("https://uplife-final.onrender.com/api/plantillas-uso/", {
             headers: {
               Authorization: `Bearer ${this.token}`,
             },
           }),
         ]);
 
-        if (!resEx.ok || !resUsoPl.ok) throw new Error("Erro ao cargar datos");
+        if (!resEx.ok) throw new Error("Erro ao cargar datos");
 
         const exercicios = await resEx.json();
-        const usosPlantilla = await resUsoPl.json();
 
         const seteDiasAtras = new Date();
         seteDiasAtras.setDate(seteDiasAtras.getDate() - 7);
@@ -81,50 +85,12 @@ export default {
           (e) => e.usuario === userId && e.data >= seteDiasAtrasISO
         );
 
-        const usosFiltrados = await Promise.all(
-          usosPlantilla
-            .filter((u) => u.usuario === userId && u.data >= seteDiasAtrasISO)
-            .map(async (uso) => {
-              try {
-                const plantillaResponse = await fetch(
-                  `https://uplife-final.onrender.com/api/plantillas/${uso.plantilla}/`,
-                  {
-                    headers: {
-                      Authorization: `Bearer ${this.token}`,
-                    },
-                  }
-                );
-                const plantillaData = await plantillaResponse.json();
-                return {
-                  ...uso,
-                  nome: plantillaData.nome,
-                  id_plantilla: plantillaData.id_plantilla,
-                  icona: plantillaData.icona,
-                };
-              } catch (error) {
-                console.error(
-                  `Erro cargando plantilla con id ${uso.plantilla}:`,
-                  error
-                );
-                return null;
-              }
-            })
-        );
-
-        const usosFiltradosLimpios = usosFiltrados.filter(Boolean);
-
         const actividades = {};
 
         exerciciosFiltrados.forEach((ex) => {
           if (!actividades[ex.data])
             actividades[ex.data] = { exercicios: [], plantillas: [] };
           actividades[ex.data].exercicios.push(ex);
-        });
-
-        usosFiltradosLimpios.forEach((p) => {
-          if (!actividades[p.data])
-            actividades[p.data] = { exercicios: [], plantillas: [] };
-          actividades[p.data].plantillas.push(p);
         });
 
         this.actividadesPorDia = Object.fromEntries(
@@ -168,6 +134,8 @@ export default {
 
     // engadir exercicio a unha plantilla
     async engadirExercicioAPlantilla(exercicio, idPlantilla) {
+      this.erro = "";
+      if (this.comprobarErro(exercicio.id_exercicio)) return;
       try {
         const plantillaRes = await fetch(
           `https://uplife-final.onrender.com/api/plantillas/${idPlantilla}/`,
@@ -207,6 +175,7 @@ export default {
           throw new Error("Erro ao engadir exercicio á plantilla");
 
         console.log("✅ Exercicio engadido á plantilla con éxito");
+        this.plantillaSeleccionada = {};
         this.cargarExercicios();
         this.$emit("cargarDatos");
       } catch (error) {
@@ -308,22 +277,19 @@ export default {
           </li>
         </ul>
 
-        <ul>
-          <li v-for="p in actividades.plantillas" :key="p.id_plantilla">
-            <div class="fila-exercicio">
-              <span id="spanPlantilla"> [P] {{ p.nome }} </span>
-              <button class="boton-dereita" @click="engadirPlantilla(p)">
-                +
-              </button>
-            </div>
-          </li>
-        </ul>
+        <span class="error">{{ erro }}</span>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.error {
+  color: #ff4d4d;
+  display: block;
+  margin-top: 2%;
+  font-size: medium;
+}
 .icona {
   height: 10%;
   width: 10%;

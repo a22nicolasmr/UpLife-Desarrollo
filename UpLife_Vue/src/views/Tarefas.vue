@@ -562,6 +562,9 @@ export default {
           @datas-con-tarefas="reenviarTarefasConHora"
           @cargarDatasConTarefas="cargarDatasConTarefas"
           @comprobarRachas="comprobarRachas"
+          @tarefasActualizadas="
+            (tarefas) => $emit('emitirDatasConTarefas', tarefas)
+          "
         />
 
         <EngadirTarefas

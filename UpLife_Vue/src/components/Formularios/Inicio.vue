@@ -14,7 +14,6 @@ export default {
     //mandar formulario se os datos estan correctos
     async mandarFormulario() {
       this.erro = "";
-      console.log("🟡 Enviando login con:", this.email, this.contrasinal);
 
       if (!this.email || !this.contrasinal) {
         this.erro = "Completa todos os campos";
@@ -27,7 +26,6 @@ export default {
           password: this.contrasinal,
         })
       );
-      console.log("Content-Type:", axios.defaults.headers);
       try {
         const response = await axios.post(
           "https://uplife-final.onrender.com/api/login/",
@@ -47,7 +45,6 @@ export default {
         const token = response.data.access;
 
         localStorage.setItem("token", token);
-        // localStorage.setItem("refresh", refresh);
 
         const usuarioStore = useUsuarioStore();
         await usuarioStore.cargarUsuario(this.email);

@@ -62,11 +62,41 @@ export default {
       return restantes > 0 ? restantes : 0;
     },
   },
-  mounted() {
+  async mounted() {
     // cargar datos ao montar o compoñente
+    await this.asegurarDatosUsuarioCargados();
     this.cargarDatos();
   },
   methods: {
+    async asegurarDatosUsuarioCargados() {
+      const store = useUsuarioStore();
+      if (!store.calorias) {
+        store.cargarToken();
+        const token = store.token;
+        try {
+          const response = await fetch(
+            `https://uplife-final.onrender.com/api/usuarios/${this.idUsuario}/`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          const data = await response.json();
+          store.nome = data.nome;
+          store.altura = data.altura;
+          store.peso = data.peso;
+          store.xenero = data.xenero;
+          store.obxectivo = data.obxectivo;
+          store.actividade = data.actividade;
+          store.idade = data.idade;
+          store.calorias = data.calorias_diarias;
+          store.auga = data.auga_diaria;
+        } catch (e) {
+          console.error("Erro cargando datos do usuario:", e);
+        }
+      }
+    },
     // cargar os grupos de comida do usuario e filtrar as comidas de hoxe
     async cargarDatos() {
       const hoxe = new Date().toISOString().split("T")[0];
@@ -417,11 +447,13 @@ export default {
           v-if="componenteActivo === 'historial'"
           @cargarDatos="cargarDatos"
           ref="hijoRef"
+          @toggleExpand="toggleExpand"
         />
         <EngadirComida
           v-if="componenteActivo === 'engadirC'"
           :grupoSeleccionadoMandar="grupoSeleccionadoMandar"
           @cargarDatos="cargarDatos"
+          @toggleExpand="toggleExpand"
         />
         <TotalComida v-if="componenteActivo === 'total'" />
         <GrupoComida

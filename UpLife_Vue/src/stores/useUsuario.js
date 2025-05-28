@@ -66,6 +66,7 @@ export const useUsuarioStore = defineStore("usuario", {
           JSON.stringify({
             id: this.id,
             nome: this.nome,
+            email: this.email,
           })
         );
 

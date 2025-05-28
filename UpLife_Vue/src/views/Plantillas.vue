@@ -121,20 +121,53 @@ export default {
     },
 
     // eliminar un exercicio polo seu id
-    async borrarExercicio(id) {
+    async borrarExercicio(idExercicio, idPlantilla) {
       try {
-        await fetch(`https://uplife-final.onrender.com/api/exercicios/${id}/`, {
-          method: "DELETE",
-          headers: { Authorization: `Bearer ${this.token}` },
-        });
-        this.plantillas.forEach((p) => {
-          p.exercicios = p.exercicios.filter((e) => e.id_exercicio !== id);
-        });
+        // Obtener la plantilla
+        const res = await fetch(
+          `https://uplife-final.onrender.com/api/plantillas/${idPlantilla}/`,
+          {
+            headers: { Authorization: `Bearer ${this.token}` },
+          }
+        );
+        if (!res.ok) throw new Error("Non se puido obter a plantilla");
+
+        const plantilla = await res.json();
+
+        // Obtener solo os IDs dos exercicios, excluíndo o que se vai borrar
+        const idsActualizados = (plantilla.exercicios || [])
+          .map((e) => (typeof e === "object" ? e.id_exercicio : e))
+          .filter((id) => id !== idExercicio);
+
+        // Actualizar a plantilla sen ese exercicio
+        const patchRes = await fetch(
+          `https://uplife-final.onrender.com/api/plantillas/${idPlantilla}/`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${this.token}`,
+            },
+            body: JSON.stringify({ exercicios: idsActualizados }),
+          }
+        );
+
+        if (!patchRes.ok)
+          throw new Error("Erro ao actualizar a plantilla sen o exercicio");
+
+        // Actualizar datos localmente
+        const plantillaLocal = this.plantillas.find(
+          (p) => p.id_plantilla === idPlantilla
+        );
+        if (plantillaLocal) {
+          plantillaLocal.exercicios = plantillaLocal.exercicios.filter(
+            (e) => e.id_exercicio !== idExercicio
+          );
+        }
       } catch (error) {
-        console.error("Erro eliminando exercicio:", error);
+        console.error("Erro eliminando exercicio da plantilla:", error);
       }
     },
-
     // activar o modo engadir exercicio e expandir a plantilla correspondente
     engadirExercicio(plantilla) {
       this.componenteActivo = "engadirE";
@@ -372,7 +405,12 @@ export default {
                           src="/imaxes/trash.png"
                           alt="borrar exercicio"
                           class="icono-trash"
-                          @click="borrarExercicio(ex.id_exercicio)"
+                          @click="
+                            borrarExercicio(
+                              ex.id_exercicio,
+                              plantilla.id_plantilla
+                            )
+                          "
                         />
                       </td>
                     </tr>

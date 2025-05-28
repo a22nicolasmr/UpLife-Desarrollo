@@ -54,10 +54,40 @@ export default {
       return restantes > 0 ? restantes : 0;
     },
   },
-  mounted() {
+  async mounted() {
+    await this.asegurarDatosUsuarioCargados();
     this.cargarAugaHoxe();
   },
   methods: {
+    async asegurarDatosUsuarioCargados() {
+      const store = useUsuarioStore();
+      if (!store.auga) {
+        store.cargarToken();
+        const token = store.token;
+        try {
+          const response = await fetch(
+            `https://uplife-final.onrender.com/api/usuarios/${this.idUsuario}/`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          const data = await response.json();
+          store.nome = data.nome;
+          store.altura = data.altura;
+          store.peso = data.peso;
+          store.xenero = data.xenero;
+          store.obxectivo = data.obxectivo;
+          store.actividade = data.actividade;
+          store.idade = data.idade;
+          store.calorias = data.calorias_diarias;
+          store.auga = data.auga_diaria;
+        } catch (e) {
+          console.error("Erro cargando datos do usuario:", e);
+        }
+      }
+    },
     // activar edición por id e campo
     activarEdicion(id, campo) {
       const entrada = this.augaHoxe.find((a) => a.id_auga === id);

@@ -122,7 +122,11 @@ export default {
           (g) => Number(g.id_grupo) === Number(this.grupoSeleccionado)
         );
 
-        const novaLista = [...(grupo.comidas || []), comidaCreada.id_comida];
+        // const novaLista = [...(grupo.comidas || []), comidaCreada.id_comida];
+        const comidasExistentes = (grupo.comidas || []).map((c) =>
+          typeof c === "object" ? c.id_comida : c
+        );
+        const novaLista = [...comidasExistentes, comidaCreada.id_comida];
 
         const resPatch = await fetch(
           `https://uplife-final.onrender.com/api/grupos/${this.grupoSeleccionado}/`,
@@ -138,6 +142,7 @@ export default {
 
         if (!resPatch.ok) throw new Error("Erro ao engadir comida ao grupo");
 
+        this.$emit("toggleExpand", this.grupoSeleccionado);
         // resetear campos
         this.nomeComida = "";
         this.peso = null;

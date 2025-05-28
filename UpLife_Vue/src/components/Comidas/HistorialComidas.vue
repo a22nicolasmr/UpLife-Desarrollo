@@ -130,7 +130,13 @@ export default {
 
           if (!grupo) throw new Error("Grupo non atopado");
 
-          const comidasActualizadas = [...grupo.comidas, novaComida.id_comida];
+          const comidasExistentes = (grupo.comidas || []).map((c) =>
+            typeof c === "object" ? c.id_comida : c
+          );
+          const comidasActualizadas = [
+            ...comidasExistentes,
+            novaComida.id_comida,
+          ];
 
           const patchResponse = await fetch(
             `https://uplife-final.onrender.com/api/grupos/${grupo.id_grupo}/`,
@@ -145,6 +151,8 @@ export default {
           );
 
           if (!patchResponse.ok) throw new Error("Erro ao actualizar grupo");
+
+          this.$emit("toggleExpand", grupo.id_grupo);
 
           // cargar datos en Comidas
           this.$emit("cargarDatos");

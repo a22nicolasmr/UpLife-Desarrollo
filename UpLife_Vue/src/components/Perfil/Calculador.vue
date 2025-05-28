@@ -54,7 +54,13 @@ export default {
         <label>Altura</label>
         <div class="range-control">
           <button @click="altura = Math.max(100, altura - 1)">−</button>
-          <input type="range" min="100" max="220" v-model="altura" />
+          <input
+            type="range"
+            min="100"
+            max="220"
+            :value="altura"
+            @input="(e) => (altura = Number(e.target.value))"
+          />
           <button @click="altura = Math.min(220, altura + 1)">+</button>
         </div>
         <div>{{ altura }} cm</div>
@@ -64,7 +70,13 @@ export default {
         <label>Peso</label>
         <div class="range-control">
           <button @click="peso = Math.max(30, peso - 1)">−</button>
-          <input type="range" min="30" max="150" v-model="peso" />
+          <input
+            type="range"
+            min="30"
+            max="150"
+            :value="peso"
+            @input="(e) => (peso = Number(e.target.value))"
+          />
           <button @click="peso = Math.min(150, peso + 1)">+</button>
         </div>
         <div>{{ peso }} kg</div>

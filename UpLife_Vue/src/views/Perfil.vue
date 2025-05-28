@@ -106,7 +106,9 @@ export default {
           }
         );
         const resultado = await response.json();
-        this.actualizarDatos();
+        console.log("Resposta do servidor:", resultado);
+        await this.actualizarDatos();
+
         const store = useUsuarioStore();
         store.imagen =
           resultado.imaxe_perfil ||
