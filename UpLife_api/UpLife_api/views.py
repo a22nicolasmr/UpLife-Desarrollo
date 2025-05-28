@@ -111,9 +111,16 @@ class UsuariosViewSet(viewsets.ModelViewSet):
     queryset = Usuarios.objects.all()
     serializer_class = UsuariosSerializer
     def get_permissions(self):
-        if self.action == "create":
+        if self.action in ["create"]:
             return [AllowAny()]
+        elif self.action == "partial_update" and self.request.method == "PATCH":
+            # Permitir modificar si solo están actualizando la contraseña
+            email = self.request.data.get("email")
+            contrasinal = self.request.data.get("contrasinal")
+            if email and contrasinal:
+                return [AllowAny()]
         return [IsAuthenticated()]
+
 
 class AugaViewSet(viewsets.ModelViewSet):
     authentication_classes = [CustomJWTAuthentication]
@@ -210,7 +217,6 @@ def enviar_codigo_confirmacion(request):
                 <html>
                   <body style="font-family: Arial, sans-serif; padding: 20px;">
                     <h2 style="color: #4CAF50;">Código de Confirmación</h2>
-                    <p>Grazas por rexistrarte en <strong>UpLife</strong>.</p>
                     <p>O teu código de confirmación é:</p>
                     <div style="font-size: 24px; font-weight: bold; color: #2196F3; margin: 20px 0;">
                       {codigo}
