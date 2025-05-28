@@ -58,6 +58,7 @@ export default {
             },
             body: JSON.stringify({
               contrasinal: this.novaContrasinal,
+              email: correo,
             }),
           }
         );

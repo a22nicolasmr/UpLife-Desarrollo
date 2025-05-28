@@ -110,15 +110,18 @@ def login_usuario(request):
 class UsuariosViewSet(viewsets.ModelViewSet):
     queryset = Usuarios.objects.all()
     serializer_class = UsuariosSerializer
+
     def get_permissions(self):
-        if self.action in ["create"]:
+        if self.action == "create":
             return [AllowAny()]
-        elif self.action == "partial_update" and self.request.method == "PATCH":
-            # Permitir modificar si solo están actualizando la contraseña
+
+        # Permitir PATCH si solo se envía contraseña e email
+        if self.request.method == "PATCH":
             email = self.request.data.get("email")
             contrasinal = self.request.data.get("contrasinal")
             if email and contrasinal:
                 return [AllowAny()]
+
         return [IsAuthenticated()]
 
 
