@@ -37,16 +37,17 @@ export default {
 
       try {
         const res = await fetch(
-          "https://uplife-final.onrender.com/api/usuarios/"
+          "https://uplife-final.onrender.com/comprobar-email/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email: this.identificador }),
+          }
         );
-        if (!res.ok) throw new Error("Error al acceder a usuarios");
-        const usuarios = await res.json();
-
-        const existe = usuarios.some(
-          (u) => u.email.toLowerCase() === this.identificador.toLowerCase()
-        );
-
-        if (!existe) {
+        const data = await res.json();
+        if (!data.existe) {
           this.erro = "Este correo no está registrado.";
           return;
         }

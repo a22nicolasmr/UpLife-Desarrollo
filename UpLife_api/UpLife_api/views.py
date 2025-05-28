@@ -19,6 +19,16 @@ from .auth import CustomJWTAuthentication
 from django.core.mail import EmailMessage
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny,IsAuthenticated
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def comprobar_email_existente(request):
+    email = request.data.get("email")
+    if not email:
+        return Response({"error": "Email requerido"}, status=status.HTTP_400_BAD_REQUEST)
+
+    existe = Usuarios.objects.filter(email=email).exists()
+    return Response({"existe": existe})
 class CustomLoginView(APIView):
     permission_classes = [AllowAny]
 

@@ -22,4 +22,6 @@ urlpatterns = [
     path("enviar-codigo/", enviar_codigo_confirmacion),
     path('api/login/', CustomLoginView.as_view(), name='custom-login'),
     path('enviar-recordatorio/', views.enviar_recordatorio),
+    path("comprobar-email/", views.comprobar_email_existente),
+
 ]
