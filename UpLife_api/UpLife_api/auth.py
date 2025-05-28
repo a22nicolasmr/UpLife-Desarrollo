@@ -7,16 +7,6 @@ from .models import Usuarios  # ou o teu modelo real
 import logging
 logger = logging.getLogger(__name__)
 logger.warning("⚠️ Aquí estamos dentro de CustomJWTAuthentication")
-
-import logging
-import jwt
-from django.conf import settings
-from rest_framework.authentication import BaseAuthentication
-from rest_framework.exceptions import AuthenticationFailed
-from .models import Usuarios
-
-logger = logging.getLogger(__name__)
-
 class CustomJWTAuthentication(BaseAuthentication):
     def authenticate(self, request):
         logger.warning("⚠️ Dentro de CustomJWTAuthentication")

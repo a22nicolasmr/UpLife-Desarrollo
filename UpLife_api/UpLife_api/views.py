@@ -1,7 +1,5 @@
 from .models import Usuarios, Auga, Medallas, Tarefas, Categorias, Exercicios, Plantillas, Comidas, Grupos,UsoPlantilla
 from .serializers import UsuariosSerializer, AugaSerializer, MedallasSerializer, TarefasSerializer, CategoriasSerializer, ExerciciosSerializer, PlantillasSerializer, ComidasSerializer, GruposSerializer,PlantillasDetailSerializer,GruposDetailSerializer,UsoPlantillaSerializer
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.hashers import check_password
 from rest_framework import viewsets
@@ -17,13 +15,10 @@ from django.conf import settings
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import AllowAny
-from rest_framework.permissions import IsAuthenticated
 from .auth import CustomJWTAuthentication
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
 from django.core.mail import EmailMessage
-
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny,IsAuthenticated
 class CustomLoginView(APIView):
     permission_classes = [AllowAny]
 
@@ -88,6 +83,10 @@ def login_usuario(request):
 class UsuariosViewSet(viewsets.ModelViewSet):
     queryset = Usuarios.objects.all()
     serializer_class = UsuariosSerializer
+    def get_permissions(self):
+        if self.action == "create":
+            return [AllowAny()]
+        return [IsAuthenticated()]
 
 class AugaViewSet(viewsets.ModelViewSet):
     authentication_classes = [CustomJWTAuthentication]
@@ -170,7 +169,8 @@ class UsoPlantillaViewSet(viewsets.ModelViewSet):
         return queryset
     
 
-@csrf_exempt
+@api_view(["POST"])
+@permission_classes([AllowAny])
 def enviar_codigo_confirmacion(request):
     if request.method == 'POST':
         try:
@@ -191,7 +191,8 @@ def enviar_codigo_confirmacion(request):
             return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
     return JsonResponse({'status': 'error', 'message': 'Invalid method'}, status=405)
 
-@csrf_exempt
+@api_view(["POST"])
+@permission_classes([AllowAny])
 def enviar_recordatorio(request):
     if request.method == 'POST':
         try:

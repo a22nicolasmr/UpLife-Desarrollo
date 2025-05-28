@@ -1,11 +1,7 @@
 from django.db import models
 from django.contrib.auth.hashers import make_password
-from django.dispatch import receiver
-import os
 from django.contrib.auth.hashers import check_password
-from cloudinary.uploader import destroy
 from cloudinary.models import CloudinaryField
-from django.db.models.signals import pre_save
 # opcions modo_aplicacion
 MODO_CHOICES = [
     ('C', 'Claro'),

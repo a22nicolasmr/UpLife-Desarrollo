@@ -1,11 +1,8 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from . import views
-from .views import login_usuario
-from .views import enviar_codigo_confirmacion
+from .views import enviar_codigo_confirmacion,login_usuario,CustomLoginView
 from django.urls import path
-from .views import CustomLoginView
-
 
 router = DefaultRouter()
 router.register(r'usuarios', views.UsuariosViewSet)
