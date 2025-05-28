@@ -204,19 +204,39 @@ def enviar_codigo_confirmacion(request):
             data = json.loads(request.body)  
             email = data.get('email')
             codigo = data.get('codigo')
-            
-            send_mail(
-                subject="Código de confirmación - UpLife",
-                message=f"O teu código de confirmación é: {codigo}",
+
+            asunto = "🔐 Código de confirmación - UpLife"
+            corpo_html = f"""
+                <html>
+                  <body style="font-family: Arial, sans-serif; padding: 20px;">
+                    <h2 style="color: #4CAF50;">Código de Confirmación</h2>
+                    <p>Grazas por rexistrarte en <strong>UpLife</strong>.</p>
+                    <p>O teu código de confirmación é:</p>
+                    <div style="font-size: 24px; font-weight: bold; color: #2196F3; margin: 20px 0;">
+                      {codigo}
+                    </div>
+                    <p>Introduce este código na aplicación para continuar co rexistro.</p>
+                    <hr />
+                    <p style="font-size: 0.9em; color: #888;">UpLife - Xestiona o teu día con éxito 🚀</p>
+                  </body>
+                </html>
+            """
+
+            email_msg = EmailMessage(
+                subject=asunto,
+                body=corpo_html,
                 from_email="uplifedaw@gmail.com",
-                recipient_list=[email],
-                fail_silently=False,
+                to=[email],
             )
+            email_msg.content_subtype = "html"  # Importante: indicar que é HTML
+            email_msg.send(fail_silently=False)
+
             return JsonResponse({'status': 'success'})
         except Exception as e:
             logger.error(f"Error sending email: {str(e)}")
             return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
     return JsonResponse({'status': 'error', 'message': 'Invalid method'}, status=405)
+
 
 @api_view(["POST"])
 @permission_classes([AllowAny])
