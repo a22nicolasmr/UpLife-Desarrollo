@@ -346,7 +346,7 @@ export default {
               <button
                 class="button-add"
                 @click="
-                  componenteActivo = 'engadirC';
+                  componenteActivo = 'grupo';
                   grupoSeleccionado = grupo.id_grupo;
                   grupoSeleccionadoMandar = grupo.id_grupo;
                 "
