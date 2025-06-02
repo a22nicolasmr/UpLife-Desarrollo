@@ -83,12 +83,8 @@ export default {
         );
         const grupos = await response2.json();
 
-        const seteDiasAtras = new Date();
-        seteDiasAtras.setDate(seteDiasAtras.getDate() - 7);
-        const seteDiasISO = seteDiasAtras.toISOString().split("T")[0];
-
         const gruposPorUsuario = grupos.filter(
-          (g) => g.usuario === this.idUsuario && g.data >= seteDiasISO
+          (g) => g.usuario === this.idUsuario
         );
 
         this.gruposUsuario = gruposPorUsuario;
