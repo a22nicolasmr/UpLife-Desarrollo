@@ -178,6 +178,7 @@ export default {
         this.plantillaSeleccionada = {};
         this.cargarExercicios();
         this.$emit("cargarDatos");
+        this.$emit("toggleExpand", idPlantilla);
       } catch (error) {
         console.error("❗Erro ao engadir exercicio á plantilla:", error);
       }
@@ -228,6 +229,9 @@ export default {
 <template>
   <div id="divXeral">
     <h2>Historial de exercicios</h2>
+    <p v-if="Object.keys(actividadesPorDia).length === 0" id="aviso">
+      Non hai exercicios rexistrados
+    </p>
     <div class="historial-scroll">
       <div
         v-for="(actividades, data) in actividadesPorDia"

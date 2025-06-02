@@ -203,6 +203,9 @@ export default {
 <template>
   <div id="divXeral">
     <h2>Historial</h2>
+    <p v-if="Object.keys(actividadesPorDia).length === 0" id="aviso">
+      Non hai exercicios rexistrados
+    </p>
     <div class="historial-scroll">
       <div
         v-for="(actividades, data) in actividadesPorDia"

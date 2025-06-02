@@ -441,6 +441,7 @@ export default {
         <EngadirDoHistorial
           v-if="componenteActivo === 'engadirD'"
           @cargarDatos="cargarDatos"
+          @toggleExpand="toggleExpand"
         >
         </EngadirDoHistorial>
       </div>
@@ -764,13 +765,14 @@ button {
     padding-left: 0;
     margin-top: -5%;
     margin-right: -5%;
-    margin-left: -10%;
+    margin-left: -2%;
   }
 
   .icono-trash {
     width: 1rem;
     height: 1rem;
     margin-top: 15%;
+    margin-left: 10%;
   }
 
   .plantilla-header img:first-child {

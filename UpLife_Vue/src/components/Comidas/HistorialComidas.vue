@@ -31,7 +31,7 @@ export default {
     this.cargarGrupos();
   },
   methods: {
-    // cargar comidas filtradas por id de usuario e agrupadas por data
+    // cargar comidas dos últimos 7 días filtradas por id de usuario e agrupadas por data
     async cargarComidas() {
       try {
         const response = await fetch(
@@ -45,8 +45,13 @@ export default {
         if (!response.ok) throw new Error("Erro ao cargar comidas");
 
         const comidas = await response.json();
+
+        const seteDiasAtras = new Date();
+        seteDiasAtras.setDate(seteDiasAtras.getDate() - 7);
+        const seteDiasISO = seteDiasAtras.toISOString().split("T")[0];
+
         const comidasPorUsuario = comidas.filter(
-          (c) => c.usuario === this.idUsuario
+          (c) => c.usuario === this.idUsuario && c.data >= seteDiasISO
         );
 
         const agrupados = {};
@@ -65,8 +70,7 @@ export default {
         console.error("Erro ao obter historial de comidas:", error);
       }
     },
-
-    // cargar grupos filtrados por id de usuario
+    // cargar grupos dos últimos 7 días filtrados por id de usuario
     async cargarGrupos() {
       try {
         const response2 = await fetch(
@@ -79,8 +83,12 @@ export default {
         );
         const grupos = await response2.json();
 
+        const seteDiasAtras = new Date();
+        seteDiasAtras.setDate(seteDiasAtras.getDate() - 7);
+        const seteDiasISO = seteDiasAtras.toISOString().split("T")[0];
+
         const gruposPorUsuario = grupos.filter(
-          (c) => c.usuario === this.idUsuario
+          (g) => g.usuario === this.idUsuario && g.data >= seteDiasISO
         );
 
         this.gruposUsuario = gruposPorUsuario;
@@ -88,7 +96,6 @@ export default {
         console.error("Erro ao obter grupos:", error);
       }
     },
-
     // engadir nova comida ao grupo correspondente
     async engadirComida(comida) {
       this.error = "";
@@ -177,6 +184,10 @@ export default {
   <div id="divXeral">
     <h2>Historial</h2>
     <div class="historial-scroll">
+      <p v-if="Object.keys(comidasPorDia).length === 0" id="aviso">
+        Non hai comidas rexistradas
+      </p>
+
       <div
         v-for="(comidas, data) in comidasPorDia"
         :key="data"

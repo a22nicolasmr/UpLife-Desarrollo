@@ -97,17 +97,21 @@ export default {
         const diffMs = tarefaHora - agora;
         const diffMin = Math.floor(diffMs / 60000);
 
+        // Usar clave compuesta como identificador único
+        const claveUnica = `${tarefa.titulo}-${tarefa.hora}`;
+
         // Notificación anticipada (a 1 minuto)
         if (
           diffMin === 1 &&
-          !this.tarefasNotificadasAnticipadas.has(tarefa.id)
+          !this.tarefasNotificadasAnticipadas.has(claveUnica)
         ) {
-          this.tarefasNotificadasAnticipadas.add(tarefa.id);
+          this.tarefasNotificadasAnticipadas.add(claveUnica);
 
           console.log("⏳ Notificación anticipada para:", tarefa.titulo);
 
           const store = useUsuarioStore();
           const email = store.email;
+          console.log("modo aplicacion", store.modo_aplicacion, "email", email);
 
           if (store.modo_aplicacion === "E" && email) {
             try {
@@ -146,7 +150,7 @@ export default {
           this.tarefaActual = tarefa;
           this.avisoActivo = true;
           tarefa.notificada = true;
-          return;
+          continue;
         }
       }
     },

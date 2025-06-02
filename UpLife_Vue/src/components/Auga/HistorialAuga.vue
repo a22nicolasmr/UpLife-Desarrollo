@@ -112,6 +112,9 @@ export default {
 <template>
   <div id="divXeral">
     <h2>Historial de auga</h2>
+    <p v-if="Object.keys(augaPorDia).length === 0" id="aviso">
+      Non hai auga rexistrada
+    </p>
     <div class="historial-scroll">
       <div v-for="(augas, data) in augaPorDia" :key="data" class="grupo-dia">
         <h3>
