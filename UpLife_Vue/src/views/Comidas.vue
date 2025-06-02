@@ -346,7 +346,7 @@ export default {
               <button
                 class="button-add"
                 @click="
-                  componenteActivo = 'grupo';
+                  componenteActivo = 'engadirC';
                   grupoSeleccionado = grupo.id_grupo;
                   grupoSeleccionadoMandar = grupo.id_grupo;
                 "
@@ -439,7 +439,7 @@ export default {
             </div>
           </transition>
         </div>
-        <button @click="componenteActivo = 'engadirC'" id="engadirE">+</button>
+        <button @click="componenteActivo = 'grupo'" id="engadirE">+</button>
       </div>
 
       <div class="dereita">
