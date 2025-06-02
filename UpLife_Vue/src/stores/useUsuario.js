@@ -4,6 +4,7 @@ export const useUsuarioStore = defineStore("usuario", {
   state: () => ({
     id: null,
     nome: "",
+    //imaxe por defecto se o usuario non ten imaxe de perfil
     imagen: "image/upload/v1747728142/usuario_xotela.png",
     medallas: 0,
     altura: 0,
