@@ -532,14 +532,14 @@ export default {
         :class="{ inactiva: componenteActivo !== 'lista' }"
         @click="componenteActivo = 'lista'"
       >
-        Lista
+        <a href="#">Lista</a>
       </div>
       <div
         class="tarxeta"
         :class="{ inactiva: componenteActivo !== 'engadir' }"
         @click="componenteActivo = 'engadir'"
       >
-        Engadir
+        <a href="#">Engadir</a>
       </div>
     </div>
 
@@ -579,6 +579,10 @@ export default {
 </template>
 
 <style>
+a {
+  text-decoration: none;
+  color: inherit;
+}
 #izquierda,
 #exercicio,
 #auga,

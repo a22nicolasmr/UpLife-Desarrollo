@@ -29,10 +29,10 @@ watch(
       />
       <div class="usuario-detalles">
         <div class="usuario-nombre" @click="$router.push('/perfil')">
-          {{ usuarioStore.nome }}
+          <a href="#">{{ usuarioStore.nome }}</a>
         </div>
         <div class="usuario-medallas" @click="$router.push('/medallas')">
-          {{ usuarioStore.medallas }} Medallas
+          <a href="#">{{ usuarioStore.medallas }} Medallas</a>
         </div>
       </div>
     </div>
@@ -40,6 +40,14 @@ watch(
 </template>
 
 <style scoped>
+a {
+  text-decoration: none;
+  color: inherit;
+}
+.usuario-nombre,
+.usuario-medallas {
+  cursor: pointer;
+}
 .barra-superior {
   background-color: #4880ff;
   padding: 0.5%;

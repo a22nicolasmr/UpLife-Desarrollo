@@ -179,7 +179,7 @@ export default {
       <label class="checkbox-condicions">
         <span>
           Acepto os
-          <a @click.prevent="$router.push('/condicions')">
+          <a href="#" @click.prevent="$router.push('/condicions')">
             termos e condicións de uso da páxina
           </a>
           <input type="checkbox" id="idCondicions" v-model="aceptaCondicions" />

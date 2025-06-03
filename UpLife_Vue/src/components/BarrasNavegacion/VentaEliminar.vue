@@ -11,6 +11,9 @@ export default {
       return store.id;
     },
   },
+  mounted() {
+    this.$refs.btnAceptar?.focus();
+  },
   methods: {
     // eliminar conta do usuario actual
     async eliminarConta() {
@@ -49,7 +52,9 @@ export default {
     <div class="modal-container">
       <h1>Eliminar conta</h1>
       <div class="buttons">
-        <button @click="eliminarConta()" id="pechar">Aceptar</button>
+        <button @click="eliminarConta()" id="pechar" ref="btnAceptar">
+          Aceptar
+        </button>
         <button @click="$emit('pecharModalEliminar')" id="cancelar">
           Cancelar
         </button>

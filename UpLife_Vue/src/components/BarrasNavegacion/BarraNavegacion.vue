@@ -26,7 +26,7 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   methods: {
-    //abrir e pechar menú en función de se se está en móvil ou non
+    //abrir e pechar menú de hamburguesa en función de se se está en móvil ou non
     handleResize() {
       if (!this.esMovil && this.menuAbierto) {
         this.menuAbierto = false;
@@ -38,7 +38,9 @@ export default {
 
 <template>
   <div>
-    <div class="hamburguesa" @click="menuAbierto = !menuAbierto">☰</div>
+    <div class="hamburguesa" @click="menuAbierto = !menuAbierto">
+      <a href="#">☰</a>
+    </div>
 
     <nav :class="{ abierto: menuAbierto }" v-if="menuAbierto || !esMovil">
       <div class="menu-superior">
@@ -54,37 +56,37 @@ export default {
             :class="{ activo: rutaActual === '/tarefas' }"
             @click="$router.push('/tarefas')"
           >
-            Tarefas
+            <a href="#">Tarefas</a>
           </li>
           <li
             :class="{ activo: rutaActual === '/exercicios' }"
             @click="$router.push('/exercicios')"
           >
-            Exercicios
+            <a href="#">Exercicios</a>
           </li>
           <li
             :class="{ activo: rutaActual === '/comidas' }"
             @click="$router.push('/comidas')"
           >
-            Comidas
+            <a href="#">Comidas</a>
           </li>
           <li
             :class="{ activo: rutaActual === '/plantillas' }"
             @click="$router.push('/plantillas')"
           >
-            Plantillas
+            <a href="#">Plantillas</a>
           </li>
           <li
             :class="{ activo: rutaActual === '/auga' }"
             @click="$router.push('/auga')"
           >
-            Auga
+            <a href="#">Auga</a>
           </li>
           <li
             :class="{ activo: rutaActual === '/medallas' }"
             @click="$router.push('/medallas')"
           >
-            Medallas
+            <a href="#">Medallas</a>
           </li>
         </ul>
       </div>
@@ -96,13 +98,13 @@ export default {
             :class="{ activo: rutaActual === '/perfil' }"
             @click="$router.push('/perfil')"
           >
-            Perfil
+            <a href="#">Perfil</a>
           </li>
           <li
             :class="{ activo: rutaActual === '/formularios/rexistro' }"
             @click="$emit('toggleModal')"
           >
-            Pechar sesión
+            <a href="#">Pechar sesión</a>
           </li>
         </ul>
       </div>
@@ -111,6 +113,10 @@ export default {
 </template>
 
 <style scoped>
+a {
+  text-decoration: none;
+  color: inherit;
+}
 nav {
   background-color: white;
   padding: 1% 1%;

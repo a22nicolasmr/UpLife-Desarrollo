@@ -17,8 +17,16 @@ export default {
     <div class="modal-container">
       <h1>Pechar sesión?</h1>
       <div class="buttons">
-        <button @click="redirixirRexistro()" id="pechar">Pechar</button>
-        <button @click="$emit('pecharModal')" id="cancelar">Cancelar</button>
+        <button @click="redirixirRexistro()" id="pechar" name="botonPechar">
+          Pechar
+        </button>
+        <button
+          @click="$emit('pecharModal')"
+          id="cancelar"
+          name="botonCancelar"
+        >
+          Cancelar
+        </button>
       </div>
     </div>
   </div>

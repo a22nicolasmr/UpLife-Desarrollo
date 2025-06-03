@@ -185,6 +185,7 @@ export default {
               :src="'https://res.cloudinary.com/dkujevuxh/' + imagen"
               alt="Imaxe de usuario"
               @click="cambiarImagen()"
+              tabindex="0"
             />
             <input
               type="file"

@@ -89,7 +89,7 @@ export default {
       />
       <div class="recuperar-contrasinal">
         <span>Esquecíches o teu contrasinal?</span>
-        <a @click.prevent="$router.push('/formularios/correoCodigo')"
+        <a href="#" @click.prevent="$router.push('/formularios/correoCodigo')"
           >Recuperar</a
         >
       </div>

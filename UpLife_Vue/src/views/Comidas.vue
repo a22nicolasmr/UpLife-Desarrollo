@@ -268,7 +268,7 @@ export default {
 
 <template>
   <div id="divXeral2">
-    <h1 class="titulo">Grupos de Comidas</h1>
+    <h1 class="titulo">Comidas</h1>
 
     <div class="tarxetas">
       <div
@@ -276,28 +276,28 @@ export default {
         :class="{ inactiva: componenteActivo !== 'historial' }"
         @click="componenteActivo = 'historial'"
       >
-        Historial
+        <a href="#">Historial</a>
       </div>
       <div
         class="tarxeta"
         :class="{ inactiva: componenteActivo !== 'engadirC' }"
         @click="componenteActivo = 'engadirC'"
       >
-        Engadir
+        <a href="#">Engadir</a>
       </div>
       <div
         class="tarxeta"
         :class="{ inactiva: componenteActivo !== 'total' }"
         @click="componenteActivo = 'total'"
       >
-        Total
+        <a href="#">Total</a>
       </div>
       <div
         class="tarxeta"
         :class="{ inactiva: componenteActivo !== 'grupo' }"
         @click="componenteActivo = 'grupo'"
       >
-        Grupo
+        <a href="#">Grupo</a>
       </div>
     </div>
 
@@ -353,11 +353,13 @@ export default {
               >
                 +
               </button>
+
               <img
                 src="/imaxes/trash.png"
                 alt="icona borrar"
                 class="icono-trash"
                 @click="borrarGrupo(grupo.id_grupo)"
+                tabindex="0"
               />
             </div>
           </div>
@@ -466,6 +468,10 @@ export default {
 </template>
 
 <style scoped>
+a {
+  text-decoration: none;
+  color: inherit;
+}
 .grafico-calorias {
   display: flex;
   align-items: center;

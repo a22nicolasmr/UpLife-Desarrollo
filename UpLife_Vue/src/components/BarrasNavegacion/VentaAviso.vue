@@ -8,6 +8,9 @@ export default {
   data() {
     return {};
   },
+  mounted() {
+    this.$refs.btnAceptar?.focus();
+  },
   methods: {
     // establecer a hora da tarefa 10 minutos despois da hora indicada inicialmente
     async posporTarefa() {
@@ -55,7 +58,9 @@ export default {
       <h1>{{ tarefaActual.hora }}</h1>
       <h1>{{ tarefaActual.titulo }}</h1>
       <div class="buttons">
-        <button @click="$emit('cerrarAviso')" id="aceptar">Aceptar</button>
+        <button @click="$emit('cerrarAviso')" id="aceptar" ref="btnAceptar">
+          Aceptar
+        </button>
         <button id="posponher" @click="posporTarefa">Pospor 10 minutos</button>
       </div>
     </div>

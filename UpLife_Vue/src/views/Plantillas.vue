@@ -245,21 +245,21 @@ export default {
         :class="{ inactiva: componenteActivo !== 'nova' }"
         @click="componenteActivo = 'nova'"
       >
-        Nova
+        <a href="#">Nova</a>
       </div>
       <div
         class="tarxeta"
         :class="{ inactiva: componenteActivo !== 'engadirE' }"
         @click="componenteActivo = 'engadirE'"
       >
-        Engadir
+        <a href="#">Engadir</a>
       </div>
       <div
         class="tarxeta"
         :class="{ inactiva: componenteActivo !== 'engadirD' }"
         @click="componenteActivo = 'engadirD'"
       >
-        Engadir exercicio do historial
+        <a href="#">Engadir exercicio do historial</a>
       </div>
     </div>
 
@@ -292,6 +292,7 @@ export default {
                 alt="icona borrar"
                 class="icono-trash"
                 @click="borrarPlantilla(plantilla.id_plantilla)"
+                tabindex="0"
               />
             </div>
           </div>

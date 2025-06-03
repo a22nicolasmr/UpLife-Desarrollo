@@ -252,21 +252,21 @@ export default {
         :class="{ inactiva: componenteActivo !== 'historial' }"
         @click="componenteActivo = 'historial'"
       >
-        Historial
+        <a href="#">Historial</a>
       </div>
       <div
         class="tarxeta"
         :class="{ inactiva: componenteActivo !== 'engadirE' }"
         @click="componenteActivo = 'engadirE'"
       >
-        Engadir exercicios
+        <a href="#">Engadir exercicios</a>
       </div>
       <div
         class="tarxeta"
         :class="{ inactiva: componenteActivo !== 'engadirP' }"
         @click="componenteActivo = 'engadirP'"
       >
-        Engadir plantillas
+        <a href="#">Engadir plantillas</a>
       </div>
     </div>
 
@@ -406,12 +406,14 @@ export default {
                 </td>
 
                 <td>
-                  <img
-                    src="/imaxes/trash.png"
-                    alt="icona borrar"
-                    @click="eliminarExercicio(exercicio.id_exercicio)"
-                    class="icon2"
-                  />
+                  <a href="#">
+                    <img
+                      src="/imaxes/trash.png"
+                      alt="icona borrar"
+                      @click="eliminarExercicio(exercicio.id_exercicio)"
+                      class="icon2"
+                    />
+                  </a>
                 </td>
               </tr>
               <tr v-if="exerciciosHoxe.length === 0">
@@ -446,12 +448,14 @@ export default {
                 </td>
                 <td>{{ plantilla.nome }}</td>
                 <td>
-                  <img
-                    src="/imaxes/trash.png"
-                    alt="icona borrar"
-                    @click="eliminarPlantilla(plantilla.id_plantilla)"
-                    class="icon"
-                  />
+                  <a href="#">
+                    <img
+                      src="/imaxes/trash.png"
+                      alt="icona borrar"
+                      @click="eliminarPlantilla(plantilla.id_plantilla)"
+                      class="icon"
+                    />
+                  </a>
                 </td>
               </tr>
               <tr v-if="plantillasHoxe.length === 0">

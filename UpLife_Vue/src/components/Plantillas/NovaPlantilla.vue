@@ -106,7 +106,7 @@ export default {
           :class="{ seleccionada: img === seleccionada }"
           @click="seleccionada = img"
         >
-          <img :src="img" alt="Opción de imaxe" />
+          <img :src="img" alt="Opción de imaxe" tabindex="0" />
         </div>
       </div>
 

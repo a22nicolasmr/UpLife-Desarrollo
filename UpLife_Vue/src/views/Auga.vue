@@ -189,14 +189,14 @@ export default {
         :class="{ inactiva: componenteActivo !== 'historial' }"
         @click="componenteActivo = 'historial'"
       >
-        Historial
+        <a href="#">Historial</a>
       </div>
       <div
         class="tarxeta"
         :class="{ inactiva: componenteActivo !== 'engadirA' }"
         @click="componenteActivo = 'engadirA'"
       >
-        Engadir auga
+        <a href="#">Engadir auga</a>
       </div>
     </div>
 
@@ -280,6 +280,7 @@ export default {
                     alt="icona borrar"
                     @click="eliminarAuga(auga.id_auga)"
                     id="icona"
+                    tabindex="0"
                   />
                 </td>
               </tr>
