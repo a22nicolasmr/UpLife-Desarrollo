@@ -81,7 +81,7 @@ export default {
       const agora = new Date();
       const horaActual = agora.toTimeString().slice(0, 5);
 
-      // Inicializa el set si no existe
+      // inicializa set se non existe
       if (!this.tarefasNotificadasAnticipadas) {
         this.tarefasNotificadasAnticipadas = new Set();
       }
@@ -89,7 +89,7 @@ export default {
       for (const tarefa of this.tarefasConHora) {
         if (!tarefa.hora || tarefa.completada) continue;
 
-        // Calcular minutos de diferencia con la hora actual
+        // calcular minutos de diferencia ca hora actual
         const tarefaHora = new Date();
         const [hora, minutos] = tarefa.hora.split(":");
         tarefaHora.setHours(hora, minutos, 0, 0);
@@ -97,10 +97,10 @@ export default {
         const diffMs = tarefaHora - agora;
         const diffMin = Math.floor(diffMs / 60000);
 
-        // Usar clave compuesta como identificador único
+        // usar clave composta como identificador único
         const claveUnica = `${tarefa.titulo}-${tarefa.hora}`;
 
-        // Notificación anticipada (a 1 minuto)
+        // notificación anticipada (a 1 minuto)
         if (
           diffMin === 1 &&
           !this.tarefasNotificadasAnticipadas.has(claveUnica)
@@ -141,7 +141,7 @@ export default {
           }
         }
 
-        // Notificación puntual
+        // notificación de hora cumplida
         if (
           tarefa.hora.slice(0, 5) === horaActual &&
           !tarefa.notificada &&

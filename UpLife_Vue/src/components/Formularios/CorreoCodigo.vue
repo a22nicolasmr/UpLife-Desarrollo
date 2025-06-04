@@ -7,21 +7,6 @@ export default {
     };
   },
   methods: {
-    getCookie(name) {
-      let cookieValue = null;
-      if (document.cookie && document.cookie !== "") {
-        const cookies = document.cookie.split(";");
-        for (let i = 0; i < cookies.length; i++) {
-          const cookie = cookies[i].trim();
-          if (cookie.startsWith(name + "=")) {
-            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-            break;
-          }
-        }
-      }
-      return cookieValue;
-    },
-
     //comprobar se o correo introducido é válido
     async comprobarCorreo(event) {
       event.preventDefault();
@@ -48,7 +33,7 @@ export default {
         );
         const data = await res.json();
         if (!data.existe) {
-          this.erro = "Este correo no está registrado.";
+          this.erro = "Este correo non está rexistrado.";
           return;
         }
 
@@ -72,14 +57,14 @@ export default {
         );
 
         if (!envio.ok) {
-          this.erro = "Error al enviar el correo.";
+          this.erro = "Error ao enviar o correo.";
           return;
         }
 
         this.$router.push("/formularios/codigo");
       } catch (error) {
         console.error("Error:", error);
-        this.erro = "Error de conexión. Inténtalo más tarde.";
+        this.erro = "Erro de conexión. Intentao mais tarde.";
       }
     },
   },

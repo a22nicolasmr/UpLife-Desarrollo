@@ -45,6 +45,7 @@ export default {
       return;
     }
 
+    //esperar a que acaben de executarse os tres métodos seguintes
     await this.cargarDatasConTarefas();
     await this.comprobarRachas();
     await this.comprobarMedallas();

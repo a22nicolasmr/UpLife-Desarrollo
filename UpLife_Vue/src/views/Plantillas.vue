@@ -3,13 +3,11 @@ import EngadirDoHistorial from "@/components/Plantillas/EngadirDoHistorial.vue";
 import EngadirExercicioPlantilla from "@/components/Plantillas/EngadirExercicioPlantilla.vue";
 import NovaPlantilla from "@/components/Plantillas/NovaPlantilla.vue";
 import { useUsuarioStore } from "@/stores/useUsuario";
-import draggable from "vuedraggable";
 
 export default {
   components: {
     NovaPlantilla,
     EngadirExercicioPlantilla,
-    draggable,
     EngadirDoHistorial,
   },
   data() {
@@ -113,7 +111,7 @@ export default {
       }
     },
 
-    // expandir ou contraer unha plantilla
+    // expandir ou contraer unha plantilla polo seu id
     toggleExpand(id) {
       this.expandedPlantillas = this.expandedPlantillas.includes(id)
         ? this.expandedPlantillas.filter((pid) => pid !== id)
@@ -123,7 +121,7 @@ export default {
     // eliminar un exercicio polo seu id
     async borrarExercicio(idExercicio, idPlantilla) {
       try {
-        // Obtener la plantilla
+        // obter a plantilla
         const res = await fetch(
           `https://uplife-final.onrender.com/api/plantillas/${idPlantilla}/`,
           {
@@ -134,12 +132,12 @@ export default {
 
         const plantilla = await res.json();
 
-        // Obtener solo os IDs dos exercicios, excluíndo o que se vai borrar
+        // obter solo os IDs dos exercicios, excluíndo o que se vai borrar
         const idsActualizados = (plantilla.exercicios || [])
           .map((e) => (typeof e === "object" ? e.id_exercicio : e))
           .filter((id) => id !== idExercicio);
 
-        // Actualizar a plantilla sen ese exercicio
+        // actualizar a plantilla sen ese exercicio
         const patchRes = await fetch(
           `https://uplife-final.onrender.com/api/plantillas/${idPlantilla}/`,
           {
@@ -155,7 +153,7 @@ export default {
         if (!patchRes.ok)
           throw new Error("Erro ao actualizar a plantilla sen o exercicio");
 
-        // Actualizar datos localmente
+        // actualizar datos localmente
         const plantillaLocal = this.plantillas.find(
           (p) => p.id_plantilla === idPlantilla
         );

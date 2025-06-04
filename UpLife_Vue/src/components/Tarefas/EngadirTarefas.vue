@@ -50,6 +50,7 @@ export default {
     },
   },
   methods: {
+    //engadir tarefa ao calendario
     async engadirTarefa() {
       this.erro = "";
 
@@ -58,6 +59,7 @@ export default {
         return;
       }
 
+      //comprobase que a hora non é unha hora pasada
       if (this.hora) {
         const [horaStr, minutoStr] = this.hora.split(":");
         const minutosIntroducidos =

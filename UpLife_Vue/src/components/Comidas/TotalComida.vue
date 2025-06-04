@@ -124,11 +124,10 @@ export default {
       </div>
     </div>
 
-    <!-- Donut Chart -->
     <div class="donut-chart">
       <svg viewBox="0 0 36 36" class="circular-chart">
         <circle class="bg" cx="18" cy="18" r="15.9155" />
-        <!-- Proteínas (verde) - primero para que quede debajo -->
+        <!-- proteínas (verde) -->
         <circle
           class="proteinas"
           cx="18"
@@ -139,7 +138,7 @@ export default {
           }`"
           stroke-dashoffset="25"
         />
-        <!-- Grasas (amarillo) -->
+        <!-- graxas (amarelo) -->
         <circle
           class="graxas"
           cx="18"
@@ -150,7 +149,7 @@ export default {
           }`"
           :stroke-dashoffset="25 - proteinaPorcentaxeReal"
         />
-        <!-- Carbohidratos (azul) - último para que quede encima -->
+        <!-- carbohidratos (azul) -->
         <circle
           class="carbs"
           cx="18"

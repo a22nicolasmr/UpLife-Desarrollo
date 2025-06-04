@@ -59,6 +59,7 @@ export default {
     this.cargarAugaHoxe();
   },
   methods: {
+    //cargar todos os datos do usuario ao montar o compoñente
     async asegurarDatosUsuarioCargados() {
       const store = useUsuarioStore();
       if (!store.auga) {

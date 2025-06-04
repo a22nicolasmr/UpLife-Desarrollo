@@ -117,6 +117,8 @@ export default {
         console.error("Erro ao subir imaxe:", error);
       }
     },
+
+    //actualizar modo da aplicación de non mandar correos a mandalos
     async actualizarModoAplicacion() {
       try {
         await fetch(
