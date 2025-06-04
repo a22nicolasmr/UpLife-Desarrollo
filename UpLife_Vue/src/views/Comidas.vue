@@ -355,9 +355,9 @@ export default {
             <img :src="grupo.icona" alt="icona grupo" />
             <h3>{{ grupo.nome }}</h3>
             <div class="botons-container">
-              <div>
+              <!-- <div>
                 <p>{{ this.cargarCaloriasPorGrupo(grupo.id_grupo) }}</p>
-              </div>
+              </div> -->
               <button
                 class="expand-button"
                 @click.stop="toggleExpand(grupo.id_grupo)"
