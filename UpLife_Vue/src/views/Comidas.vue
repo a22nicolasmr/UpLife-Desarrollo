@@ -68,6 +68,27 @@ export default {
     this.cargarDatos();
   },
   methods: {
+    //calcula as calorias inxeridas por cada grupo creado
+    async cargarCaloriasPorGrupo(idGrupo) {
+      const store = useUsuarioStore();
+      store.cargarToken();
+      const token = store.token;
+      try {
+        const response = await fetch(
+          `https://uplife-final.onrender.com/api/grupos/${idGrupo}/`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const data = await response.json();
+        const comidas = data.comidas || [];
+        return comidas.reduce((acc, comida) => acc + comida.calorias, 0);
+      } catch (error) {
+        console.error("Erro calculando as comidas do grupo");
+      }
+    },
     async asegurarDatosUsuarioCargados() {
       const store = useUsuarioStore();
       if (!store.calorias) {
@@ -334,6 +355,9 @@ export default {
             <img :src="grupo.icona" alt="icona grupo" />
             <h3>{{ grupo.nome }}</h3>
             <div class="botons-container">
+              <div>
+                <p>{{ this.cargarCaloriasPorGrupo(grupo.id_grupo) }}</p>
+              </div>
               <button
                 class="expand-button"
                 @click.stop="toggleExpand(grupo.id_grupo)"
