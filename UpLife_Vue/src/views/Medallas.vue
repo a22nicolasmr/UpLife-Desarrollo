@@ -171,6 +171,7 @@ export default {
                 <img
                   :src="'https://res.cloudinary.com/dkujevuxh/' + medalla.icona"
                   alt="Icona medalla"
+                  id="imaxeMedalla"
                 />
                 <div>
                   <h3>{{ medalla.nome }}</h3>
@@ -205,6 +206,7 @@ export default {
                 <img
                   :src="'https://res.cloudinary.com/dkujevuxh/' + medalla.icona"
                   alt="Icona medalla"
+                  id="imaxeMedalla2"
                 />
                 <div>
                   <h3>{{ medalla.nome }}</h3>
@@ -239,6 +241,7 @@ export default {
                 <img
                   :src="'https://res.cloudinary.com/dkujevuxh/' + medalla.icona"
                   alt="Icona medalla"
+                  id="imaxeMedalla3"
                 />
                 <div>
                   <h3>{{ medalla.nome }}</h3>
@@ -254,6 +257,12 @@ export default {
 </template>
 
 <style scoped>
+#imaxeMedalla3,
+#imaxeMedalla2,
+#imaxeMedalla {
+  background-color: white;
+}
+
 .general {
   width: 93%;
   padding: 3%;
