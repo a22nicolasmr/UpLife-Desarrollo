@@ -18,11 +18,13 @@ export default {
         repiteContrasinal: "",
         aceptaCondicions: "",
       },
+      cargando: false,
     };
   },
   methods: {
     //rexistrar usuario se os campos do formulario están ben cubertos
     async mandarFormulario() {
+      this.cargando = true;
       let isValid = true;
       this.errors = {
         nomeCompleto: "",
@@ -117,6 +119,7 @@ export default {
         this.repiteContrasinal = "";
         console.log("Hai erros no formulario");
       }
+      this.cargando = false;
     },
   },
 };
@@ -188,7 +191,11 @@ export default {
       <div v-if="errors.aceptaCondicions" class="erro">
         {{ errors.aceptaCondicions }}
       </div>
-      <button type="submit">Crear conta</button>
+
+      <button type="submit" :disabled="cargando">
+        <span v-if="!cargando">Crear conta</span>
+        <span v-else class="spinner"></span>
+      </button>
 
       <p>
         Xa tes unha conta?
@@ -227,5 +234,23 @@ h1 {
   margin: 0;
   width: 16px;
   height: 16px;
+}
+
+/* Spinner */
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ccc;
+  border-top: 2px solid #7f5af0;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>

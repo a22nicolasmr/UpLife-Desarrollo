@@ -15,6 +15,15 @@ export default {
       erro: "",
     };
   },
+  watch: {
+    dataSeleccionada() {
+      if (!this.erro == "") {
+        this.hora = "";
+        this.tarefa = "";
+        this.erro = "";
+      }
+    },
+  },
   computed: {
     // obter id de usuario do store
     idUsuario() {
@@ -50,28 +59,45 @@ export default {
     },
   },
   methods: {
+    dataHoxeISO() {
+      return new Date().toLocaleDateString("en-CA");
+    },
     //engadir tarefa ao calendario
     async engadirTarefa() {
       this.erro = "";
 
       if (!this.tarefa) {
         this.erro = "Por favor, enche todos os campos.";
+
         return;
       }
 
-      //comprobase que a hora non é unha hora pasada
+      // comproba que a hora non é unha hora pasada
       if (this.hora) {
         const [horaStr, minutoStr] = this.hora.split(":");
         const minutosIntroducidos =
           parseInt(horaStr, 10) * 60 + parseInt(minutoStr, 10);
 
-        const ahora = new Date();
-        const minutosAgora = ahora.getHours() * 60 + ahora.getMinutes();
+        const agora = new Date();
+        const minutosAgora = agora.getHours() * 60 + agora.getMinutes();
 
-        if (minutosIntroducidos < minutosAgora) {
-          this.erro =
-            "Non podes engadir unha tarefa para unha hora pasada de hoxe.";
-          return;
+        const dataSeleccionadaFormatada =
+          this.dataSeleccionada.toLocaleDateString("en-CA");
+        const dataHoxeFormatada = this.dataHoxeISO();
+
+        console.log(
+          "agora",
+          dataHoxeFormatada,
+          "this.dataSeleccionada",
+          dataSeleccionadaFormatada
+        );
+
+        if (dataHoxeFormatada === dataSeleccionadaFormatada) {
+          if (minutosIntroducidos < minutosAgora) {
+            this.erro =
+              "Non podes engadir unha tarefa para unha hora pasada de hoxe.";
+            return;
+          }
         }
       }
 

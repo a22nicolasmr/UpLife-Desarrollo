@@ -8,24 +8,22 @@ export default {
       email: "",
       contrasinal: "",
       erro: "",
+      cargando: false,
     };
   },
   methods: {
     //mandar formulario se os datos estan correctos
     async mandarFormulario() {
       this.erro = "";
+      this.cargando = true;
 
       if (!this.email || !this.contrasinal) {
         this.erro = "Completa todos os campos";
         this.contrasinal = "";
+        this.cargando = false;
         return;
       }
-      console.log(
-        JSON.stringify({
-          username: this.email,
-          password: this.contrasinal,
-        })
-      );
+
       try {
         const response = await axios.post(
           "https://uplife-final.onrender.com/api/login/",
@@ -40,10 +38,7 @@ export default {
           }
         );
 
-        console.log("🟢 Login correcto:", response.data);
-
         const token = response.data.access;
-
         localStorage.setItem("token", token);
 
         const usuarioStore = useUsuarioStore();
@@ -62,6 +57,8 @@ export default {
           this.erro = "Erro ao iniciar sesión. Inténtao de novo";
         }
         this.contrasinal = "";
+      } finally {
+        this.cargando = false;
       }
     },
   },
@@ -87,23 +84,25 @@ export default {
         placeholder="Escribe o teu contrasinal"
         v-model="contrasinal"
       />
+
       <div class="recuperar-contrasinal">
         <span>Esquecíches o teu contrasinal?</span>
         <a href="#" @click.prevent="$router.push('/formularios/correoCodigo')"
           >Recuperar</a
         >
       </div>
-      <div v-if="erro" class="erro">
-        {{ erro }}
-      </div>
+
+      <div v-if="erro" class="erro">{{ erro }}</div>
 
       <button
         name="botonInicio"
         id="idBotonInicio"
         type="submit"
+        :disabled="cargando"
         @click.prevent="mandarFormulario()"
       >
-        Iniciar sesión
+        <span v-if="!cargando">Iniciar sesión</span>
+        <span v-else class="spinner"></span>
       </button>
 
       <p>
@@ -133,8 +132,25 @@ h1 {
   margin: 6px 0 12px;
   gap: 6px;
 }
-
 .recuperar-contrasinal a {
   cursor: pointer;
+}
+
+/* Spinner */
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ccc;
+  border-top: 2px solid #7f5af0;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>

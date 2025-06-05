@@ -371,6 +371,7 @@ export default {
       if (dia.date < hoxe) return;
 
       this.dataSeleccionada = dia.date;
+
       this.comprobarTarefasNaData(this.dataSeleccionada);
 
       // scrollear ata as tarefas da data seleccionada

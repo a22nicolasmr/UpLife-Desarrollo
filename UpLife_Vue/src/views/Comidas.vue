@@ -20,7 +20,13 @@ export default {
       grupoSeleccionado: null,
       grupoSeleccionadoMandar: null,
       editando: { id: null, campo: null, valor: "" },
+      caloriasPorGrupo: {},
     };
+  },
+  watch: {
+    grupos() {
+      this.cargarTodasAsCalorias(this.grupos);
+    },
   },
   computed: {
     // obter o id do usuario desde o store
@@ -65,29 +71,47 @@ export default {
   async mounted() {
     // cargar datos ao montar o compoñente
     await this.asegurarDatosUsuarioCargados();
-    this.cargarDatos();
+    await this.cargarDatos();
+    this.cargarTodasAsCalorias(this.grupos);
   },
   methods: {
+    dataHoxeISO() {
+      return new Date().toLocaleDateString("en-CA");
+    },
     //calcula as calorias inxeridas por cada grupo creado
-    async cargarCaloriasPorGrupo(idGrupo) {
+    async cargarTodasAsCalorias(grupos) {
       const store = useUsuarioStore();
       store.cargarToken();
       const token = store.token;
-      try {
-        const response = await fetch(
-          `https://uplife-final.onrender.com/api/grupos/${idGrupo}/`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+
+      await Promise.all(
+        grupos.map(async (grupo) => {
+          try {
+            const response = await fetch(
+              `https://uplife-final.onrender.com/api/grupos/${grupo.id_grupo}/`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+            const data = await response.json();
+            const comidas =
+              data.comidas.filter((c) => c.data === this.dataHoxeISO()) || [];
+            this.caloriasPorGrupo[grupo.id_grupo] = comidas.reduce(
+              (acc, comida) =>
+                acc + Math.round((comida.calorias * comida.peso) / 100),
+              0
+            );
+          } catch (error) {
+            console.error(
+              "Erro calculando as comidas do grupo",
+              grupo.id_grupo
+            );
+            this.caloriasPorGrupo[grupo.id_grupo] = 0;
           }
-        );
-        const data = await response.json();
-        const comidas = data.comidas || [];
-        return comidas.reduce((acc, comida) => acc + comida.calorias, 0);
-      } catch (error) {
-        console.error("Erro calculando as comidas do grupo");
-      }
+        })
+      );
     },
     async asegurarDatosUsuarioCargados() {
       const store = useUsuarioStore();
@@ -193,6 +217,7 @@ export default {
         this.componenteActivo = "historial";
         this.$refs.hijoRef.cargarComidas();
         this.$refs.hijoRef.cargarGrupos();
+        this.cargarTodasAsCalorias(this.grupos);
       } catch (error) {
         console.error("Erro eliminando grupo e comidas:", error);
       }
@@ -222,6 +247,7 @@ export default {
         this.componenteActivo = "historial";
         this.$refs.hijoRef.cargarComidas();
         this.$refs.hijoRef.cargarGrupos();
+        this.cargarTodasAsCalorias(this.grupos);
       } catch (error) {
         console.error("Erro eliminando comida:", error);
       }
@@ -279,6 +305,7 @@ export default {
         this.cargarDatos();
         this.$refs.hijoRef.cargarGrupos();
         this.$refs.hijoRef.cargarComidas();
+        this.cargarTodasAsCalorias(this.grupos);
       } catch (error) {
         console.error("Erro ao actualizar comida:", error);
       }
@@ -355,9 +382,9 @@ export default {
             <img :src="grupo.icona" alt="icona grupo" />
             <h3>{{ grupo.nome }}</h3>
             <div class="botons-container">
-              <!-- <div>
-                <p>{{ this.cargarCaloriasPorGrupo(grupo.id_grupo) }}</p>
-              </div> -->
+              <div>
+                <p>{{ caloriasPorGrupo[grupo.id_grupo] }}</p>
+              </div>
               <button
                 class="expand-button"
                 @click.stop="toggleExpand(grupo.id_grupo)"
