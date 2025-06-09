@@ -56,6 +56,7 @@ export default {
 
         const userId = this.idUsuario;
 
+        // filtrar exercicios e plantillas por fecha dos últimos 7 días
         const exerciciosFiltrados = exercicios.filter(
           (e) => e.usuario === userId && e.data >= seteDiasAtrasISO
         );

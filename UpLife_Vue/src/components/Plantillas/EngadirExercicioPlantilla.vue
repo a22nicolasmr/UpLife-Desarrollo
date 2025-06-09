@@ -70,7 +70,6 @@ export default {
 
         if (!resEx.ok) throw new Error("Erro ao crear exercicio");
         const exercicioCreado = await resEx.json();
-        console.log("exercicio creado ", exercicioCreado);
 
         await this.cargarDatos();
         const plantilla = this.plantillas.find(
@@ -155,14 +154,6 @@ export default {
 
     // comprobar que todos os campos obrigatorios están cubertos
     comprobarCampos() {
-      console.log(
-        this.plantillaSeleccionada,
-        this.nomeExercicio,
-        this.categoriaSeleccionada,
-        this.repeticions,
-        this.peso
-      );
-
       this.erro = "";
       if (
         !this.plantillaSeleccionada ||

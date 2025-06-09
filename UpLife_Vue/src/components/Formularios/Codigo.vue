@@ -7,7 +7,7 @@ export default {
     };
   },
   methods: {
-    //comprobar código enviado
+    //comprobar se o código enviado concide co gardado no localStorage en CorreoCodigo
     comprobarCodigo(event) {
       event.preventDefault();
       this.erro = null;
@@ -29,7 +29,7 @@ export default {
         this.erro = "O código non é correcto. Revisa o correo.";
       }
     },
-    //comprobar se o correo introducido é válido
+    // reenviar código se o usuario o require
     async reenviarCodigo(event) {
       event.preventDefault();
       this.erro = null;

@@ -122,7 +122,6 @@ export default {
           (g) => Number(g.id_grupo) === Number(this.grupoSeleccionado)
         );
 
-        // const novaLista = [...(grupo.comidas || []), comidaCreada.id_comida];
         const comidasExistentes = (grupo.comidas || []).map((c) =>
           typeof c === "object" ? c.id_comida : c
         );

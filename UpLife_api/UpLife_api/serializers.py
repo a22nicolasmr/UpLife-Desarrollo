@@ -45,7 +45,6 @@ class ExerciciosSerializer(serializers.ModelSerializer):
         model = Exercicios
         fields = '__all__'
 
-# necesario para que ao facer PATCH nas plantillas acepte unha lista de ids de exercicios
 class PlantillasSerializer(serializers.ModelSerializer):
     exercicios = serializers.PrimaryKeyRelatedField(
         many=True,
@@ -60,7 +59,6 @@ class PlantillasSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-# necesario para listar os exercicios
 class PlantillasDetailSerializer(serializers.ModelSerializer):
     exercicios = ExerciciosSerializer(many=True, read_only=True)
 
@@ -74,7 +72,6 @@ class ComidasSerializer(serializers.ModelSerializer):
         model = Comidas
         fields = '__all__'
 
-# serializer báscio só coas claves das comidas
 class GruposSerializer(serializers.ModelSerializer):
     comidas = serializers.PrimaryKeyRelatedField(
         many=True,
@@ -89,7 +86,6 @@ class GruposSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-# serializer cos atributos das comidas detallados
 class GruposDetailSerializer(serializers.ModelSerializer):
     comidas = ComidasSerializer(many=True, read_only=True)
     class Meta:

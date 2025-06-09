@@ -205,7 +205,7 @@ class UsoPlantillaViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(usuario=usuario_id)
         return queryset
     
-
+# enviar código de de cambio de contrasinal
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def enviar_codigo_confirmacion(request):
@@ -237,7 +237,7 @@ def enviar_codigo_confirmacion(request):
                 from_email="uplifedaw@gmail.com",
                 to=[email],
             )
-            email_msg.content_subtype = "html"  # Importante: indicar que é HTML
+            email_msg.content_subtype = "html"  
             email_msg.send(fail_silently=False)
 
             return JsonResponse({'status': 'success'})
@@ -247,6 +247,7 @@ def enviar_codigo_confirmacion(request):
     return JsonResponse({'status': 'error', 'message': 'Invalid method'}, status=405)
 
 
+# enviar un correo electrónico de alerta
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def enviar_recordatorio(request):

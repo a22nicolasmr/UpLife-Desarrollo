@@ -174,7 +174,6 @@ export default {
         if (!patchRes.ok)
           throw new Error("Erro ao engadir exercicio á plantilla");
 
-        console.log("✅ Exercicio engadido á plantilla con éxito");
         this.plantillaSeleccionada = {};
         this.cargarExercicios();
         this.$emit("cargarDatos");

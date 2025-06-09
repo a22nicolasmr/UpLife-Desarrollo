@@ -28,6 +28,7 @@ export default {
   },
 
   watch: {
+    // actualizar e obter medallas se o valor da variable valorMedallas cambia
     valorMedallas: {
       async handler(newVal) {
         if (newVal && newVal.length > 0) {
@@ -76,6 +77,7 @@ export default {
             medallaActual.usuarios.includes(usuarioId) &&
             medallaActual.completado;
 
+          // actualizar a medalla como completada no servidor se está completada
           if (medalla.completado && !xaIncluido) {
             const patchRes = await fetch(
               `https://uplife-final.onrender.com/api/medallas/${medalla.id_medalla}/`,
@@ -111,8 +113,6 @@ export default {
       if (algunhaActualizada) {
         await this.obterMedallas();
         this.$emit("medallasActualizadas");
-      } else {
-        console.log("🟡 Ningún cambio detectado, non se recarga nada");
       }
     },
 

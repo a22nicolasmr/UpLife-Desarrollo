@@ -61,6 +61,7 @@ export default {
     },
   },
   methods: {
+    // executar o metodo datas-con-tarefas en Tarefas para pasar as tarefas a App , onde se comprobarán
     emitirDatasConTarefas(tarefasConHora = []) {
       this.$emit("datas-con-tarefas", tarefasConHora);
     },
@@ -75,12 +76,14 @@ export default {
         const bloque = Array.isArray(refs) ? refs[0] : refs;
 
         if (bloque && scrollContainer) {
+          // calcular coordenadas de desprazamento
           const bloqueRect = bloque.getBoundingClientRect();
           const containerRect = scrollContainer.getBoundingClientRect();
 
           const offset =
             bloqueRect.top - containerRect.top + scrollContainer.scrollTop;
 
+          // desprazamento suave
           scrollContainer.scrollTo({
             top: offset,
             behavior: "smooth",
@@ -109,11 +112,12 @@ export default {
         if (!response.ok) throw new Error("Erro ao cargar tarefas");
         const tarefas = await response.json();
 
-        const hoyISO = new Date().toISOString().split("T")[0];
+        const hoxeISO = new Date().toISOString().split("T")[0];
         this.tarefasConHora = tarefas.filter(
-          (t) => t.usuario === idUsuario && t.hora != null && t.data === hoyISO
+          (t) => t.usuario === idUsuario && t.hora != null && t.data === hoxeISO
         );
 
+        // agrupar as tarefas por data
         const agrupadas = {};
         const tarefasUsuario = tarefas.filter((t) => t.usuario === idUsuario);
         for (const tarefa of tarefasUsuario) {

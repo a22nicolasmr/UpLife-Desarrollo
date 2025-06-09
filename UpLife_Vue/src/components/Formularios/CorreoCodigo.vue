@@ -37,6 +37,7 @@ export default {
           return;
         }
 
+        // xerar un código e gardalo no localStorage
         const codigo = Math.floor(100000 + Math.random() * 900000).toString();
 
         localStorage.setItem("correoConfirmacion", this.identificador);

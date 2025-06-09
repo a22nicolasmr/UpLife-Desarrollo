@@ -6,8 +6,8 @@ export default {
   methods: {
     //redirixir usuario a rexistro
     redirixirRexistro() {
-      this.$emit("pecharModal");
-      this.$router.push("/formularios/rexistro");
+      this.$emit("pecharModal", "p");
+      this.$router.replace({ name: "inicio" });
     },
   },
 };
@@ -21,7 +21,7 @@ export default {
           Pechar
         </button>
         <button
-          @click="$emit('pecharModal')"
+          @click="$emit('pecharModal', 'c')"
           id="cancelar"
           name="botonCancelar"
         >

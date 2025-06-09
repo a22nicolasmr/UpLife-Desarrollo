@@ -109,7 +109,6 @@ export default {
           }
         );
         const resultado = await response.json();
-        console.log("Resposta do servidor:", resultado);
         await this.actualizarDatos();
 
         const store = useUsuarioStore();
@@ -135,7 +134,6 @@ export default {
             body: JSON.stringify({ modo_aplicacion: this.modoAplicacion }),
           }
         );
-        console.log("Modo de aplicación actualizado:", this.modoAplicacion);
         const store = useUsuarioStore();
         store.modo_aplicacion = this.modoAplicacion;
       } catch (error) {

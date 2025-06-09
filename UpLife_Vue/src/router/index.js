@@ -30,6 +30,7 @@ import Cambio from "@/components/Formularios/Cambio.vue";
 import Codigo from "@/components/Formularios/Codigo.vue";
 import CorreoCodigo from "@/components/Formularios/CorreoCodigo.vue";
 import EngadirDoHistorial from "@/components/Plantillas/EngadirDoHistorial.vue";
+import { useUsuarioStore } from "@/stores/useUsuario";
 
 const routes = [
   {
@@ -216,6 +217,16 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+router.beforeEach((to, from, next) => {
+  const usuarioStore = useUsuarioStore();
+
+  // protexer as urls requerindo autenticación
+  if (to.meta.requiereAuth && !usuarioStore.token) {
+    next({ name: "inicio" });
+  } else {
+    next();
+  }
 });
 
 export default router;

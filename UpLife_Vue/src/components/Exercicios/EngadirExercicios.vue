@@ -30,16 +30,6 @@ export default {
     //validar formulario
     comprobarCampos() {
       this.erro = "";
-      console.log(
-        "nome",
-        this.nome,
-        "categoria",
-        this.categoriaSeleccionada,
-        "repeticions",
-        this.repeticions,
-        "peso",
-        this.peso
-      );
 
       if (
         !this.nome ||

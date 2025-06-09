@@ -30,6 +30,7 @@ export default {
         return;
       }
 
+      // atopar un usuario polo seu email
       try {
         const res = await fetch(
           "https://uplife-final.onrender.com/obter-usuario-id/",
@@ -49,6 +50,7 @@ export default {
           return;
         }
 
+        //cambiar contrasinal
         const response = await fetch(
           `https://uplife-final.onrender.com/api/usuarios/${data.id_usuario}/`,
           {

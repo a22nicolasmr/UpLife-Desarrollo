@@ -22,7 +22,6 @@ SECRET_KEY = os.environ.get(
     "django-insecure-p@$&536+j!4mzyf338c6yln=!_jmit6hbbsy5-@u&$-xy_00b9"
 )
 
-# DEBUG = True
 
 ALLOWED_HOSTS = ['*']  
 DEBUG = False
@@ -79,16 +78,13 @@ MIDDLEWARE = [
 ]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# permitir conexions de "http://localhost:5174",
+# permitir conexións dos enlaces indicados
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5174",
     "https://uplife-final.onrender.com",
     "https://uplife-vue-final.onrender.com",
     "https://uplife.site"
 ]
-
-# permitir conexions de calquera,
-# CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'UpLife.urls'
 

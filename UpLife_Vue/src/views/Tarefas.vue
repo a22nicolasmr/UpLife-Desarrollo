@@ -39,14 +39,12 @@ export default {
 
   // cando se carga a vista, cargar as datas con tarefas, comprobar rachas e medallas do usuario
   async mounted() {
-    this.cargando = true;
     const usuarioStore = useUsuarioStore();
     usuarioStore.cargarToken();
 
-    console.log("🟢 Token cargado no store:", usuarioStore.token);
     if (!usuarioStore.token) {
       console.warn("🔴 Token non dispoñible. Redirixindo ao login...");
-      this.$router.push({ name: "login" });
+      this.$router.push({ name: "inicio" });
       return;
     }
 
@@ -83,7 +81,7 @@ export default {
         9,
         this.rComidas >= 7 && this.rExercicios >= 7 && this.rAuga >= 7
       );
-      agregarMedalla(10, false); // lóxica pendente
+      agregarMedalla(10, false);
 
       // medalla 11 (plantillas)
       try {
@@ -147,36 +145,38 @@ export default {
       this.valorMedallas = valorMedallas;
       this.$emit("mandarRachas", this.valorMedallas);
 
-      const usuarioStore = useUsuarioStore();
-      const medallasPrevias = Array.isArray(usuarioStore.medallas)
-        ? usuarioStore.medallas
-        : Object.values(usuarioStore.medallas || []);
+      //comprobar se a medalla foi mostrada
+      // const usuarioStore = useUsuarioStore();
+      // const medallasPrevias = Array.isArray(usuarioStore.medallas)
+      //   ? usuarioStore.medallas
+      //   : Object.values(usuarioStore.medallas || []);
 
-      const medallasMostradas =
-        JSON.parse(localStorage.getItem("medallasMostradas")) || [];
+      // const medallasMostradas =
+      //   JSON.parse(localStorage.getItem("medallasMostradas")) || [];
 
-      let novasParaMostrar = [];
+      // let novasParaMostrar = [];
 
-      for (const nova of valorMedallas) {
-        const previa = medallasPrevias.find(
-          (m) => m.id_medalla === nova.id_medalla
-        );
-        const xaEstaba = previa?.completado;
-        const xaMostrada = medallasMostradas.includes(nova.id_medalla);
+      // for (const nova of valorMedallas) {
+      //   const previa = medallasPrevias.find(
+      //     (m) => m.id_medalla === nova.id_medalla
+      //   );
+      //   const xaEstaba = previa?.completado;
+      //   const xaMostrada = medallasMostradas.includes(nova.id_medalla);
 
-        if (!xaEstaba && nova.completado && !xaMostrada) {
-          novasParaMostrar.push(nova.id_medalla);
-        }
-      }
+      //   if (!xaEstaba && nova.completado && !xaMostrada) {
+      //     novasParaMostrar.push(nova.id_medalla);
+      //   }
+      // }
 
-      if (novasParaMostrar.length > 0) {
-        this.$emit("abrirVentaMedallas");
-        const actualizado = [
-          ...new Set([...medallasMostradas, ...novasParaMostrar]),
-        ];
-        localStorage.setItem("medallasMostradas", JSON.stringify(actualizado));
-      }
+      // if (novasParaMostrar.length > 0) {
+      //   this.$emit("abrirVentaMedallas");
+      //   const actualizado = [
+      //     ...new Set([...medallasMostradas, ...novasParaMostrar]),
+      //   ];
+      //   localStorage.setItem("medallasMostradas", JSON.stringify(actualizado));
+      // }
 
+      // actualizar datos das medallas no store
       usuarioStore.updateNumeroMedallas();
       usuarioStore.cargarMedallas();
 
@@ -427,8 +427,6 @@ export default {
         this.$router.push({ name: "login" });
         return;
       }
-
-      console.log("📤 Enviando token no fetch:", token);
 
       try {
         const response = await fetch(

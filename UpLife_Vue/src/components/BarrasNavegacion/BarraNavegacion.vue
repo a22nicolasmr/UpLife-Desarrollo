@@ -13,7 +13,7 @@ export default {
     },
 
     //comprobar se se está accedendo dende un móvil
-    esMovil() {
+    eMovil() {
       return window.innerWidth <= 768;
     },
   },
@@ -28,7 +28,7 @@ export default {
   methods: {
     //abrir e pechar menú de hamburguesa en función de se se está en móvil ou non
     handleResize() {
-      if (!this.esMovil && this.menuAbierto) {
+      if (!this.eMovil && this.menuAbierto) {
         this.menuAbierto = false;
       }
     },
@@ -42,7 +42,7 @@ export default {
       <a href="#">☰</a>
     </div>
 
-    <nav :class="{ abierto: menuAbierto }" v-if="menuAbierto || !esMovil">
+    <nav :class="{ abierto: menuAbierto }" v-if="menuAbierto || !eMovil">
       <div class="menu-superior">
         <ul>
           <li>

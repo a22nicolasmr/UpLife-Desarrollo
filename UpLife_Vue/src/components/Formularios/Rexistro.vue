@@ -105,8 +105,6 @@ export default {
             if (data.nome_usuario) {
               this.errors.nomeUsuario = "Este nome de usuario xa está en uso";
             }
-          } else {
-            console.log("Erro ao crear a conta. Inténtao de novo.");
           }
 
           console.error(
@@ -117,7 +115,6 @@ export default {
       } else {
         this.contrasinal = "";
         this.repiteContrasinal = "";
-        console.log("Hai erros no formulario");
       }
       this.cargando = false;
     },

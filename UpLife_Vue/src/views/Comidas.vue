@@ -121,6 +121,7 @@ export default {
         })
       );
     },
+    // asegurar que se cargan todos os datos do usuario
     async asegurarDatosUsuarioCargados() {
       const store = useUsuarioStore();
       if (!store.calorias) {

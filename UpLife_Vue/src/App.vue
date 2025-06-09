@@ -30,7 +30,7 @@ export default {
     VentaMedallas,
   },
   mounted() {
-    // chamar a actualizar medallas de medallas para cargar as medallas
+    // chamar a actualizar medallas de medallas para cargar as medallas unha vez que o compoñente esté cargado
     this.$nextTick(async () => {
       const medallasComp = this.$refs.medallasRef;
       if (medallasComp?.actualizarMedallas) {
@@ -51,7 +51,6 @@ export default {
 
     // executar comprobación hora cada segundo
     this.intervalId = setInterval(this.comprobarHoras, 1000);
-    // this.intervalId = setInterval(this.comprobarHoras, 5000);
   },
   methods: {
     // abrir ventá medallas cando se obtén unha medalla
@@ -65,9 +64,15 @@ export default {
     mandarRachas(valorMedallas) {
       this.valorMedallas = valorMedallas;
     },
-    // activar/desactivar modal pechar sesión
-    toggleModal() {
-      this.modalActivo = !this.modalActivo;
+    // activar/desactivar modal pechar sesión e borrar os datos
+    toggleModal(valor) {
+      if (valor === "p") {
+        this.modalActivo = !this.modalActivo;
+        const usuarioStore = useUsuarioStore();
+        usuarioStore.cerrarSesion();
+      } else {
+        this.modalActivo = !this.modalActivo;
+      }
     },
     // coller tarefas con hora filtrando por as que non foran notificadas previamente
     emitirDatasConTarefas(tarefas) {
@@ -100,18 +105,15 @@ export default {
         // usar clave composta como identificador único
         const claveUnica = `${tarefa.titulo}-${tarefa.hora}`;
 
-        // notificación anticipada (a 1 minuto)
+        // notificación anticipada (a 2 minutos)
         if (
           diffMin === 1 &&
           !this.tarefasNotificadasAnticipadas.has(claveUnica)
         ) {
           this.tarefasNotificadasAnticipadas.add(claveUnica);
 
-          console.log("⏳ Notificación anticipada para:", tarefa.titulo);
-
           const store = useUsuarioStore();
           const email = store.email;
-          console.log("modo aplicacion", store.modo_aplicacion, "email", email);
 
           if (store.modo_aplicacion === "E" && email) {
             try {
@@ -131,13 +133,9 @@ export default {
               );
 
               const result = await res.json();
-              console.log("📧 Correo enviado:", result);
-              console.log("mail", email);
             } catch (error) {
               console.error("❌ Erro ao enviar correo:", error);
             }
-          } else {
-            console.log("Modo aplicación non é E ou email non dispoñible");
           }
         }
 

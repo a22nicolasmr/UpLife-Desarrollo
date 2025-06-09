@@ -16,6 +16,7 @@ export default {
     };
   },
   watch: {
+    // borrar campos ao seleccionar unha data
     dataSeleccionada() {
       if (!this.erro == "") {
         this.hora = "";
@@ -43,7 +44,7 @@ export default {
         .toUpperCase();
     },
 
-    // obter hora mínima
+    // obter hora mínima a que se pode engadir unha tarefa
     minHora() {
       const now = new Date();
       const hojeISO = now.toISOString().split("T")[0];
@@ -84,13 +85,6 @@ export default {
         const dataSeleccionadaFormatada =
           this.dataSeleccionada.toLocaleDateString("en-CA");
         const dataHoxeFormatada = this.dataHoxeISO();
-
-        console.log(
-          "agora",
-          dataHoxeFormatada,
-          "this.dataSeleccionada",
-          dataSeleccionadaFormatada
-        );
 
         if (dataHoxeFormatada === dataSeleccionadaFormatada) {
           if (minutosIntroducidos < minutosAgora) {
