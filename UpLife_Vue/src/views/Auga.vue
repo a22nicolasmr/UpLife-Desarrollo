@@ -2,17 +2,20 @@
 import EngadirAuga from "@/components/Auga/EngadirAuga.vue";
 import HistorialAuga from "@/components/Auga/HistorialAuga.vue";
 import { useUsuarioStore } from "@/stores/useUsuario";
+import Cargando from "@/components/BarrasNavegacion/Cargando.vue";
 
 export default {
   components: {
     HistorialAuga,
     EngadirAuga,
+    Cargando,
   },
   data() {
     return {
       componenteActivo: "historial",
       augaHoxe: [],
       editando: { id: null, campo: null, valor: "" },
+      cargando: true,
     };
   },
 
@@ -55,8 +58,12 @@ export default {
     },
   },
   async mounted() {
-    await this.asegurarDatosUsuarioCargados();
-    this.cargarAugaHoxe();
+    try {
+      await this.asegurarDatosUsuarioCargados();
+      await this.cargarAugaHoxe();
+    } finally {
+      this.cargando = false;
+    }
   },
   methods: {
     //cargar todos os datos do usuario ao montar o compoñente
@@ -181,131 +188,135 @@ export default {
 </script>
 
 <template>
-  <div id="divXeral2">
-    <h1 class="titulo">Auga</h1>
+  <div>
+    <Cargando v-if="cargando"></Cargando>
+    <div v-else id="divXeral2">
+      <h1 class="titulo">Auga</h1>
 
-    <div class="tarxetas">
-      <div
-        class="tarxeta"
-        :class="{ inactiva: componenteActivo !== 'historial' }"
-        @click="componenteActivo = 'historial'"
-      >
-        <a href="#">Historial</a>
+      <div class="tarxetas">
+        <div
+          class="tarxeta"
+          :class="{ inactiva: componenteActivo !== 'historial' }"
+          @click="componenteActivo = 'historial'"
+        >
+          <a href="#">Historial</a>
+        </div>
+        <div
+          class="tarxeta"
+          :class="{ inactiva: componenteActivo !== 'engadirA' }"
+          @click="componenteActivo = 'engadirA'"
+        >
+          <a href="#">Engadir auga</a>
+        </div>
       </div>
-      <div
-        class="tarxeta"
-        :class="{ inactiva: componenteActivo !== 'engadirA' }"
-        @click="componenteActivo = 'engadirA'"
-      >
-        <a href="#">Engadir auga</a>
-      </div>
-    </div>
 
-    <div class="auga-layout">
-      <div class="esquerda">
-        <!-- GRÁFICO DE PROGRESO -->
-        <div class="grafico-auga">
-          <svg viewBox="0 0 36 36" class="circular-chart">
-            <path
-              class="circle-bg"
-              d="M18 2.0845
+      <div class="auga-layout">
+        <div class="esquerda">
+          <!-- GRÁFICO DE PROGRESO -->
+          <div class="grafico-auga">
+            <svg viewBox="0 0 36 36" class="circular-chart">
+              <path
+                class="circle-bg"
+                d="M18 2.0845
                  a 15.9155 15.9155 0 0 1 0 31.831
                  a 15.9155 15.9155 0 0 1 0 -31.831"
-            />
-            <path
-              class="circle"
-              :stroke-dasharray="porcentaxeAuga + ', 100'"
-              d="M18 2.0845
+              />
+              <path
+                class="circle"
+                :stroke-dasharray="porcentaxeAuga + ', 100'"
+                d="M18 2.0845
                  a 15.9155 15.9155 0 0 1 0 31.831
                  a 15.9155 15.9155 0 0 1 0 -31.831"
-            />
-            <text x="18" y="20.35" class="percentage">
-              {{ porcentaxeAuga }}%
-            </text>
-          </svg>
-          <div class="info-auga">
-            <p>
-              <strong>Auga restante:</strong>
-              {{ augaRestante }} ml
-            </p>
-            <p><strong>Auga inxerida:</strong> {{ augaInxeridaHoxe }} ml</p>
+              />
+              <text x="18" y="20.35" class="percentage">
+                {{ porcentaxeAuga }}%
+              </text>
+            </svg>
+            <div class="info-auga">
+              <p>
+                <strong>Auga restante:</strong>
+                {{ augaRestante }} ml
+              </p>
+              <p><strong>Auga inxerida:</strong> {{ augaInxeridaHoxe }} ml</p>
+            </div>
+          </div>
+
+          <div class="esquerdaAbaixo">
+            <table>
+              <thead>
+                <tr>
+                  <th>Cantidade(ml)</th>
+                  <th>Hora</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="auga in augaHoxe" :key="auga.id_auga">
+                  <td @click="activarEdicion(auga.id_auga, 'cantidade')">
+                    <input
+                      :ref="`editInput-${auga.id_auga}-cantidade`"
+                      v-if="
+                        editando.id === auga.id_auga &&
+                        editando.campo === 'cantidade'
+                      "
+                      type="number"
+                      v-model.number="editando.valor"
+                      @blur="guardarCampoEditado(auga.id_auga, 'cantidade')"
+                      @keyup.enter="
+                        guardarCampoEditado(auga.id_auga, 'cantidade')
+                      "
+                      @click.stop
+                    />
+                    <span v-else>{{ auga.cantidade }}</span>
+                  </td>
+                  <td @click="activarEdicion(auga.id_auga, 'hora')">
+                    <input
+                      :ref="`editInput-${auga.id_auga}-hora`"
+                      v-if="
+                        editando.id === auga.id_auga &&
+                        editando.campo === 'hora'
+                      "
+                      type="time"
+                      v-model="editando.valor"
+                      @blur="guardarCampoEditado(auga.id_auga, 'hora')"
+                      @keyup.enter="guardarCampoEditado(auga.id_auga, 'hora')"
+                      @click.stop
+                    />
+                    <span v-else>{{ auga.hora }}</span>
+                  </td>
+
+                  <td>
+                    <img
+                      src="/imaxes/trash.png"
+                      alt="icona borrar"
+                      @click="eliminarAuga(auga.id_auga)"
+                      id="icona"
+                      tabindex="0"
+                    />
+                  </td>
+                </tr>
+                <tr v-if="augaHoxe.length === 0">
+                  <td colspan="3">Non hai rexistros de auga para hoxe.</td>
+                </tr>
+              </tbody>
+            </table>
+            <button @click="componenteActivo = 'engadirA'" id="engadirA">
+              +
+            </button>
           </div>
         </div>
 
-        <div class="esquerdaAbaixo">
-          <table>
-            <thead>
-              <tr>
-                <th>Cantidade(ml)</th>
-                <th>Hora</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="auga in augaHoxe" :key="auga.id_auga">
-                <td @click="activarEdicion(auga.id_auga, 'cantidade')">
-                  <input
-                    :ref="`editInput-${auga.id_auga}-cantidade`"
-                    v-if="
-                      editando.id === auga.id_auga &&
-                      editando.campo === 'cantidade'
-                    "
-                    type="number"
-                    v-model.number="editando.valor"
-                    @blur="guardarCampoEditado(auga.id_auga, 'cantidade')"
-                    @keyup.enter="
-                      guardarCampoEditado(auga.id_auga, 'cantidade')
-                    "
-                    @click.stop
-                  />
-                  <span v-else>{{ auga.cantidade }}</span>
-                </td>
-                <td @click="activarEdicion(auga.id_auga, 'hora')">
-                  <input
-                    :ref="`editInput-${auga.id_auga}-hora`"
-                    v-if="
-                      editando.id === auga.id_auga && editando.campo === 'hora'
-                    "
-                    type="time"
-                    v-model="editando.valor"
-                    @blur="guardarCampoEditado(auga.id_auga, 'hora')"
-                    @keyup.enter="guardarCampoEditado(auga.id_auga, 'hora')"
-                    @click.stop
-                  />
-                  <span v-else>{{ auga.hora }}</span>
-                </td>
-
-                <td>
-                  <img
-                    src="/imaxes/trash.png"
-                    alt="icona borrar"
-                    @click="eliminarAuga(auga.id_auga)"
-                    id="icona"
-                    tabindex="0"
-                  />
-                </td>
-              </tr>
-              <tr v-if="augaHoxe.length === 0">
-                <td colspan="3">Non hai rexistros de auga para hoxe.</td>
-              </tr>
-            </tbody>
-          </table>
-          <button @click="componenteActivo = 'engadirA'" id="engadirA">
-            +
-          </button>
+        <div class="dereita">
+          <HistorialAuga
+            v-if="componenteActivo === 'historial'"
+            @cargarAugaHoxe="cargarAugaHoxe"
+            ref="filloAuga"
+          />
+          <EngadirAuga
+            v-if="componenteActivo === 'engadirA'"
+            @cargarAugaHoxe="cargarAugaHoxe"
+          />
         </div>
-      </div>
-
-      <div class="dereita">
-        <HistorialAuga
-          v-if="componenteActivo === 'historial'"
-          @cargarAugaHoxe="cargarAugaHoxe"
-          ref="filloAuga"
-        />
-        <EngadirAuga
-          v-if="componenteActivo === 'engadirA'"
-          @cargarAugaHoxe="cargarAugaHoxe"
-        />
       </div>
     </div>
   </div>

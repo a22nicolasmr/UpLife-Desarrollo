@@ -2,13 +2,16 @@
 import EngadirDoHistorial from "@/components/Plantillas/EngadirDoHistorial.vue";
 import EngadirExercicioPlantilla from "@/components/Plantillas/EngadirExercicioPlantilla.vue";
 import NovaPlantilla from "@/components/Plantillas/NovaPlantilla.vue";
+
 import { useUsuarioStore } from "@/stores/useUsuario";
+import Cargando from "@/components/BarrasNavegacion/Cargando.vue";
 
 export default {
   components: {
     NovaPlantilla,
     EngadirExercicioPlantilla,
     EngadirDoHistorial,
+    Cargando,
   },
   data() {
     return {
@@ -26,6 +29,7 @@ export default {
         5: "Peito",
         6: "Todo corpo",
       },
+      cargando: true,
     };
   },
   computed: {
@@ -42,9 +46,14 @@ export default {
       return new Date().toISOString().split("T")[0];
     },
   },
-  mounted() {
+  async mounted() {
+    this.cargando = true;
     // cargar as plantillas ao montar o compoñente
-    this.cargarDatos();
+    try {
+      await this.cargarDatos();
+    } finally {
+      this.cargando = false;
+    }
   },
   methods: {
     // obter o nome da categoría a partir do seu id
@@ -234,215 +243,230 @@ export default {
 </script>
 
 <template>
-  <div id="divXeral2">
-    <h1 class="titulo">Plantillas</h1>
+  <div>
+    <Cargando v-if="cargando" />
+    <div v-else id="divXeral2">
+      <h1 class="titulo">Plantillas</h1>
 
-    <div class="tarxetas">
-      <div
-        class="tarxeta"
-        :class="{ inactiva: componenteActivo !== 'nova' }"
-        @click="componenteActivo = 'nova'"
-      >
-        <a href="#">Nova</a>
-      </div>
-      <div
-        class="tarxeta"
-        :class="{ inactiva: componenteActivo !== 'engadirE' }"
-        @click="componenteActivo = 'engadirE'"
-      >
-        <a href="#">Engadir</a>
-      </div>
-      <div
-        class="tarxeta"
-        :class="{ inactiva: componenteActivo !== 'engadirD' }"
-        @click="componenteActivo = 'engadirD'"
-      >
-        <a href="#">Engadir exercicio do historial</a>
-      </div>
-    </div>
-
-    <div class="plantilla-layout">
-      <div class="esquerda">
-        <h2>Lista de plantillas</h2>
+      <div class="tarxetas">
         <div
-          v-for="plantilla in plantillas"
-          :key="plantilla.id_plantilla"
-          class="divPlantilla"
+          class="tarxeta"
+          :class="{ inactiva: componenteActivo !== 'nova' }"
+          @click="componenteActivo = 'nova'"
         >
-          <div class="plantilla-header">
-            <img :src="plantilla.icona" alt="icona plantilla" />
-            <h3>{{ plantilla.nome }}</h3>
-            <div class="botons-container">
-              <button
-                class="expand-button"
-                @click.stop="toggleExpand(plantilla.id_plantilla)"
-                :class="{
-                  rotated: expandedPlantillas.includes(plantilla.id_plantilla),
-                }"
-              >
-                ▼
-              </button>
-              <button class="button-add" @click="engadirExercicio(plantilla)">
-                +
-              </button>
-              <img
-                src="/imaxes/trash.png"
-                alt="icona borrar"
-                class="icono-trash"
-                @click="borrarPlantilla(plantilla.id_plantilla)"
-                tabindex="0"
-              />
-            </div>
-          </div>
-
-          <transition name="fade-slide">
-            <div
-              v-if="expandedPlantillas.includes(plantilla.id_plantilla)"
-              class="exercicios-plantilla"
-            >
-              <template
-                v-if="plantilla.exercicios && plantilla.exercicios.length"
-              >
-                <table class="tabela-exercicios">
-                  <thead>
-                    <tr>
-                      <th>Nome</th>
-                      <th>Repeticións</th>
-                      <th>Peso (kg)</th>
-                      <th>Categoria</th>
-                      <th>Eliminar</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      v-for="ex in plantilla.exercicios"
-                      :key="ex.id_exercicio"
-                    >
-                      <td @click="activarEdicion(ex.id_exercicio, 'nome')">
-                        <input
-                          v-if="
-                            editando.id === ex.id_exercicio &&
-                            editando.campo === 'nome'
-                          "
-                          v-model="editando.valor"
-                          @blur="guardarCampoEditado(ex.id_exercicio, 'nome')"
-                          @keyup.enter="
-                            guardarCampoEditado(ex.id_exercicio, 'nome')
-                          "
-                          @click.stop
-                        />
-                        <span v-else>{{ ex.nome }}</span>
-                      </td>
-
-                      <td
-                        @click="activarEdicion(ex.id_exercicio, 'repeticions')"
-                      >
-                        <input
-                          v-if="
-                            editando.id === ex.id_exercicio &&
-                            editando.campo === 'repeticions'
-                          "
-                          v-model="editando.valor"
-                          @blur="
-                            guardarCampoEditado(ex.id_exercicio, 'repeticions')
-                          "
-                          @keyup.enter="
-                            guardarCampoEditado(ex.id_exercicio, 'repeticions')
-                          "
-                          @click.stop
-                        />
-                        <span v-else>{{ ex.repeticions }}</span>
-                      </td>
-
-                      <td @click="activarEdicion(ex.id_exercicio, 'peso')">
-                        <input
-                          v-if="
-                            editando.id === ex.id_exercicio &&
-                            editando.campo === 'peso'
-                          "
-                          type="number"
-                          v-model.number="editando.valor"
-                          @blur="guardarCampoEditado(ex.id_exercicio, 'peso')"
-                          @keyup.enter="
-                            guardarCampoEditado(ex.id_exercicio, 'peso')
-                          "
-                          @click.stop
-                        />
-                        <span v-else>{{ ex.peso }}</span>
-                      </td>
-
-                      <td @click="activarEdicion(ex.id_exercicio, 'categoria')">
-                        <select
-                          v-if="
-                            editando.id === ex.id_exercicio &&
-                            editando.campo === 'categoria'
-                          "
-                          v-model.number="editando.valor"
-                          @blur="
-                            guardarCampoEditado(ex.id_exercicio, 'categoria')
-                          "
-                          @keyup.enter="
-                            guardarCampoEditado(ex.id_exercicio, 'categoria')
-                          "
-                          @click.stop
-                        >
-                          <option
-                            v-for="(label, key) in categoriasMap"
-                            :value="parseInt(key)"
-                            :key="key"
-                          >
-                            {{ label }}
-                          </option>
-                        </select>
-                        <span v-else>{{
-                          nomeCategoriaPorId(ex.categoria)
-                        }}</span>
-                      </td>
-
-                      <td>
-                        <img
-                          src="/imaxes/trash.png"
-                          alt="borrar exercicio"
-                          class="icono-trash"
-                          @click="
-                            borrarExercicio(
-                              ex.id_exercicio,
-                              plantilla.id_plantilla
-                            )
-                          "
-                        />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </template>
-
-              <p v-else class="sen-exercicios">
-                Esta plantilla non ten exercicios.
-              </p>
-            </div>
-          </transition>
+          <a href="#">Nova</a>
         </div>
-        <button @click="componenteActivo = 'nova'" id="engadirE">+</button>
+        <div
+          class="tarxeta"
+          :class="{ inactiva: componenteActivo !== 'engadirE' }"
+          @click="componenteActivo = 'engadirE'"
+        >
+          <a href="#">Engadir</a>
+        </div>
+        <div
+          class="tarxeta"
+          :class="{ inactiva: componenteActivo !== 'engadirD' }"
+          @click="componenteActivo = 'engadirD'"
+        >
+          <a href="#">Engadir exercicio do historial</a>
+        </div>
       </div>
 
-      <div class="dereita">
-        <NovaPlantilla
-          v-if="componenteActivo === 'nova'"
-          @cargarDatos="cargarDatos"
-        />
-        <EngadirExercicioPlantilla
-          v-if="componenteActivo === 'engadirE'"
-          :plantillaSeleccionadaMandar="plantillaSeleccionadaMandar"
-          @cargarDatos="cargarDatos"
-          ref="engadirRef"
-        />
-        <EngadirDoHistorial
-          v-if="componenteActivo === 'engadirD'"
-          @cargarDatos="cargarDatos"
-          @toggleExpand="toggleExpand"
-        >
-        </EngadirDoHistorial>
+      <div class="plantilla-layout">
+        <div class="esquerda">
+          <h2>Lista de plantillas</h2>
+          <div
+            v-for="plantilla in plantillas"
+            :key="plantilla.id_plantilla"
+            class="divPlantilla"
+          >
+            <div class="plantilla-header">
+              <img :src="plantilla.icona" alt="icona plantilla" />
+              <h3>{{ plantilla.nome }}</h3>
+              <div class="botons-container">
+                <button
+                  class="expand-button"
+                  @click.stop="toggleExpand(plantilla.id_plantilla)"
+                  :class="{
+                    rotated: expandedPlantillas.includes(
+                      plantilla.id_plantilla
+                    ),
+                  }"
+                >
+                  ▼
+                </button>
+                <button class="button-add" @click="engadirExercicio(plantilla)">
+                  +
+                </button>
+                <img
+                  src="/imaxes/trash.png"
+                  alt="icona borrar"
+                  class="icono-trash"
+                  @click="borrarPlantilla(plantilla.id_plantilla)"
+                  tabindex="0"
+                />
+              </div>
+            </div>
+
+            <transition name="fade-slide">
+              <div
+                v-if="expandedPlantillas.includes(plantilla.id_plantilla)"
+                class="exercicios-plantilla"
+              >
+                <template
+                  v-if="plantilla.exercicios && plantilla.exercicios.length"
+                >
+                  <table class="tabela-exercicios">
+                    <thead>
+                      <tr>
+                        <th>Nome</th>
+                        <th>Repeticións</th>
+                        <th>Peso (kg)</th>
+                        <th>Categoria</th>
+                        <th>Eliminar</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="ex in plantilla.exercicios"
+                        :key="ex.id_exercicio"
+                      >
+                        <td @click="activarEdicion(ex.id_exercicio, 'nome')">
+                          <input
+                            v-if="
+                              editando.id === ex.id_exercicio &&
+                              editando.campo === 'nome'
+                            "
+                            v-model="editando.valor"
+                            @blur="guardarCampoEditado(ex.id_exercicio, 'nome')"
+                            @keyup.enter="
+                              guardarCampoEditado(ex.id_exercicio, 'nome')
+                            "
+                            @click.stop
+                          />
+                          <span v-else>{{ ex.nome }}</span>
+                        </td>
+
+                        <td
+                          @click="
+                            activarEdicion(ex.id_exercicio, 'repeticions')
+                          "
+                        >
+                          <input
+                            v-if="
+                              editando.id === ex.id_exercicio &&
+                              editando.campo === 'repeticions'
+                            "
+                            v-model="editando.valor"
+                            @blur="
+                              guardarCampoEditado(
+                                ex.id_exercicio,
+                                'repeticions'
+                              )
+                            "
+                            @keyup.enter="
+                              guardarCampoEditado(
+                                ex.id_exercicio,
+                                'repeticions'
+                              )
+                            "
+                            @click.stop
+                          />
+                          <span v-else>{{ ex.repeticions }}</span>
+                        </td>
+
+                        <td @click="activarEdicion(ex.id_exercicio, 'peso')">
+                          <input
+                            v-if="
+                              editando.id === ex.id_exercicio &&
+                              editando.campo === 'peso'
+                            "
+                            type="number"
+                            v-model.number="editando.valor"
+                            @blur="guardarCampoEditado(ex.id_exercicio, 'peso')"
+                            @keyup.enter="
+                              guardarCampoEditado(ex.id_exercicio, 'peso')
+                            "
+                            @click.stop
+                          />
+                          <span v-else>{{ ex.peso }}</span>
+                        </td>
+
+                        <td
+                          @click="activarEdicion(ex.id_exercicio, 'categoria')"
+                        >
+                          <select
+                            v-if="
+                              editando.id === ex.id_exercicio &&
+                              editando.campo === 'categoria'
+                            "
+                            v-model.number="editando.valor"
+                            @blur="
+                              guardarCampoEditado(ex.id_exercicio, 'categoria')
+                            "
+                            @keyup.enter="
+                              guardarCampoEditado(ex.id_exercicio, 'categoria')
+                            "
+                            @click.stop
+                          >
+                            <option
+                              v-for="(label, key) in categoriasMap"
+                              :value="parseInt(key)"
+                              :key="key"
+                            >
+                              {{ label }}
+                            </option>
+                          </select>
+                          <span v-else>{{
+                            nomeCategoriaPorId(ex.categoria)
+                          }}</span>
+                        </td>
+
+                        <td>
+                          <img
+                            src="/imaxes/trash.png"
+                            alt="borrar exercicio"
+                            class="icono-trash"
+                            @click="
+                              borrarExercicio(
+                                ex.id_exercicio,
+                                plantilla.id_plantilla
+                              )
+                            "
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </template>
+
+                <p v-else class="sen-exercicios">
+                  Esta plantilla non ten exercicios.
+                </p>
+              </div>
+            </transition>
+          </div>
+          <button @click="componenteActivo = 'nova'" id="engadirE">+</button>
+        </div>
+
+        <div class="dereita">
+          <NovaPlantilla
+            v-if="componenteActivo === 'nova'"
+            @cargarDatos="cargarDatos"
+          />
+          <EngadirExercicioPlantilla
+            v-if="componenteActivo === 'engadirE'"
+            :plantillaSeleccionadaMandar="plantillaSeleccionadaMandar"
+            @cargarDatos="cargarDatos"
+            ref="engadirRef"
+          />
+          <EngadirDoHistorial
+            v-if="componenteActivo === 'engadirD'"
+            @cargarDatos="cargarDatos"
+            @toggleExpand="toggleExpand"
+          >
+          </EngadirDoHistorial>
+        </div>
       </div>
     </div>
   </div>

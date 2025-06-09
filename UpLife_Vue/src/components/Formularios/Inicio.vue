@@ -3,6 +3,7 @@ import axios from "axios";
 import { useUsuarioStore } from "@/stores/useUsuario";
 
 export default {
+  components: {},
   data() {
     return {
       email: "",

@@ -1,12 +1,15 @@
 <script>
 import ListaTarefas from "@/components/Tarefas/ListaTarefas.vue";
 import EngadirTarefas from "@/components/Tarefas/EngadirTarefas.vue";
+
 import { useUsuarioStore } from "@/stores/useUsuario";
+import Cargando from "@/components/BarrasNavegacion/Cargando.vue";
 
 export default {
   components: {
     ListaTarefas,
     EngadirTarefas,
+    Cargando,
   },
   data() {
     return {
@@ -30,11 +33,13 @@ export default {
         comidas: false,
         auga: false,
       },
+      cargando: true,
     };
   },
 
   // cando se carga a vista, cargar as datas con tarefas, comprobar rachas e medallas do usuario
   async mounted() {
+    this.cargando = true;
     const usuarioStore = useUsuarioStore();
     usuarioStore.cargarToken();
 
@@ -46,9 +51,13 @@ export default {
     }
 
     //esperar a que acaben de executarse os tres métodos seguintes
-    await this.cargarDatasConTarefas();
-    await this.comprobarRachas();
-    await this.comprobarMedallas();
+    try {
+      await this.cargarDatasConTarefas();
+      await this.comprobarRachas();
+      await this.comprobarMedallas();
+    } finally {
+      this.cargando = false;
+    }
   },
 
   methods: {
@@ -472,109 +481,112 @@ export default {
 </script>
 
 <template>
-  <div id="divXeral">
-    <h1 class="titulo">Tarefas</h1>
-    <div class="divsArriba">
-      <div id="izquierda">
-        <div>
-          <p>Racha de tarefas</p>
-          <p>{{ rTarefas }}</p>
-          <p v-if="advertencias.tarefas" class="advertencia">
-            ✔ Fai unha tarefa!
-          </p>
+  <div>
+    <Cargando v-if="cargando" />
+    <div v-else id="divXeral">
+      <h1 class="titulo">Tarefas</h1>
+      <div class="divsArriba">
+        <div id="izquierda">
+          <div>
+            <p>Racha de tarefas</p>
+            <p>{{ rTarefas }}</p>
+            <p v-if="advertencias.tarefas" class="advertencia">
+              ✔ Fai unha tarefa!
+            </p>
+          </div>
+          <div>
+            <img src="/imaxes/task.png" alt="Icona tarefas" />
+          </div>
         </div>
-        <div>
-          <img src="/imaxes/task.png" alt="Icona tarefas" />
+
+        <div id="exercicio">
+          <div>
+            <p>Racha de exercicios</p>
+            <p>{{ rExercicios }}</p>
+            <p v-if="advertencias.exercicios" class="advertencia">
+              💪 Fai un exercicio hoxe!
+            </p>
+          </div>
+          <div>
+            <img src="/imaxes/exercise.png" alt="Icona exercicios" />
+          </div>
+        </div>
+
+        <div id="comidas">
+          <div>
+            <p>Racha de comidas</p>
+            <p>{{ rComidas }}</p>
+            <p v-if="advertencias.comidas" class="advertencia">
+              🍽️ Rexistra a túa comida!
+            </p>
+          </div>
+          <div>
+            <img src="/imaxes/diet.png" alt="Icona comidas" />
+          </div>
+        </div>
+
+        <div id="auga">
+          <div>
+            <p>Racha de auga</p>
+            <p class="centro">{{ rAuga }}</p>
+            <p v-if="advertencias.auga" class="advertencia">
+              💧 Rexistra a túa auga!
+            </p>
+          </div>
+          <div>
+            <img src="/imaxes/water-bottle.png" alt="Icona auga" />
+          </div>
         </div>
       </div>
 
-      <div id="exercicio">
-        <div>
-          <p>Racha de exercicios</p>
-          <p>{{ rExercicios }}</p>
-          <p v-if="advertencias.exercicios" class="advertencia">
-            💪 Fai un exercicio hoxe!
-          </p>
+      <div class="tarxetas">
+        <div
+          class="tarxeta"
+          :class="{ inactiva: componenteActivo !== 'lista' }"
+          @click="componenteActivo = 'lista'"
+        >
+          <a href="#">Lista</a>
         </div>
-        <div>
-          <img src="/imaxes/exercise.png" alt="Icona exercicios" />
-        </div>
-      </div>
-
-      <div id="comidas">
-        <div>
-          <p>Racha de comidas</p>
-          <p>{{ rComidas }}</p>
-          <p v-if="advertencias.comidas" class="advertencia">
-            🍽️ Rexistra a túa comida!
-          </p>
-        </div>
-        <div>
-          <img src="/imaxes/diet.png" alt="Icona comidas" />
+        <div
+          class="tarxeta"
+          :class="{ inactiva: componenteActivo !== 'engadir' }"
+          @click="componenteActivo = 'engadir'"
+        >
+          <a href="#">Engadir</a>
         </div>
       </div>
 
-      <div id="auga">
-        <div>
-          <p>Racha de auga</p>
-          <p class="centro">{{ rAuga }}</p>
-          <p v-if="advertencias.auga" class="advertencia">
-            💧 Rexistra a túa auga!
-          </p>
+      <div class="tarefas-layout">
+        <div class="calendario">
+          <vc-calendar
+            :key="attrs.length"
+            :attributes="attrs"
+            @dayclick="seleccionarData"
+            :min-date="new Date()"
+            :disabled-dates="disabledDates"
+          />
         </div>
-        <div>
-          <img src="/imaxes/water-bottle.png" alt="Icona auga" />
+
+        <div class="lateral">
+          <ListaTarefas
+            v-if="componenteActivo === 'lista'"
+            ref="listaTarefasRef"
+            :dataSeleccionada="dataSeleccionada"
+            @datas-con-tarefas="reenviarTarefasConHora"
+            @cargarDatasConTarefas="cargarDatasConTarefas"
+            @comprobarRachas="comprobarRachas"
+            @tarefasActualizadas="
+              (tarefas) => $emit('emitirDatasConTarefas', tarefas)
+            "
+          />
+
+          <EngadirTarefas
+            v-if="componenteActivo === 'engadir'"
+            :dataSeleccionada="dataSeleccionada"
+            @cargarDatasConTarefas="cargarDatasConTarefas"
+            @comprobarRachas="comprobarRachas"
+          />
         </div>
-      </div>
-    </div>
-
-    <div class="tarxetas">
-      <div
-        class="tarxeta"
-        :class="{ inactiva: componenteActivo !== 'lista' }"
-        @click="componenteActivo = 'lista'"
-      >
-        <a href="#">Lista</a>
-      </div>
-      <div
-        class="tarxeta"
-        :class="{ inactiva: componenteActivo !== 'engadir' }"
-        @click="componenteActivo = 'engadir'"
-      >
-        <a href="#">Engadir</a>
-      </div>
-    </div>
-
-    <div class="tarefas-layout">
-      <div class="calendario">
-        <vc-calendar
-          :key="attrs.length"
-          :attributes="attrs"
-          @dayclick="seleccionarData"
-          :min-date="new Date()"
-          :disabled-dates="disabledDates"
-        />
-      </div>
-
-      <div class="lateral">
-        <ListaTarefas
-          v-if="componenteActivo === 'lista'"
-          ref="listaTarefasRef"
-          :dataSeleccionada="dataSeleccionada"
-          @datas-con-tarefas="reenviarTarefasConHora"
-          @cargarDatasConTarefas="cargarDatasConTarefas"
-          @comprobarRachas="comprobarRachas"
-          @tarefasActualizadas="
-            (tarefas) => $emit('emitirDatasConTarefas', tarefas)
-          "
-        />
-
-        <EngadirTarefas
-          v-if="componenteActivo === 'engadir'"
-          :dataSeleccionada="dataSeleccionada"
-          @cargarDatasConTarefas="cargarDatasConTarefas"
-          @comprobarRachas="comprobarRachas"
-        />
       </div>
     </div>
   </div>

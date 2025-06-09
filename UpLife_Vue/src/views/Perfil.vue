@@ -2,9 +2,11 @@
 import Calculadora from "@/components/Perfil/Calculadora.vue";
 import { useUsuarioStore } from "@/stores/useUsuario";
 
+import Cargando from "@/components/BarrasNavegacion/Cargando.vue";
 export default {
   components: {
     Calculadora,
+    Cargando,
   },
   data() {
     return {
@@ -21,6 +23,7 @@ export default {
       calorias: 0,
       auga: 0,
       modoAplicacion: "C",
+      cargando: true,
     };
   },
   computed: {
@@ -142,94 +145,102 @@ export default {
   },
 
   // actualizar datos cando se monta o compoñente
-  mounted() {
-    this.actualizarDatos();
+  async mounted() {
+    this.cargando = true;
+    try {
+      await this.actualizarDatos();
+    } finally {
+      this.cargando = false;
+    }
   },
 };
 </script>
 
 <template>
-  <div class="container">
-    <h1>Perfil</h1>
-    <div class="perfil-layout">
-      <div class="datos">
-        <div id="divArriba">
-          <div id="detallesArriba">
-            <h2>Detalles da conta</h2>
-            <p><strong>Nome:</strong> {{ nome }}</p>
-            <p><strong>Email:</strong> {{ email }}</p>
-            <p><strong>Nome de usuario:</strong> {{ nomeUsuario }}</p>
-            <p>Desexa recibir notificacións das súas tarefas?</p>
-            <label>
-              Si:
-              <input
-                type="radio"
-                name="opcion"
-                value="E"
-                v-model="modoAplicacion"
-                @change="actualizarModoAplicacion"
+  <div>
+    <Cargando v-if="cargando" />
+    <div v-else class="container">
+      <h1>Perfil</h1>
+      <div class="perfil-layout">
+        <div class="datos">
+          <div id="divArriba">
+            <div id="detallesArriba">
+              <h2>Detalles da conta</h2>
+              <p><strong>Nome:</strong> {{ nome }}</p>
+              <p><strong>Email:</strong> {{ email }}</p>
+              <p><strong>Nome de usuario:</strong> {{ nomeUsuario }}</p>
+              <p>Desexa recibir notificacións das súas tarefas?</p>
+              <label>
+                Si:
+                <input
+                  type="radio"
+                  name="opcion"
+                  value="E"
+                  v-model="modoAplicacion"
+                  @change="actualizarModoAplicacion"
+                />
+              </label>
+              <label>
+                Non:
+                <input
+                  type="radio"
+                  name="opcion"
+                  value="C"
+                  v-model="modoAplicacion"
+                  @change="actualizarModoAplicacion"
+                />
+              </label>
+            </div>
+
+            <div class="imaxe-perfil">
+              <img
+                :src="'https://res.cloudinary.com/dkujevuxh/' + imagen"
+                alt="Imaxe de usuario"
+                @click="cambiarImagen()"
+                tabindex="0"
               />
-            </label>
-            <label>
-              Non:
               <input
-                type="radio"
-                name="opcion"
-                value="C"
-                v-model="modoAplicacion"
-                @change="actualizarModoAplicacion"
+                type="file"
+                ref="fileInput"
+                style="display: none"
+                @change="subirImagen"
               />
-            </label>
+            </div>
           </div>
 
-          <div class="imaxe-perfil">
-            <img
-              :src="'https://res.cloudinary.com/dkujevuxh/' + imagen"
-              alt="Imaxe de usuario"
-              @click="cambiarImagen()"
-              tabindex="0"
-            />
-            <input
-              type="file"
-              ref="fileInput"
-              style="display: none"
-              @change="subirImagen"
-            />
+          <div>
+            <h2>Datos do usuario</h2>
+            <p><strong>Xénero:</strong> {{ xenero }}</p>
+            <p>
+              <strong>Altura:</strong> {{ altura
+              }}<span v-if="altura !== 'non especificado'"> cm</span>
+            </p>
+            <p>
+              <strong>Peso:</strong> {{ peso
+              }}<span v-if="peso !== 'non especificado'"> kg</span>
+            </p>
+            <p><strong>Obxectivo:</strong> {{ obxectivo }}</p>
+            <p><strong>Actividade:</strong> {{ actividade }}</p>
+            <p>
+              <strong>Idade:</strong> {{ idade
+              }}<span v-if="idade !== 'non especificado'"> anos</span>
+            </p>
+            <p>
+              <strong>Calorías diarias:</strong> {{ calorias
+              }}<span v-if="calorias !== 'non especificado'"> kcal</span>
+            </p>
+            <p id="ultimoP">
+              <strong>Cantidad de auga diaria:</strong> {{ auga
+              }}<span v-if="auga !== 'non especificado'"> ml</span>
+            </p>
+            <button id="eliminar" @click="$emit('eliminarConta')">
+              Eliminar conta
+            </button>
           </div>
         </div>
-
-        <div>
-          <h2>Datos do usuario</h2>
-          <p><strong>Xénero:</strong> {{ xenero }}</p>
-          <p>
-            <strong>Altura:</strong> {{ altura
-            }}<span v-if="altura !== 'non especificado'"> cm</span>
-          </p>
-          <p>
-            <strong>Peso:</strong> {{ peso
-            }}<span v-if="peso !== 'non especificado'"> kg</span>
-          </p>
-          <p><strong>Obxectivo:</strong> {{ obxectivo }}</p>
-          <p><strong>Actividade:</strong> {{ actividade }}</p>
-          <p>
-            <strong>Idade:</strong> {{ idade
-            }}<span v-if="idade !== 'non especificado'"> anos</span>
-          </p>
-          <p>
-            <strong>Calorías diarias:</strong> {{ calorias
-            }}<span v-if="calorias !== 'non especificado'"> kcal</span>
-          </p>
-          <p id="ultimoP">
-            <strong>Cantidad de auga diaria:</strong> {{ auga
-            }}<span v-if="auga !== 'non especificado'"> ml</span>
-          </p>
-          <button id="eliminar" @click="$emit('eliminarConta')">
-            Eliminar conta
-          </button>
+        <div class="calculadora">
+          <Calculadora @actualizarDatos="actualizarDatos" />
         </div>
-      </div>
-      <div class="calculadora">
-        <Calculadora @actualizarDatos="actualizarDatos" />
       </div>
     </div>
   </div>

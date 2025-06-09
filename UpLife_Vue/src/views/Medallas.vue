@@ -1,7 +1,12 @@
 <script>
 import { useUsuarioStore } from "@/stores/useUsuario";
 
+import Cargando from "@/components/BarrasNavegacion/Cargando.vue";
+
 export default {
+  components: {
+    Cargando,
+  },
   props: {
     valorMedallas: Array,
   },
@@ -11,10 +16,15 @@ export default {
       primeirasMedallas: [],
       segundasMedallas: [],
       terceirasMedallas: [],
+      cargando: true,
     };
   },
-  mounted() {
-    this.obterMedallas();
+  async mounted() {
+    try {
+      await this.obterMedallas();
+    } finally {
+      this.cargando = false;
+    }
   },
 
   watch: {
@@ -143,109 +153,118 @@ export default {
 </script>
 
 <template>
-  <div id="todo">
-    <h1>Medallas</h1>
-    <div class="general">
-      <div class="medallas-container">
-        <div class="column">
-          <div
-            v-for="medalla in primeirasMedallas"
-            :key="medalla.id_medalla"
-            class="medalla"
-          >
-            <div class="medalla-content">
-              <div
-                v-if="medallaCompletadaPorUsuario(medalla)"
-                class="check-icon"
-              >
-                <img src="/imaxes/check.png" alt="Check" id="check" />
-              </div>
-              <div v-else>
-                <img
-                  src="/imaxes/invisible.PNG"
-                  alt="Invisible"
-                  id="invisible"
-                />
-              </div>
-              <div class="medalla-info">
-                <img
-                  :src="'https://res.cloudinary.com/dkujevuxh/' + medalla.icona"
-                  alt="Icona medalla"
-                  id="imaxeMedalla"
-                />
-                <div>
-                  <h3>{{ medalla.nome }}</h3>
-                  <p>{{ medalla.descripcion }}</p>
+  <div>
+    <Cargando v-if="cargando" />
+    <div v-else id="todo">
+      <h1>Medallas</h1>
+      <div class="general">
+        <div class="medallas-container">
+          <div class="column">
+            <div
+              v-for="medalla in primeirasMedallas"
+              :key="medalla.id_medalla"
+              class="medalla"
+            >
+              <div class="medalla-content">
+                <div
+                  v-if="medallaCompletadaPorUsuario(medalla)"
+                  class="check-icon"
+                >
+                  <img src="/imaxes/check.png" alt="Check" id="check" />
+                </div>
+                <div v-else>
+                  <img
+                    src="/imaxes/invisible.PNG"
+                    alt="Invisible"
+                    id="invisible"
+                  />
+                </div>
+                <div class="medalla-info">
+                  <img
+                    :src="
+                      'https://res.cloudinary.com/dkujevuxh/' + medalla.icona
+                    "
+                    alt="Icona medalla"
+                    id="imaxeMedalla"
+                  />
+                  <div>
+                    <h3>{{ medalla.nome }}</h3>
+                    <p>{{ medalla.descripcion }}</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="column">
-          <div
-            v-for="medalla in segundasMedallas"
-            :key="medalla.id_medalla"
-            class="medalla"
-          >
-            <div class="medalla-content">
-              <div
-                v-if="medallaCompletadaPorUsuario(medalla)"
-                class="check-icon"
-              >
-                <img src="/imaxes/check.png" alt="Check" id="check" />
-              </div>
-              <div v-else>
-                <img
-                  src="/imaxes/invisible.PNG"
-                  alt="Invisible"
-                  id="invisible"
-                />
-              </div>
-              <div class="medalla-info">
-                <img
-                  :src="'https://res.cloudinary.com/dkujevuxh/' + medalla.icona"
-                  alt="Icona medalla"
-                  id="imaxeMedalla2"
-                />
-                <div>
-                  <h3>{{ medalla.nome }}</h3>
-                  <p>{{ medalla.descripcion }}</p>
+          <div class="column">
+            <div
+              v-for="medalla in segundasMedallas"
+              :key="medalla.id_medalla"
+              class="medalla"
+            >
+              <div class="medalla-content">
+                <div
+                  v-if="medallaCompletadaPorUsuario(medalla)"
+                  class="check-icon"
+                >
+                  <img src="/imaxes/check.png" alt="Check" id="check" />
+                </div>
+                <div v-else>
+                  <img
+                    src="/imaxes/invisible.PNG"
+                    alt="Invisible"
+                    id="invisible"
+                  />
+                </div>
+                <div class="medalla-info">
+                  <img
+                    :src="
+                      'https://res.cloudinary.com/dkujevuxh/' + medalla.icona
+                    "
+                    alt="Icona medalla"
+                    id="imaxeMedalla2"
+                  />
+                  <div>
+                    <h3>{{ medalla.nome }}</h3>
+                    <p>{{ medalla.descripcion }}</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="column">
-          <div
-            v-for="medalla in terceirasMedallas"
-            :key="medalla.id_medalla"
-            class="medalla"
-          >
-            <div class="medalla-content">
-              <div
-                v-if="medallaCompletadaPorUsuario(medalla)"
-                class="check-icon"
-              >
-                <img src="/imaxes/check.png" alt="Check" id="check" />
-              </div>
-              <div v-else>
-                <img
-                  src="/imaxes/invisible.PNG"
-                  alt="Invisible"
-                  id="invisible"
-                />
-              </div>
-              <div class="medalla-info">
-                <img
-                  :src="'https://res.cloudinary.com/dkujevuxh/' + medalla.icona"
-                  alt="Icona medalla"
-                  id="imaxeMedalla3"
-                />
-                <div>
-                  <h3>{{ medalla.nome }}</h3>
-                  <p>{{ medalla.descripcion }}</p>
+          <div class="column">
+            <div
+              v-for="medalla in terceirasMedallas"
+              :key="medalla.id_medalla"
+              class="medalla"
+            >
+              <div class="medalla-content">
+                <div
+                  v-if="medallaCompletadaPorUsuario(medalla)"
+                  class="check-icon"
+                >
+                  <img src="/imaxes/check.png" alt="Check" id="check" />
+                </div>
+                <div v-else>
+                  <img
+                    src="/imaxes/invisible.PNG"
+                    alt="Invisible"
+                    id="invisible"
+                  />
+                </div>
+                <div class="medalla-info">
+                  <img
+                    :src="
+                      'https://res.cloudinary.com/dkujevuxh/' + medalla.icona
+                    "
+                    alt="Icona medalla"
+                    id="imaxeMedalla3"
+                  />
+                  <div>
+                    <h3>{{ medalla.nome }}</h3>
+                    <p>{{ medalla.descripcion }}</p>
+                  </div>
                 </div>
               </div>
             </div>

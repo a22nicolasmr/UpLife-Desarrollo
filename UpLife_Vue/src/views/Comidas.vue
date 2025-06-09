@@ -4,6 +4,7 @@ import GrupoComida from "@/components/Comidas/GrupoComida.vue";
 import HistorialComidas from "@/components/Comidas/HistorialComidas.vue";
 import TotalComida from "@/components/Comidas/TotalComida.vue";
 import { useUsuarioStore } from "@/stores/useUsuario";
+import Cargando from "@/components/BarrasNavegacion/Cargando.vue";
 
 export default {
   components: {
@@ -11,6 +12,7 @@ export default {
     GrupoComida,
     HistorialComidas,
     TotalComida,
+    Cargando,
   },
   data() {
     return {
@@ -21,6 +23,7 @@ export default {
       grupoSeleccionadoMandar: null,
       editando: { id: null, campo: null, valor: "" },
       caloriasPorGrupo: {},
+      cargando: true,
     };
   },
   watch: {
@@ -69,10 +72,15 @@ export default {
     },
   },
   async mounted() {
+    this.cargando = true;
     // cargar datos ao montar o compoñente
     await this.asegurarDatosUsuarioCargados();
     await this.cargarDatos();
-    this.cargarTodasAsCalorias(this.grupos);
+    await this.cargarTodasAsCalorias(this.grupos);
+    try {
+    } finally {
+      this.cargando = false;
+    }
   },
   methods: {
     dataHoxeISO() {
@@ -315,204 +323,223 @@ export default {
 </script>
 
 <template>
-  <div id="divXeral2">
-    <h1 class="titulo">Comidas</h1>
+  <div>
+    <Cargando v-if="cargando" />
 
-    <div class="tarxetas">
-      <div
-        class="tarxeta"
-        :class="{ inactiva: componenteActivo !== 'historial' }"
-        @click="componenteActivo = 'historial'"
-      >
-        <a href="#">Historial</a>
-      </div>
-      <div
-        class="tarxeta"
-        :class="{ inactiva: componenteActivo !== 'engadirC' }"
-        @click="componenteActivo = 'engadirC'"
-      >
-        <a href="#">Engadir</a>
-      </div>
-      <div
-        class="tarxeta"
-        :class="{ inactiva: componenteActivo !== 'total' }"
-        @click="componenteActivo = 'total'"
-      >
-        <a href="#">Total</a>
-      </div>
-      <div
-        class="tarxeta"
-        :class="{ inactiva: componenteActivo !== 'grupo' }"
-        @click="componenteActivo = 'grupo'"
-      >
-        <a href="#">Grupo</a>
-      </div>
-    </div>
+    <div v-else id="divXeral2">
+      <h1 class="titulo">Comidas</h1>
 
-    <div class="plantilla-layout">
-      <div class="esquerda">
-        <div class="grafico-calorias">
-          <svg viewBox="0 0 36 36" class="circular-chart">
-            <path
-              class="circle-bg"
-              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831
-                 a 15.9155 15.9155 0 0 1 0 -31.831"
-            />
-            <path
-              class="circle"
-              :stroke-dasharray="porcentaxeCalorias + ', 100'"
-              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831
-                 a 15.9155 15.9155 0 0 1 0 -31.831"
-            />
-            <text x="18" y="20.35" class="percentage">
-              {{ porcentaxeCalorias }}%
-            </text>
-          </svg>
-          <div class="info-calorias">
-            <p>
-              <strong>Calorías restantes:</strong>
-              {{ caloriasRestantes }} kcal
-            </p>
-            <p><strong>Inxeridas:</strong> {{ caloriasInxeridasHoxe }} kcal</p>
-          </div>
+      <div class="tarxetas">
+        <div
+          class="tarxeta"
+          :class="{ inactiva: componenteActivo !== 'historial' }"
+          @click="componenteActivo = 'historial'"
+        >
+          <a href="#">Historial</a>
         </div>
+        <div
+          class="tarxeta"
+          :class="{ inactiva: componenteActivo !== 'engadirC' }"
+          @click="componenteActivo = 'engadirC'"
+        >
+          <a href="#">Engadir</a>
+        </div>
+        <div
+          class="tarxeta"
+          :class="{ inactiva: componenteActivo !== 'total' }"
+          @click="componenteActivo = 'total'"
+        >
+          <a href="#">Total</a>
+        </div>
+        <div
+          class="tarxeta"
+          :class="{ inactiva: componenteActivo !== 'grupo' }"
+          @click="componenteActivo = 'grupo'"
+        >
+          <a href="#">Grupo</a>
+        </div>
+      </div>
 
-        <div v-for="grupo in grupos" :key="grupo.id_grupo" class="divPlantilla">
-          <div class="plantilla-header">
-            <img :src="grupo.icona" alt="icona grupo" />
-            <h3>{{ grupo.nome }}</h3>
-            <div class="botons-container">
-              <div>
-                <p>{{ caloriasPorGrupo[grupo.id_grupo] }}</p>
-              </div>
-              <button
-                class="expand-button"
-                @click.stop="toggleExpand(grupo.id_grupo)"
-                :class="{
-                  rotated: expandedGrupos.includes(grupo.id_grupo),
-                }"
-              >
-                ▼
-              </button>
-              <button
-                class="button-add"
-                @click="
-                  componenteActivo = 'engadirC';
-                  grupoSeleccionado = grupo.id_grupo;
-                  grupoSeleccionadoMandar = grupo.id_grupo;
-                "
-              >
-                +
-              </button>
-
-              <img
-                src="/imaxes/trash.png"
-                alt="icona borrar"
-                class="icono-trash"
-                @click="borrarGrupo(grupo.id_grupo)"
-                tabindex="0"
+      <div class="plantilla-layout">
+        <div class="esquerda">
+          <div class="grafico-calorias">
+            <svg viewBox="0 0 36 36" class="circular-chart">
+              <path
+                class="circle-bg"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831
+                 a 15.9155 15.9155 0 0 1 0 -31.831"
               />
+              <path
+                class="circle"
+                :stroke-dasharray="porcentaxeCalorias + ', 100'"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831
+                 a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+              <text x="18" y="20.35" class="percentage">
+                {{ porcentaxeCalorias }}%
+              </text>
+            </svg>
+            <div class="info-calorias">
+              <p>
+                <strong>Calorías restantes:</strong>
+                {{ caloriasRestantes }} kcal
+              </p>
+              <p>
+                <strong>Inxeridas:</strong> {{ caloriasInxeridasHoxe }} kcal
+              </p>
             </div>
           </div>
 
-          <transition name="fade-slide">
-            <div
-              v-if="expandedGrupos.includes(grupo.id_grupo)"
-              class="exercicios-plantilla"
-            >
-              <template v-if="grupo.comidas && grupo.comidas.length">
-                <table class="tabela-exercicios">
-                  <thead>
-                    <tr>
-                      <th>Nome</th>
-                      <th>Peso (g)</th>
-                      <th>Calorías</th>
-                      <th>Carbohidratos (g)</th>
-                      <th>Proteínas (g)</th>
-                      <th>Graxas (g)</th>
-                      <th>Eliminar</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="comida in grupo.comidas" :key="comida.id_comida">
-                      <td @click="activarEdicion(comida.id_comida, 'nome')">
-                        <input
-                          ref="editInput"
-                          v-if="
-                            editando.id === comida.id_comida &&
-                            editando.campo === 'nome'
-                          "
-                          v-model="editando.valor"
-                          @blur="guardarCampoEditado(comida.id_comida, 'nome')"
-                          @keyup.enter="
-                            guardarCampoEditado(comida.id_comida, 'nome')
-                          "
-                          @click.stop
-                        />
+          <div
+            v-for="grupo in grupos"
+            :key="grupo.id_grupo"
+            class="divPlantilla"
+          >
+            <div class="plantilla-header">
+              <img :src="grupo.icona" alt="icona grupo" />
+              <h3>{{ grupo.nome }}</h3>
+              <div class="botons-container">
+                <div>
+                  <p>{{ caloriasPorGrupo[grupo.id_grupo] }}</p>
+                </div>
+                <button
+                  class="expand-button"
+                  @click.stop="toggleExpand(grupo.id_grupo)"
+                  :class="{
+                    rotated: expandedGrupos.includes(grupo.id_grupo),
+                  }"
+                >
+                  ▼
+                </button>
+                <button
+                  class="button-add"
+                  @click="
+                    componenteActivo = 'engadirC';
+                    grupoSeleccionado = grupo.id_grupo;
+                    grupoSeleccionadoMandar = grupo.id_grupo;
+                  "
+                >
+                  +
+                </button>
 
-                        <span v-else>{{ comida.nome }}</span>
-                      </td>
-                      <td @click="activarEdicion(comida.id_comida, 'peso')">
-                        <input
-                          ref="editInput"
-                          v-if="
-                            editando.id === comida.id_comida &&
-                            editando.campo === 'peso'
-                          "
-                          type="number"
-                          v-model.number="editando.valor"
-                          @blur="guardarCampoEditado(comida.id_comida, 'peso')"
-                          @keyup.enter="
-                            guardarCampoEditado(comida.id_comida, 'peso')
-                          "
-                          @click.stop
-                        />
-
-                        <span v-else>{{ comida.peso }}</span>
-                      </td>
-                      <td>{{ calcular(comida.calorias, comida.peso) }} kcal</td>
-                      <td>
-                        {{ calcular(comida.carbohidratos, comida.peso) }} g
-                      </td>
-                      <td>{{ calcular(comida.proteinas, comida.peso) }} g</td>
-                      <td>{{ calcular(comida.graxas, comida.peso) }} g</td>
-                      <td>
-                        <img
-                          src="/imaxes/trash.png"
-                          alt="borrar comida"
-                          class="icono-borrar-ex"
-                          @click="borrarComida(comida.id_comida)"
-                        />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </template>
-              <p v-else class="sen-exercicios">Este grupo non ten comidas.</p>
+                <img
+                  src="/imaxes/trash.png"
+                  alt="icona borrar"
+                  class="icono-trash"
+                  @click="borrarGrupo(grupo.id_grupo)"
+                  tabindex="0"
+                />
+              </div>
             </div>
-          </transition>
-        </div>
-        <button @click="componenteActivo = 'grupo'" id="engadirE">+</button>
-      </div>
 
-      <div class="dereita">
-        <HistorialComidas
-          v-if="componenteActivo === 'historial'"
-          @cargarDatos="cargarDatos"
-          ref="hijoRef"
-          @toggleExpand="toggleExpand"
-        />
-        <EngadirComida
-          v-if="componenteActivo === 'engadirC'"
-          :grupoSeleccionadoMandar="grupoSeleccionadoMandar"
-          @cargarDatos="cargarDatos"
-          @toggleExpand="toggleExpand"
-        />
-        <TotalComida v-if="componenteActivo === 'total'" />
-        <GrupoComida
-          v-if="componenteActivo === 'grupo'"
-          @cargarDatos="cargarDatos"
-        />
+            <transition name="fade-slide">
+              <div
+                v-if="expandedGrupos.includes(grupo.id_grupo)"
+                class="exercicios-plantilla"
+              >
+                <template v-if="grupo.comidas && grupo.comidas.length">
+                  <table class="tabela-exercicios">
+                    <thead>
+                      <tr>
+                        <th>Nome</th>
+                        <th>Peso (g)</th>
+                        <th>Calorías</th>
+                        <th>Carbohidratos (g)</th>
+                        <th>Proteínas (g)</th>
+                        <th>Graxas (g)</th>
+                        <th>Eliminar</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="comida in grupo.comidas"
+                        :key="comida.id_comida"
+                      >
+                        <td @click="activarEdicion(comida.id_comida, 'nome')">
+                          <input
+                            ref="editInput"
+                            v-if="
+                              editando.id === comida.id_comida &&
+                              editando.campo === 'nome'
+                            "
+                            v-model="editando.valor"
+                            @blur="
+                              guardarCampoEditado(comida.id_comida, 'nome')
+                            "
+                            @keyup.enter="
+                              guardarCampoEditado(comida.id_comida, 'nome')
+                            "
+                            @click.stop
+                          />
+
+                          <span v-else>{{ comida.nome }}</span>
+                        </td>
+                        <td @click="activarEdicion(comida.id_comida, 'peso')">
+                          <input
+                            ref="editInput"
+                            v-if="
+                              editando.id === comida.id_comida &&
+                              editando.campo === 'peso'
+                            "
+                            type="number"
+                            v-model.number="editando.valor"
+                            @blur="
+                              guardarCampoEditado(comida.id_comida, 'peso')
+                            "
+                            @keyup.enter="
+                              guardarCampoEditado(comida.id_comida, 'peso')
+                            "
+                            @click.stop
+                          />
+
+                          <span v-else>{{ comida.peso }}</span>
+                        </td>
+                        <td>
+                          {{ calcular(comida.calorias, comida.peso) }} kcal
+                        </td>
+                        <td>
+                          {{ calcular(comida.carbohidratos, comida.peso) }} g
+                        </td>
+                        <td>{{ calcular(comida.proteinas, comida.peso) }} g</td>
+                        <td>{{ calcular(comida.graxas, comida.peso) }} g</td>
+                        <td>
+                          <img
+                            src="/imaxes/trash.png"
+                            alt="borrar comida"
+                            class="icono-borrar-ex"
+                            @click="borrarComida(comida.id_comida)"
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </template>
+                <p v-else class="sen-exercicios">Este grupo non ten comidas.</p>
+              </div>
+            </transition>
+          </div>
+          <button @click="componenteActivo = 'grupo'" id="engadirE">+</button>
+        </div>
+
+        <div class="dereita">
+          <HistorialComidas
+            v-if="componenteActivo === 'historial'"
+            @cargarDatos="cargarDatos"
+            ref="hijoRef"
+            @toggleExpand="toggleExpand"
+          />
+          <EngadirComida
+            v-if="componenteActivo === 'engadirC'"
+            :grupoSeleccionadoMandar="grupoSeleccionadoMandar"
+            @cargarDatos="cargarDatos"
+            @toggleExpand="toggleExpand"
+          />
+          <TotalComida v-if="componenteActivo === 'total'" />
+          <GrupoComida
+            v-if="componenteActivo === 'grupo'"
+            @cargarDatos="cargarDatos"
+          />
+        </div>
       </div>
     </div>
   </div>

@@ -3,12 +3,14 @@ import EngadirExercicios from "@/components/Exercicios/EngadirExercicios.vue";
 import EngadirPlantillasExercicios from "@/components/Exercicios/EngadirPlantillasExercicios.vue";
 import HistorialExercicios from "@/components/Exercicios/HistorialExercicios.vue";
 import { useUsuarioStore } from "@/stores/useUsuario";
+import Cargando from "@/components/BarrasNavegacion/Cargando.vue";
 
 export default {
   components: {
     HistorialExercicios,
     EngadirExercicios,
     EngadirPlantillasExercicios,
+    Cargando,
   },
   data() {
     return {
@@ -25,13 +27,19 @@ export default {
         5: "Peito",
         6: "Todo corpo",
       },
+      cargando: true,
     };
   },
-  mounted() {
-    // cargar exercicios e plantillas ao montar o compoñente
-    this.cargarExerciciosHoxe();
-    this.cargarPlantillasHoxe();
-    document.addEventListener("click", this.cancelarEdicionAoFora);
+  // cargar exercicios e plantillas ao montar o compoñente
+  async mounted() {
+    this.cargando = true;
+    try {
+      await this.cargarExerciciosHoxe();
+      await this.cargarPlantillasHoxe();
+    } finally {
+      this.cargando = false;
+      document.addEventListener("click", this.cancelarEdicionAoFora);
+    }
   },
   beforeUnmount() {
     // quitar o listener ao desmontar o compoñente
@@ -244,245 +252,258 @@ export default {
 </script>
 
 <template>
-  <div id="divXeral2">
-    <h1 class="titulo">Exercicios</h1>
-    <div class="tarxetas">
-      <div
-        class="tarxeta"
-        :class="{ inactiva: componenteActivo !== 'historial' }"
-        @click="componenteActivo = 'historial'"
-      >
-        <a href="#">Historial</a>
-      </div>
-      <div
-        class="tarxeta"
-        :class="{ inactiva: componenteActivo !== 'engadirE' }"
-        @click="componenteActivo = 'engadirE'"
-      >
-        <a href="#">Engadir exercicios</a>
-      </div>
-      <div
-        class="tarxeta"
-        :class="{ inactiva: componenteActivo !== 'engadirP' }"
-        @click="componenteActivo = 'engadirP'"
-      >
-        <a href="#">Engadir plantillas</a>
-      </div>
-    </div>
-
-    <div class="exercicios-layout">
-      <div class="esquerda">
-        <div class="esquerdaArriba">
-          <h2>Exercicios de hoxe</h2>
+  <div>
+    <Cargando v-if="cargando" />
+    <div v-else id="divXeral2">
+      <h1 class="titulo">Exercicios</h1>
+      <div class="tarxetas">
+        <div
+          class="tarxeta"
+          :class="{ inactiva: componenteActivo !== 'historial' }"
+          @click="componenteActivo = 'historial'"
+        >
+          <a href="#">Historial</a>
         </div>
-        <div class="esquerdaAbaixo">
-          <table>
-            <thead>
-              <tr>
-                <th>Título</th>
-                <th>Categoría</th>
-                <th>Repeticións</th>
-                <th>Peso</th>
-                <th>Eliminar</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="exercicio in exerciciosHoxe"
-                :key="exercicio.id_exercicio"
-              >
-                <td
-                  @click="
-                    activarEdicion(
-                      exercicio.id_exercicio,
-                      'nome',
-                      exercicio.nome
-                    )
-                  "
-                  class="editable"
-                >
-                  <input
-                    v-if="
-                      editando.id === exercicio.id_exercicio &&
-                      editando.campo === 'nome'
-                    "
-                    v-model="editando.valor"
-                    @blur="guardarCampoEditado(exercicio.id_exercicio, 'nome')"
-                    @keyup.enter="
-                      guardarCampoEditado(exercicio.id_exercicio, 'nome')
-                    "
-                    @click.stop
-                  />
-                  <span v-else>{{ exercicio.nome }}</span>
-                </td>
+        <div
+          class="tarxeta"
+          :class="{ inactiva: componenteActivo !== 'engadirE' }"
+          @click="componenteActivo = 'engadirE'"
+        >
+          <a href="#">Engadir exercicios</a>
+        </div>
+        <div
+          class="tarxeta"
+          :class="{ inactiva: componenteActivo !== 'engadirP' }"
+          @click="componenteActivo = 'engadirP'"
+        >
+          <a href="#">Engadir plantillas</a>
+        </div>
+      </div>
 
-                <td
-                  @click="
-                    activarEdicion(
-                      exercicio.id_exercicio,
-                      'categoria',
-                      exercicio.categoria
-                    )
-                  "
-                  class="editable"
+      <div class="exercicios-layout">
+        <div class="esquerda">
+          <div class="esquerdaArriba">
+            <h2>Exercicios de hoxe</h2>
+          </div>
+          <div class="esquerdaAbaixo">
+            <table>
+              <thead>
+                <tr>
+                  <th>Título</th>
+                  <th>Categoría</th>
+                  <th>Repeticións</th>
+                  <th>Peso</th>
+                  <th>Eliminar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="exercicio in exerciciosHoxe"
+                  :key="exercicio.id_exercicio"
                 >
-                  <select
-                    v-if="
-                      editando.id === exercicio.id_exercicio &&
-                      editando.campo === 'categoria'
+                  <td
+                    @click="
+                      activarEdicion(
+                        exercicio.id_exercicio,
+                        'nome',
+                        exercicio.nome
+                      )
                     "
-                    v-model.number="editando.valor"
-                    @blur="
-                      guardarCampoEditado(exercicio.id_exercicio, 'categoria')
-                    "
-                    @keyup.enter="
-                      guardarCampoEditado(exercicio.id_exercicio, 'categoria')
-                    "
-                    @click.stop
+                    class="editable"
                   >
-                    <option
-                      v-for="(label, key) in categoriasMap"
-                      :value="parseInt(key)"
-                      :key="key"
+                    <input
+                      v-if="
+                        editando.id === exercicio.id_exercicio &&
+                        editando.campo === 'nome'
+                      "
+                      v-model="editando.valor"
+                      @blur="
+                        guardarCampoEditado(exercicio.id_exercicio, 'nome')
+                      "
+                      @keyup.enter="
+                        guardarCampoEditado(exercicio.id_exercicio, 'nome')
+                      "
+                      @click.stop
+                    />
+                    <span v-else>{{ exercicio.nome }}</span>
+                  </td>
+
+                  <td
+                    @click="
+                      activarEdicion(
+                        exercicio.id_exercicio,
+                        'categoria',
+                        exercicio.categoria
+                      )
+                    "
+                    class="editable"
+                  >
+                    <select
+                      v-if="
+                        editando.id === exercicio.id_exercicio &&
+                        editando.campo === 'categoria'
+                      "
+                      v-model.number="editando.valor"
+                      @blur="
+                        guardarCampoEditado(exercicio.id_exercicio, 'categoria')
+                      "
+                      @keyup.enter="
+                        guardarCampoEditado(exercicio.id_exercicio, 'categoria')
+                      "
+                      @click.stop
                     >
-                      {{ label }}
-                    </option>
-                  </select>
-                  <span v-else>{{
-                    nomeCategoriaPorId(exercicio.categoria)
-                  }}</span>
-                </td>
+                      <option
+                        v-for="(label, key) in categoriasMap"
+                        :value="parseInt(key)"
+                        :key="key"
+                      >
+                        {{ label }}
+                      </option>
+                    </select>
+                    <span v-else>{{
+                      nomeCategoriaPorId(exercicio.categoria)
+                    }}</span>
+                  </td>
 
-                <td
-                  @click="
-                    activarEdicion(
-                      exercicio.id_exercicio,
-                      'repeticions',
-                      exercicio.repeticions
-                    )
-                  "
-                  class="editable"
-                >
-                  <input
-                    v-if="
-                      editando.id === exercicio.id_exercicio &&
-                      editando.campo === 'repeticions'
+                  <td
+                    @click="
+                      activarEdicion(
+                        exercicio.id_exercicio,
+                        'repeticions',
+                        exercicio.repeticions
+                      )
                     "
-                    v-model="editando.valor"
-                    @blur="
-                      guardarCampoEditado(exercicio.id_exercicio, 'repeticions')
-                    "
-                    @keyup.enter="
-                      guardarCampoEditado(exercicio.id_exercicio, 'repeticions')
-                    "
-                    @click.stop
-                  />
-                  <span v-else>{{ exercicio.repeticions }}</span>
-                </td>
-
-                <td
-                  @click="
-                    activarEdicion(
-                      exercicio.id_exercicio,
-                      'peso',
-                      exercicio.peso
-                    )
-                  "
-                  class="editable"
-                >
-                  <input
-                    v-if="
-                      editando.id === exercicio.id_exercicio &&
-                      editando.campo === 'peso'
-                    "
-                    v-model.number="editando.valor"
-                    @blur="guardarCampoEditado(exercicio.id_exercicio, 'peso')"
-                    @keyup.enter="
-                      guardarCampoEditado(exercicio.id_exercicio, 'peso')
-                    "
-                    @click.stop
-                  />
-                  <span v-else>{{ exercicio.peso }} </span>
-                </td>
-
-                <td>
-                  <a href="#">
-                    <img
-                      src="/imaxes/trash.png"
-                      alt="icona borrar"
-                      @click="eliminarExercicio(exercicio.id_exercicio)"
-                      class="icon2"
+                    class="editable"
+                  >
+                    <input
+                      v-if="
+                        editando.id === exercicio.id_exercicio &&
+                        editando.campo === 'repeticions'
+                      "
+                      v-model="editando.valor"
+                      @blur="
+                        guardarCampoEditado(
+                          exercicio.id_exercicio,
+                          'repeticions'
+                        )
+                      "
+                      @keyup.enter="
+                        guardarCampoEditado(
+                          exercicio.id_exercicio,
+                          'repeticions'
+                        )
+                      "
+                      @click.stop
                     />
-                  </a>
-                </td>
-              </tr>
-              <tr v-if="exerciciosHoxe.length === 0">
-                <td colspan="4">Non hai exercicios rexistrados para hoxe.</td>
-              </tr>
-            </tbody>
-          </table>
-          <button @click="componenteActivo = 'engadirE'">+</button>
+                    <span v-else>{{ exercicio.repeticions }}</span>
+                  </td>
+
+                  <td
+                    @click="
+                      activarEdicion(
+                        exercicio.id_exercicio,
+                        'peso',
+                        exercicio.peso
+                      )
+                    "
+                    class="editable"
+                  >
+                    <input
+                      v-if="
+                        editando.id === exercicio.id_exercicio &&
+                        editando.campo === 'peso'
+                      "
+                      v-model.number="editando.valor"
+                      @blur="
+                        guardarCampoEditado(exercicio.id_exercicio, 'peso')
+                      "
+                      @keyup.enter="
+                        guardarCampoEditado(exercicio.id_exercicio, 'peso')
+                      "
+                      @click.stop
+                    />
+                    <span v-else>{{ exercicio.peso }} </span>
+                  </td>
+
+                  <td>
+                    <a href="#">
+                      <img
+                        src="/imaxes/trash.png"
+                        alt="icona borrar"
+                        @click="eliminarExercicio(exercicio.id_exercicio)"
+                        class="icon2"
+                      />
+                    </a>
+                  </td>
+                </tr>
+                <tr v-if="exerciciosHoxe.length === 0">
+                  <td colspan="4">Non hai exercicios rexistrados para hoxe.</td>
+                </tr>
+              </tbody>
+            </table>
+            <button @click="componenteActivo = 'engadirE'">+</button>
+          </div>
+
+          <div class="esquerdaAbaixo">
+            <h2>Plantillas de hoxe</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Icona</th>
+                  <th>Nome</th>
+                  <th>Eliminar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="plantilla in plantillasHoxe"
+                  :key="plantilla.id_plantilla"
+                >
+                  <td>
+                    <img
+                      :src="plantilla.icona"
+                      alt="icona plantilla"
+                      class="icona"
+                    />
+                  </td>
+                  <td>{{ plantilla.nome }}</td>
+                  <td>
+                    <a href="#">
+                      <img
+                        src="/imaxes/trash.png"
+                        alt="icona borrar"
+                        @click="eliminarPlantilla(plantilla.id_plantilla)"
+                        class="icon"
+                      />
+                    </a>
+                  </td>
+                </tr>
+                <tr v-if="plantillasHoxe.length === 0">
+                  <td colspan="3">Non hai plantillas rexistradas para hoxe.</td>
+                </tr>
+              </tbody>
+            </table>
+            <button @click="componenteActivo = 'engadirP'">+</button>
+          </div>
         </div>
 
-        <div class="esquerdaAbaixo">
-          <h2>Plantillas de hoxe</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Icona</th>
-                <th>Nome</th>
-                <th>Eliminar</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="plantilla in plantillasHoxe"
-                :key="plantilla.id_plantilla"
-              >
-                <td>
-                  <img
-                    :src="plantilla.icona"
-                    alt="icona plantilla"
-                    class="icona"
-                  />
-                </td>
-                <td>{{ plantilla.nome }}</td>
-                <td>
-                  <a href="#">
-                    <img
-                      src="/imaxes/trash.png"
-                      alt="icona borrar"
-                      @click="eliminarPlantilla(plantilla.id_plantilla)"
-                      class="icon"
-                    />
-                  </a>
-                </td>
-              </tr>
-              <tr v-if="plantillasHoxe.length === 0">
-                <td colspan="3">Non hai plantillas rexistradas para hoxe.</td>
-              </tr>
-            </tbody>
-          </table>
-          <button @click="componenteActivo = 'engadirP'">+</button>
+        <div class="dereita">
+          <HistorialExercicios
+            v-if="componenteActivo === 'historial'"
+            @cargarExerciciosHoxe="cargarExerciciosHoxe"
+            @cargarPlantillasHoxe="cargarPlantillasHoxe"
+            ref="historialRef"
+          />
+          <EngadirExercicios
+            v-if="componenteActivo === 'engadirE'"
+            @cargarExerciciosHoxe="cargarExerciciosHoxe"
+          />
+          <EngadirPlantillasExercicios
+            v-if="componenteActivo === 'engadirP'"
+            @engadirPlantilla="engadirPlantilla"
+            @cargarPlantillasHoxe="cargarPlantillasHoxe"
+          />
         </div>
-      </div>
-
-      <div class="dereita">
-        <HistorialExercicios
-          v-if="componenteActivo === 'historial'"
-          @cargarExerciciosHoxe="cargarExerciciosHoxe"
-          @cargarPlantillasHoxe="cargarPlantillasHoxe"
-          ref="historialRef"
-        />
-        <EngadirExercicios
-          v-if="componenteActivo === 'engadirE'"
-          @cargarExerciciosHoxe="cargarExerciciosHoxe"
-        />
-        <EngadirPlantillasExercicios
-          v-if="componenteActivo === 'engadirP'"
-          @engadirPlantilla="engadirPlantilla"
-          @cargarPlantillasHoxe="cargarPlantillasHoxe"
-        />
       </div>
     </div>
   </div>
