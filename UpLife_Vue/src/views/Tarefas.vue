@@ -61,7 +61,9 @@ export default {
   methods: {
     // comprobar se os requerementos das medallas se cumpren
     async comprobarMedallas() {
+      const usuarioStore = useUsuarioStore();
       await this.comprobarRachas();
+
       const valorMedallas = [];
       let seCompletoAlguna = false;
       const token = useUsuarioStore().token;
