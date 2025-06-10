@@ -6,6 +6,7 @@ import VentaEliminar from "./components/BarrasNavegacion/VentaEliminar.vue";
 import VentaMedallas from "./components/BarrasNavegacion/VentaMedallas.vue";
 import VentaPechar from "./components/BarrasNavegacion/VentaPechar.vue";
 import { useUsuarioStore } from "@/stores/useUsuario";
+import Uso from "./views/Uso.vue";
 
 export default {
   data() {
@@ -19,6 +20,7 @@ export default {
       ventaEliminar: false,
       ventaMedallas: false,
       tarefasNotificadasAnticipadas: new Set(),
+      usoActivo: true,
     };
   },
   components: {
@@ -28,6 +30,7 @@ export default {
     VentaAviso,
     VentaEliminar,
     VentaMedallas,
+    Uso,
   },
   mounted() {
     // chamar a actualizar medallas de medallas para cargar as medallas unha vez que o compoñente esté cargado
@@ -172,6 +175,14 @@ export default {
     async actualizarMedallasStore() {
       await useUsuarioStore().cargarMedallas();
     },
+
+    pecharUso() {
+      this.usoActivo = false;
+    },
+
+    abrirUso() {
+      this.usoActivo = true;
+    },
   },
   watch: {
     // se o aviso está activo , o son de ventá aviso execútase en bucle
@@ -240,6 +251,7 @@ export default {
         v-if="mostrarBarra"
         :rutaActual="rutaActual"
         @toggleModal="toggleModal"
+        @abrirUso="abrirUso"
       />
     </div>
 
@@ -268,6 +280,7 @@ export default {
     </VentaEliminar>
     <VentaMedallas v-if="ventaMedallas" @ventaMedallas="pecharVentaMedallas">
     </VentaMedallas>
+    <Uso v-if="usoActivo" @pecharUso="pecharUso"></Uso>
   </div>
 </template>
 

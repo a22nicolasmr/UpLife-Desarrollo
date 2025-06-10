@@ -209,7 +209,7 @@ const routes = [
   {
     path: "/:pathMatch(.*)*",
     name: "not-found",
-    component: () => import("@/views/NotFound.vue"), // crea este archivo
+    component: () => import("@/views/NotFound.vue"),
   },
 ];
 

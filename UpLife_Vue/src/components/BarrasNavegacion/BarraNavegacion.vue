@@ -1,9 +1,14 @@
 <script>
+import Uso from "@/views/Uso.vue";
 export default {
+  components: {
+    Uso,
+  },
   data() {
     return {
       modal: false,
       menuAbierto: false,
+      usoAberto: true,
     };
   },
   computed: {
@@ -99,6 +104,9 @@ export default {
             @click="$router.push('/perfil')"
           >
             <a href="#">Perfil</a>
+          </li>
+          <li @click="$emit('abrirUso')">
+            <a href="#">Axuda</a>
           </li>
           <li
             :class="{ activo: rutaActual === '/formularios/rexistro' }"
