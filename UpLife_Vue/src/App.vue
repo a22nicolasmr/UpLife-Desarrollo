@@ -20,7 +20,7 @@ export default {
       ventaEliminar: false,
       ventaMedallas: false,
       tarefasNotificadasAnticipadas: new Set(),
-      usoActivo: true,
+      usoActivo: false,
     };
   },
   components: {
