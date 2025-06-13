@@ -39,7 +39,7 @@
           </ul>
         </section>
         <section>
-          <h2>3.Cambiar a foto de perfil</h2>
+          <h2>3. Cambiar a foto de perfil</h2>
           <ul>
             <li>
               Podes cambiar a túa foto de perfil facendo click na fotografía que

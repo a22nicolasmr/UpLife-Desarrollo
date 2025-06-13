@@ -92,7 +92,7 @@ export default {
       <label for="nome">Nome</label>
       <input type="text" id="nome" v-model="nome" placeholder="Nome" />
 
-      <p>Escolle unha icona para o grupo</p>
+      <p>Escolle unha ícona para o grupo</p>
       <div class="opcion-imaxes">
         <div
           v-for="(img, index) in imaxes"

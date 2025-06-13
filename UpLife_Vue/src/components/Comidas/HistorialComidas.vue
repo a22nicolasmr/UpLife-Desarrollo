@@ -1,13 +1,18 @@
 <script>
 import { useUsuarioStore } from "@/stores/useUsuario";
+import Cargando from "@/components/BarrasNavegacion/Cargando.vue";
 
 export default {
+  components: {
+    Cargando,
+  },
   data() {
     return {
       comidasPorDia: {},
       gruposUsuario: [],
       gruposSeleccionadosPorComida: {},
       error: "",
+      cargando: true,
     };
   },
   computed: {
@@ -27,8 +32,12 @@ export default {
   },
   async mounted() {
     // cagar grupos e comidas cando se monta o compoñente
-    this.cargarComidas();
-    this.cargarGrupos();
+    try {
+      await this.cargarComidas();
+      await this.cargarGrupos();
+    } finally {
+      this.cargando = false;
+    }
   },
   methods: {
     // cargar comidas dos últimos 7 días filtradas por id de usuario e agrupadas por data
@@ -177,58 +186,61 @@ export default {
 </script>
 
 <template>
-  <div id="divXeral">
-    <h2>Historial</h2>
-    <div class="historial-scroll">
-      <p v-if="Object.keys(comidasPorDia).length === 0" id="aviso">
-        Non hai comidas rexistradas
-      </p>
+  <div>
+    <Cargando v-if="cargando"></Cargando>
+    <div v-else id="divXeral">
+      <h2>Historial</h2>
+      <div class="historial-scroll">
+        <p v-if="Object.keys(comidasPorDia).length === 0" id="aviso">
+          Non hai comidas rexistradas
+        </p>
 
-      <div
-        v-for="(comidas, data) in comidasPorDia"
-        :key="data"
-        class="grupo-dia"
-      >
-        <h3>
-          {{
-            new Date(data).toLocaleDateString("gl-ES", {
-              weekday: "long",
-              day: "numeric",
-              month: "long",
-            })
-          }}
-        </h3>
-        <ul>
-          <li v-for="comida in comidas" :key="comida.id_comida">
-            <div class="fila-exercicio">
-              <span style="flex: 1">
-                {{ comida.nome }} - {{ comida.peso }}g -
-                {{ Math.ceil((comida.calorias / 100) * comida.peso) }} kcal
-              </span>
-              <div style="display: flex; gap: 0.5rem; align-items: center">
-                <select
-                  class="select-pequeno"
-                  v-model="gruposSeleccionadosPorComida[comida.id_comida]"
-                >
-                  <option value="">Selecciona un grupo</option>
-                  <option
-                    v-for="grupo in gruposUsuario"
-                    :key="grupo.id_grupo"
-                    :value="grupo.id_grupo"
+        <div
+          v-for="(comidas, data) in comidasPorDia"
+          :key="data"
+          class="grupo-dia"
+        >
+          <h3>
+            {{
+              new Date(data).toLocaleDateString("gl-ES", {
+                weekday: "long",
+                day: "numeric",
+                month: "long",
+              })
+            }}
+          </h3>
+          <ul>
+            <li v-for="comida in comidas" :key="comida.id_comida">
+              <div class="fila-exercicio">
+                <span style="flex: 1">
+                  {{ comida.nome }} - {{ comida.peso }}g -
+                  {{ Math.ceil((comida.calorias / 100) * comida.peso) }} kcal
+                </span>
+                <div style="display: flex; gap: 0.5rem; align-items: center">
+                  <select
+                    class="select-pequeno"
+                    v-model="gruposSeleccionadosPorComida[comida.id_comida]"
                   >
-                    {{ grupo.nome }}
-                  </option>
-                </select>
+                    <option value="">Selecciona un grupo</option>
+                    <option
+                      v-for="grupo in gruposUsuario"
+                      :key="grupo.id_grupo"
+                      :value="grupo.id_grupo"
+                    >
+                      {{ grupo.nome }}
+                    </option>
+                  </select>
 
-                <button class="boton-dereita" @click="engadirComida(comida)">
-                  +
-                </button>
+                  <button class="boton-dereita" @click="engadirComida(comida)">
+                    +
+                  </button>
+                </div>
               </div>
-            </div>
-          </li>
-        </ul>
+            </li>
+          </ul>
+        </div>
+        <span class="error">{{ error }}</span>
       </div>
-      <span class="error">{{ error }}</span>
     </div>
   </div>
 </template>
@@ -297,11 +309,11 @@ li {
   background-color: #7f5af0;
   color: white;
   border: none;
-  padding: 1% 2%;
   border-radius: 6px;
   cursor: pointer;
   white-space: nowrap;
   transition: background-color 0.3s ease;
+  margin-bottom: 5%;
 }
 
 .boton-dereita:hover {

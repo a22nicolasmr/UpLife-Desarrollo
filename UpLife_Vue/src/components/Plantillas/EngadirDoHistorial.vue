@@ -1,7 +1,11 @@
 <script>
 import { useUsuarioStore } from "@/stores/useUsuario";
+import Cargando from "@/components/BarrasNavegacion/Cargando.vue";
 
 export default {
+  components: {
+    Cargando,
+  },
   data() {
     return {
       exerciciosPorDia: {},
@@ -9,6 +13,7 @@ export default {
       plantillasUsuario: [],
       plantillaSeleccionada: {},
       erro: "",
+      cargando: true,
     };
   },
   computed: {
@@ -27,8 +32,12 @@ export default {
   },
   async mounted() {
     // cargar plantillas e exercicios ao montar o compoñente
-    await this.cargarPlantillasUsuario();
-    this.cargarExercicios();
+    try {
+      await this.cargarPlantillasUsuario();
+      await this.cargarExercicios();
+    } finally {
+      this.cargando = false;
+    }
   },
   methods: {
     // validar formulario
@@ -226,61 +235,64 @@ export default {
 </script>
 
 <template>
-  <div id="divXeral">
-    <h2>Historial de exercicios</h2>
-    <p v-if="Object.keys(actividadesPorDia).length === 0" id="aviso">
-      Non hai exercicios rexistrados
-    </p>
-    <div class="historial-scroll">
-      <div
-        v-for="(actividades, data) in actividadesPorDia"
-        :key="data"
-        class="grupo-dia"
-      >
-        <h3>
-          {{
-            new Date(data).toLocaleDateString("gl-ES", {
-              weekday: "long",
-              day: "numeric",
-              month: "long",
-            })
-          }}
-        </h3>
+  <div>
+    <Cargando v-if="cargando"></Cargando>
+    <div v-else id="divXeral">
+      <h2>Historial de exercicios</h2>
+      <p v-if="Object.keys(actividadesPorDia).length === 0" id="aviso">
+        Non hai exercicios rexistrados
+      </p>
+      <div class="historial-scroll">
+        <div
+          v-for="(actividades, data) in actividadesPorDia"
+          :key="data"
+          class="grupo-dia"
+        >
+          <h3>
+            {{
+              new Date(data).toLocaleDateString("gl-ES", {
+                weekday: "long",
+                day: "numeric",
+                month: "long",
+              })
+            }}
+          </h3>
 
-        <ul>
-          <li v-for="ex in actividades.exercicios" :key="ex.id_exercicio">
-            <div class="fila-exercicio">
-              <span>
-                [E] {{ ex.nome }} - {{ ex.repeticions }} - {{ ex.peso }}kg ({{
-                  nomeCategoria(ex.categoria)
-                }})
-              </span>
-              <select v-model="plantillaSeleccionada[ex.id_exercicio]">
-                <option disabled value="">Seleccionar plantilla</option>
-                <option
-                  v-for="p in plantillasUsuario"
-                  :key="p.id_plantilla"
-                  :value="p.id_plantilla"
+          <ul>
+            <li v-for="ex in actividades.exercicios" :key="ex.id_exercicio">
+              <div class="fila-exercicio">
+                <span>
+                  [E] {{ ex.nome }} - {{ ex.repeticions }} - {{ ex.peso }}kg ({{
+                    nomeCategoria(ex.categoria)
+                  }})
+                </span>
+                <select v-model="plantillaSeleccionada[ex.id_exercicio]">
+                  <option disabled value="">Seleccionar plantilla</option>
+                  <option
+                    v-for="p in plantillasUsuario"
+                    :key="p.id_plantilla"
+                    :value="p.id_plantilla"
+                  >
+                    {{ p.nome }}
+                  </option>
+                </select>
+                <button
+                  class="boton-dereita"
+                  @click="
+                    engadirExercicioAPlantilla(
+                      ex,
+                      plantillaSeleccionada[ex.id_exercicio]
+                    )
+                  "
                 >
-                  {{ p.nome }}
-                </option>
-              </select>
-              <button
-                class="boton-dereita"
-                @click="
-                  engadirExercicioAPlantilla(
-                    ex,
-                    plantillaSeleccionada[ex.id_exercicio]
-                  )
-                "
-              >
-                +
-              </button>
-            </div>
-          </li>
-        </ul>
+                  +
+                </button>
+              </div>
+            </li>
+          </ul>
 
-        <span class="error">{{ erro }}</span>
+          <span class="error">{{ erro }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -345,7 +357,6 @@ li {
   background-color: #7f5af0;
   color: white;
   border: none;
-  padding: 1% 2%;
   border-radius: 6px;
   cursor: pointer;
   white-space: nowrap;

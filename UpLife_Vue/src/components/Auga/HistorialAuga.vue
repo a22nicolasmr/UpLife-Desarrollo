@@ -1,10 +1,15 @@
 <script>
 import { useUsuarioStore } from "@/stores/useUsuario";
+import Cargando from "@/components/BarrasNavegacion/Cargando.vue";
 
 export default {
+  components: {
+    Cargando,
+  },
   data() {
     return {
       augaPorDia: {},
+      cargando: true,
     };
   },
   computed: {
@@ -30,7 +35,11 @@ export default {
   },
   async mounted() {
     // cargar rexistros de auga ao montar o compoñente
-    this.cargarAuga();
+    try {
+      await this.cargarAuga();
+    } finally {
+      this.cargando = false;
+    }
   },
 
   methods: {
@@ -110,41 +119,46 @@ export default {
 </script>
 
 <template>
-  <div id="divXeral">
-    <h2>Historial de auga</h2>
-    <p v-if="Object.keys(augaPorDia).length === 0" id="aviso">
-      Non hai auga rexistrada
-    </p>
-    <div class="historial-scroll">
-      <div v-for="(augas, data) in augaPorDia" :key="data" class="grupo-dia">
-        <h3>
-          {{
-            new Date(data).toLocaleDateString("gl-ES", {
-              weekday: "long",
-              day: "numeric",
-              month: "long",
-            })
-          }}
-        </h3>
-        <ul>
-          <li v-for="auga in augas" :key="auga.id_auga">
-            <div class="fila-auga">
-              <span
-                >Hora
-                {{
-                  new Date("1970-01-01T" + auga.hora + "Z").toLocaleTimeString(
-                    "gl-ES",
-                    { hour: "2-digit", minute: "2-digit" }
-                  )
-                }}
-                - {{ auga.cantidade }} ml
-              </span>
-              <button class="boton-dereita" @click="engadirAuga(auga)">
-                +
-              </button>
-            </div>
-          </li>
-        </ul>
+  <div>
+    <Cargando v-if="cargando"></Cargando>
+    <div v-else id="divXeral">
+      <h2>Historial de auga</h2>
+      <p v-if="Object.keys(augaPorDia).length === 0" id="aviso">
+        Non hai auga rexistrada
+      </p>
+      <div class="historial-scroll">
+        <div v-for="(augas, data) in augaPorDia" :key="data" class="grupo-dia">
+          <h3>
+            {{
+              new Date(data).toLocaleDateString("gl-ES", {
+                weekday: "long",
+                day: "numeric",
+                month: "long",
+              })
+            }}
+          </h3>
+          <ul>
+            <li v-for="auga in augas" :key="auga.id_auga">
+              <div class="fila-auga">
+                <span
+                  >Hora
+                  {{
+                    new Date(
+                      "1970-01-01T" + auga.hora + "Z"
+                    ).toLocaleTimeString("gl-ES", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })
+                  }}
+                  - {{ auga.cantidade }} ml
+                </span>
+                <button class="boton-dereita" @click="engadirAuga(auga)">
+                  +
+                </button>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
