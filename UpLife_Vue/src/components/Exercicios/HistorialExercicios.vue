@@ -1,11 +1,16 @@
 <script>
 import { useUsuarioStore } from "@/stores/useUsuario";
+import Cargando from "@/components/BarrasNavegacion/Cargando.vue";
 
 export default {
+  components: {
+    Cargando,
+  },
   data() {
     return {
       exerciciosPorDia: {},
       actividadesPorDia: {},
+      cargando: true,
     };
   },
   computed: {
@@ -24,7 +29,11 @@ export default {
   },
   async mounted() {
     // cargar exercicios cando se monta o compoñente
-    this.cargarExercicios();
+    try {
+      await this.cargarExercicios();
+    } finally {
+      this.cargando = false;
+    }
   },
   methods: {
     // cargar exercicios e usos de plantilla dos últimos 7 días
@@ -202,52 +211,55 @@ export default {
 </script>
 
 <template>
-  <div id="divXeral">
-    <h2>Historial</h2>
-    <p v-if="Object.keys(actividadesPorDia).length === 0" id="aviso">
-      Non hai exercicios rexistrados
-    </p>
-    <div class="historial-scroll">
-      <div
-        v-for="(actividades, data) in actividadesPorDia"
-        :key="data"
-        class="grupo-dia"
-      >
-        <h3>
-          {{
-            new Date(data).toLocaleDateString("gl-ES", {
-              weekday: "long",
-              day: "numeric",
-              month: "long",
-            })
-          }}
-        </h3>
+  <div>
+    <Cargando v-if="cargando"></Cargando>
+    <div v-else id="divXeral">
+      <h2>Historial</h2>
+      <p v-if="Object.keys(actividadesPorDia).length === 0" id="aviso">
+        Non hai exercicios rexistrados
+      </p>
+      <div class="historial-scroll">
+        <div
+          v-for="(actividades, data) in actividadesPorDia"
+          :key="data"
+          class="grupo-dia"
+        >
+          <h3>
+            {{
+              new Date(data).toLocaleDateString("gl-ES", {
+                weekday: "long",
+                day: "numeric",
+                month: "long",
+              })
+            }}
+          </h3>
 
-        <ul>
-          <li v-for="ex in actividades.exercicios" :key="ex.id_exercicio">
-            <div class="fila-exercicio">
-              <span>
-                [E] {{ ex.nome }} - {{ ex.repeticions }} - {{ ex.peso }}kg ({{
-                  nomeCategoria(ex.categoria)
-                }})
-              </span>
-              <button class="boton-dereita" @click="engadirExercicio(ex)">
-                +
-              </button>
-            </div>
-          </li>
-        </ul>
+          <ul>
+            <li v-for="ex in actividades.exercicios" :key="ex.id_exercicio">
+              <div class="fila-exercicio">
+                <span>
+                  [E] {{ ex.nome }} - {{ ex.repeticions }} - {{ ex.peso }}kg ({{
+                    nomeCategoria(ex.categoria)
+                  }})
+                </span>
+                <button class="boton-dereita" @click="engadirExercicio(ex)">
+                  +
+                </button>
+              </div>
+            </li>
+          </ul>
 
-        <ul>
-          <li v-for="p in actividades.plantillas" :key="p.id_plantilla">
-            <div class="fila-exercicio">
-              <span id="spanPlantilla"> [P] {{ p.nome }} </span>
-              <button class="boton-dereita" @click="engadirPlantilla(p)">
-                +
-              </button>
-            </div>
-          </li>
-        </ul>
+          <ul>
+            <li v-for="p in actividades.plantillas" :key="p.id_plantilla">
+              <div class="fila-exercicio">
+                <span id="spanPlantilla"> [P] {{ p.nome }} </span>
+                <button class="boton-dereita" @click="engadirPlantilla(p)">
+                  +
+                </button>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

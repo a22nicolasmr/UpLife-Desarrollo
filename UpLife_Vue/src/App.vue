@@ -56,13 +56,6 @@ export default {
     this.intervalId = setInterval(this.comprobarHoras, 1000);
   },
   methods: {
-    // abrir ventá medallas cando se obtén unha medalla
-    abrirVentaMedallas() {
-      this.ventaMedallas = true;
-      setTimeout(() => {
-        this.ventaMedallas = false;
-      }, 3000);
-    },
     // coller o valor das rachas para enviar a clase Medallas como prop
     mandarRachas(valorMedallas) {
       this.valorMedallas = valorMedallas;
@@ -263,7 +256,6 @@ export default {
         @eliminarConta="eliminarConta"
         @medallasActualizadas="actualizarMedallasStore"
         ref="medallasRef"
-        @abrirVentaMedallas="abrirVentaMedallas"
       />
     </div>
 

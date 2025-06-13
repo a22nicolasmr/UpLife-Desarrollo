@@ -147,37 +147,6 @@ export default {
       this.valorMedallas = valorMedallas;
       this.$emit("mandarRachas", this.valorMedallas);
 
-      //comprobar se a medalla foi mostrada
-      // const usuarioStore = useUsuarioStore();
-      // const medallasPrevias = Array.isArray(usuarioStore.medallas)
-      //   ? usuarioStore.medallas
-      //   : Object.values(usuarioStore.medallas || []);
-
-      // const medallasMostradas =
-      //   JSON.parse(localStorage.getItem("medallasMostradas")) || [];
-
-      // let novasParaMostrar = [];
-
-      // for (const nova of valorMedallas) {
-      //   const previa = medallasPrevias.find(
-      //     (m) => m.id_medalla === nova.id_medalla
-      //   );
-      //   const xaEstaba = previa?.completado;
-      //   const xaMostrada = medallasMostradas.includes(nova.id_medalla);
-
-      //   if (!xaEstaba && nova.completado && !xaMostrada) {
-      //     novasParaMostrar.push(nova.id_medalla);
-      //   }
-      // }
-
-      // if (novasParaMostrar.length > 0) {
-      //   this.$emit("abrirVentaMedallas");
-      //   const actualizado = [
-      //     ...new Set([...medallasMostradas, ...novasParaMostrar]),
-      //   ];
-      //   localStorage.setItem("medallasMostradas", JSON.stringify(actualizado));
-      // }
-
       // actualizar datos das medallas no store
       usuarioStore.updateNumeroMedallas();
       usuarioStore.cargarMedallas();
