@@ -50,26 +50,20 @@ class CustomLoginView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        print("🔵 [CustomLoginView] POST recibido")
         username = request.data.get("username")
         password = request.data.get("password")
-        print(f"🔸 Datos recibidos: {username} / {password}")
 
         if not username or not password:
             return Response({"detail": "Username and password required"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             user = Usuarios.objects.get(nome_usuario=username)
-            print("✅ Usuario encontrado:", user)
         except Usuarios.DoesNotExist:
-            print("❌ Usuario no encontrado")
             return Response({"detail": "Invalid username or password"}, status=status.HTTP_401_UNAUTHORIZED)
 
         if not user.check_password(password):
-            print("❌ Contraseña incorrecta")
             return Response({"detail": "Invalid username or password"}, status=status.HTTP_401_UNAUTHORIZED)
 
-        print("✅ Usuario autenticado, generando token")
 
         payload = {
             "user_id": user.id_usuario,
