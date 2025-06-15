@@ -41,6 +41,9 @@ export const useUsuarioStore = defineStore("usuario", {
     // cargar todos os datos do usuario a partir do nome de usuario
     async cargarUsuario(nome) {
       if (!this.token) return;
+      if (this.isTokenExpired(this.token)) {
+        return;
+      }
 
       try {
         const response = await fetch(
@@ -78,9 +81,27 @@ export const useUsuarioStore = defineStore("usuario", {
       }
     },
 
+    //comprobar que o token non esté expirado
+    isTokenExpired(token) {
+      if (!token) return true;
+
+      try {
+        const payloadBase64 = token.split(".")[1];
+        const payloadJson = atob(payloadBase64);
+        const payload = JSON.parse(payloadJson);
+        if (!payload.exp) return true;
+        const ahora = Date.now() / 1000;
+        return payload.exp < ahora;
+      } catch {
+        return true;
+      }
+    },
     // cargar medallas completadas do usuario
     async cargarMedallas() {
       if (!this.token || !this.id) return;
+      if (this.isTokenExpired(this.token)) {
+        return;
+      }
 
       try {
         const medallasRes = await fetch(
@@ -91,6 +112,7 @@ export const useUsuarioStore = defineStore("usuario", {
             },
           }
         );
+        if (!medallasRes.ok) return;
         const medallas = await medallasRes.json();
         this.medallas = medallas.filter(
           (m) => m.usuarios.includes(this.id) && m.completado
