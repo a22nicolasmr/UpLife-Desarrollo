@@ -43,7 +43,6 @@ export default {
     usuarioStore.cargarToken();
 
     if (!usuarioStore.token) {
-      console.warn("🔴 Token non dispoñible. Redirixindo ao login...");
       this.$router.push({ name: "inicio" });
       return;
     }

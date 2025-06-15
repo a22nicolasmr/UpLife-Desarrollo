@@ -9,7 +9,7 @@ export default {
     };
   },
   methods: {
-    //cambiar contrasinal
+    // cambiar contrasinal
     async cambiarContrasinal() {
       this.erro = "";
       this.exito = "";
@@ -50,7 +50,7 @@ export default {
           return;
         }
 
-        //cambiar contrasinal
+        // cambiar contrasinal
         const response = await fetch(
           `https://uplife-final.onrender.com/api/usuarios/${data.id_usuario}/`,
           {
@@ -71,7 +71,7 @@ export default {
         this.novaContrasinal = "";
         this.repetirContrasinal = "";
 
-        //borrar do storage o correo e o código
+        // borrar do storage o correo e o código
         localStorage.removeItem("correoConfirmacion");
         localStorage.removeItem("codigoConfirmacion");
 
@@ -84,7 +84,7 @@ export default {
       }
     },
 
-    //cambiar vista a inicio
+    // cambiar vista a inicio
     cancelar() {
       this.$router.push("/formularios/inicio");
     },

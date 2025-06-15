@@ -12,18 +12,18 @@ export default {
     };
   },
   computed: {
-    //obter ruta actual
+    // obter ruta actual
     rutaActual() {
       return this.$route.path;
     },
 
-    //comprobar se se está accedendo dende un móvil
+    // comprobar se se está accedendo dende un móvil
     eMovil() {
       return window.innerWidth <= 768;
     },
   },
 
-  //engadir o evento resize cando se monta o compoñente e quitalo cando se desmonta
+  // engadir o evento resize cando se monta o compoñente e quitalo cando se desmonta
   mounted() {
     window.addEventListener("resize", this.handleResize);
   },
@@ -31,7 +31,7 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   methods: {
-    //abrir e pechar menú de hamburguesa en función de se se está en móvil ou non
+    // abrir e pechar menú de hamburguesa en función de se se está en móvil ou non
     handleResize() {
       if (!this.eMovil && this.menuAbierto) {
         this.menuAbierto = false;
@@ -54,7 +54,7 @@ export default {
             <img
               src="/imaxes/Logo.PNG"
               alt="UpLife"
-              @click="$router.push('/formularios/rexistro')"
+              @click="$router.push('/tarefas')"
             />
           </li>
           <li

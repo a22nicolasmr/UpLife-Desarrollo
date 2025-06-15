@@ -13,7 +13,7 @@ export default {
     };
   },
   methods: {
-    //mandar formulario se os datos estan correctos
+    // mandar formulario se os datos estan correctos
     async mandarFormulario() {
       this.erro = "";
       this.cargando = true;

@@ -109,7 +109,7 @@ class UsuariosViewSet(viewsets.ModelViewSet):
         if self.action == "create":
             return [AllowAny()]
 
-        # Permitir PATCH si solo se envía contraseña e email
+        # permitir PATCH si solo se envía contraseña e email
         if self.request.method == "PATCH":
             email = self.request.data.get("email")
             contrasinal = self.request.data.get("contrasinal")
@@ -272,7 +272,7 @@ def enviar_recordatorio(request):
                 from_email="uplifedaw@gmail.com",
                 to=[email],
             )
-            email_msg.content_subtype = "html"  # Importante: indicar que é HTML
+            email_msg.content_subtype = "html"  
 
             email_msg.send(fail_silently=False)
 

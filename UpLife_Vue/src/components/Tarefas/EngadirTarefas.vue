@@ -63,7 +63,7 @@ export default {
     dataHoxeISO() {
       return new Date().toLocaleDateString("en-CA");
     },
-    //engadir tarefa ao calendario
+    // engadir tarefa ao calendario
     async engadirTarefa() {
       this.erro = "";
 

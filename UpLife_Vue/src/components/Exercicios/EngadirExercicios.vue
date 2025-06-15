@@ -13,7 +13,7 @@ export default {
     };
   },
   computed: {
-    //obter usuario do storage e data de hoxe
+    // obter usuario do storage e data de hoxe
     idUsuario() {
       const store = useUsuarioStore();
       return store.id;
@@ -21,13 +21,13 @@ export default {
     dataHoxeISO() {
       return new Date().toISOString().split("T")[0];
     },
-    //obter token desde o store
+    // obter token desde o store
     token() {
       return useUsuarioStore().token;
     },
   },
   methods: {
-    //validar formulario
+    // validar formulario
     comprobarCampos() {
       this.erro = "";
 
@@ -44,13 +44,13 @@ export default {
       return true;
     },
 
-    //filtrar categoría por id
+    // filtrar categoría por id
     obterIdCategoriaPorId(id) {
       const categoria = this.categorias.find((c) => c.id === parseInt(id));
       return categoria ? categoria.id : null;
     },
 
-    //obter nome da categoría por id
+    // obter nome da categoría por id
     obterIdCategoria(nome) {
       const mapa = {
         Perna: 1,
@@ -63,7 +63,7 @@ export default {
       return mapa[nome];
     },
 
-    //engadir un novo exercicio
+    // engadir un novo exercicio
     async engadirExercicio() {
       if (!this.comprobarCampos()) return;
 
@@ -98,7 +98,7 @@ export default {
 
         if (!resEx.ok) throw new Error("Erro ao crear exercicio");
 
-        //limpar campos
+        // limpar campos
         this.nome = "";
         this.repeticions = "";
         this.peso = 0;

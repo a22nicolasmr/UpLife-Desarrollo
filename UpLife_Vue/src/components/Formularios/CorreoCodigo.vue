@@ -7,7 +7,7 @@ export default {
     };
   },
   methods: {
-    //comprobar se o correo introducido é válido
+    // comprobar se o correo introducido é válido
     async comprobarCorreo(event) {
       event.preventDefault();
       this.erro = null;

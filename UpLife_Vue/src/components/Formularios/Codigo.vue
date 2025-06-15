@@ -7,7 +7,7 @@ export default {
     };
   },
   methods: {
-    //comprobar se o código enviado concide co gardado no localStorage en CorreoCodigo
+    // comprobar se o código enviado concide co gardado no localStorage en CorreoCodigo
     comprobarCodigo(event) {
       event.preventDefault();
       this.erro = null;

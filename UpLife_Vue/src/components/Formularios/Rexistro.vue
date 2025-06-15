@@ -22,7 +22,7 @@ export default {
     };
   },
   methods: {
-    //rexistrar usuario se os campos do formulario están ben cubertos
+    // rexistrar usuario se os campos do formulario están ben cubertos
     async mandarFormulario() {
       this.cargando = true;
       let isValid = true;

@@ -3,7 +3,6 @@ import BarraNavegacion from "./components/BarrasNavegacion/BarraNavegacion.vue";
 import BarraSuperior from "./components/BarrasNavegacion/BarraSuperior.vue";
 import VentaAviso from "./components/BarrasNavegacion/VentaAviso.vue";
 import VentaEliminar from "./components/BarrasNavegacion/VentaEliminar.vue";
-import VentaMedallas from "./components/BarrasNavegacion/VentaMedallas.vue";
 import VentaPechar from "./components/BarrasNavegacion/VentaPechar.vue";
 import { useUsuarioStore } from "@/stores/useUsuario";
 import Uso from "./views/Uso.vue";
@@ -18,7 +17,6 @@ export default {
       intervalId: null,
       valorMedallas: [],
       ventaEliminar: false,
-      ventaMedallas: false,
       tarefasNotificadasAnticipadas: new Set(),
       usoActivo: false,
     };
@@ -29,7 +27,6 @@ export default {
     VentaPechar,
     VentaAviso,
     VentaEliminar,
-    VentaMedallas,
     Uso,
   },
   mounted() {
@@ -169,6 +166,7 @@ export default {
       await useUsuarioStore().cargarMedallas();
     },
 
+    // abrir e pechar ventá de uso
     pecharUso() {
       this.usoActivo = false;
     },
@@ -270,8 +268,7 @@ export default {
       @pecharModalEliminar="pecharModalEliminar"
     >
     </VentaEliminar>
-    <VentaMedallas v-if="ventaMedallas" @ventaMedallas="pecharVentaMedallas">
-    </VentaMedallas>
+
     <Uso v-if="usoActivo" @pecharUso="pecharUso"></Uso>
   </div>
 </template>

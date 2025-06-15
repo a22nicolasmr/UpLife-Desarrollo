@@ -83,6 +83,7 @@ export default {
     }
   },
   methods: {
+    // obter a data de hoxe en fomato CA
     dataHoxeISO() {
       return new Date().toLocaleDateString("en-CA");
     },
@@ -937,7 +938,7 @@ button {
   #divXeral2 {
     height: auto;
     overflow-y: auto;
-    padding-bottom: 2rem; /* espacio para evitar recorte inferior */
+    padding-bottom: 2rem;
   }
 
   body {
@@ -1041,7 +1042,7 @@ button {
   #divXeral2 {
     height: auto;
     overflow-y: auto;
-    padding-bottom: 2rem; /* espacio para evitar recorte inferior */
+    padding-bottom: 2rem;
   }
 
   body {
