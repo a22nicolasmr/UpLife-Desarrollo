@@ -25,7 +25,7 @@ export default {
       return useUsuarioStore().id;
     },
     dataHoxeISO() {
-      return new Date().toISOString().split("T")[0];
+      return new Date().toLocaleDateString("en-CA");
     },
     augaTotalNecesaria() {
       return useUsuarioStore().auga;

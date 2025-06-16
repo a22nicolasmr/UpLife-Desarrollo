@@ -43,7 +43,7 @@ export default {
     },
     // obter a data actual en formato ISO
     dataHoxeISO() {
-      return new Date().toISOString().split("T")[0];
+      return new Date().toLocaleDateString("en-CA");
     },
   },
   async mounted() {

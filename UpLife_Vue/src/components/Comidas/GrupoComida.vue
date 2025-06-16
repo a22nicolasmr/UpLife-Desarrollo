@@ -26,7 +26,7 @@ export default {
     },
     // obter data de hoxe en formato ISO
     dataHoxeISO() {
-      return new Date().toISOString().split("T")[0];
+      return new Date().toLocaleDateString("en-CA");
     },
     // obter token do usuario desde o store
     token() {

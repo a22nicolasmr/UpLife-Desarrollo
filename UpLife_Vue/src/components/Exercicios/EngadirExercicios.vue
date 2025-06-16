@@ -19,7 +19,7 @@ export default {
       return store.id;
     },
     dataHoxeISO() {
-      return new Date().toISOString().split("T")[0];
+      return new Date().toLocaleDateString("en-CA");
     },
     // obter token desde o store
     token() {

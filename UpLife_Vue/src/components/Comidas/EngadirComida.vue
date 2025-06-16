@@ -42,7 +42,7 @@ export default {
   methods: {
     // obter data de hoxe en formato ISO
     dataHoxeISO() {
-      return new Date().toISOString().split("T")[0];
+      return new Date().toLocaleDateString("en-CA");
     },
 
     // cargar grupos filtrados polo id de usuario
