@@ -95,7 +95,7 @@ export default {
     async cargarExerciciosHoxe() {
       const idUsuario = useUsuarioStore().id;
       const token = useUsuarioStore().token;
-      const hoxe = new Date().toISOString().split("T")[0];
+      const hoxe = this.dataHoxeISO();
       try {
         const response = await fetch(
           "https://uplife-final.onrender.com/api/exercicios/",
@@ -112,12 +112,14 @@ export default {
         console.error("Erro cargando exercicios:", error);
       }
     },
-
+    dataHoxeISO() {
+      return new Date().toLocaleDateString("en-CA");
+    },
     // cargar plantillas usadas polo usuario na data actual
     async cargarPlantillasHoxe() {
       const idUsuario = useUsuarioStore().id;
       const token = useUsuarioStore().token;
-      const hoxe = new Date().toISOString().split("T")[0];
+      const hoxe = this.dataHoxeISO();
       try {
         const response = await fetch(
           "https://uplife-final.onrender.com/api/plantillas-uso/",
@@ -151,6 +153,7 @@ export default {
         );
         this.plantillasHoxe = plantillasCompletas;
         this.$refs.historialRef?.cargarExercicios();
+        this.componenteActivo = "historial";
       } catch (error) {
         console.error("Erro cargando plantillas hoxe:", error);
       }
@@ -160,7 +163,7 @@ export default {
     async eliminarPlantilla(id_plantilla) {
       const idUsuario = useUsuarioStore().id;
       const token = useUsuarioStore().token;
-      const hoxe = new Date().toISOString().split("T")[0];
+      const hoxe = this.dataHoxeISO();
       try {
         const response = await fetch(
           "https://uplife-final.onrender.com/api/plantillas-uso/",
@@ -199,7 +202,7 @@ export default {
     async engadirPlantilla(nomePlantilla) {
       const idUsuario = useUsuarioStore().id;
       const token = useUsuarioStore().token;
-      const hoxe = new Date().toISOString().split("T")[0];
+      const hoxe = this.dataHoxeISO();
       try {
         const response = await fetch(
           "https://uplife-final.onrender.com/api/plantillas/",

@@ -25,6 +25,9 @@ export default {
   },
 
   methods: {
+    dataHoxeISO() {
+      return new Date().toLocaleDateString("en-CA");
+    },
     // cargar plantillas filtradas por id de usuario
     async cargarPlantillas() {
       const idUsuario = useUsuarioStore().id;
@@ -57,7 +60,6 @@ export default {
       }
 
       const idUsuario = useUsuarioStore().id;
-      const hoxe = new Date().toISOString().split("T")[0];
 
       try {
         const response = await fetch(
@@ -71,7 +73,7 @@ export default {
             body: JSON.stringify({
               usuario: idUsuario,
               plantilla: parseInt(this.plantillaSeleccionada),
-              data: hoxe,
+              data: this.dataHoxeISO(),
             }),
           }
         );

@@ -154,7 +154,7 @@ export default {
     },
     // cargar os grupos de comida do usuario e filtrar as comidas de hoxe
     async cargarDatos() {
-      const hoxe = new Date().toISOString().split("T")[0];
+      const hoxe = this.dataHoxeISO();
       const usuarioStore = useUsuarioStore();
       usuarioStore.cargarToken();
       const token = usuarioStore.token;

@@ -104,7 +104,7 @@ export default {
   <div class="total-container">
     <div class="cards">
       <div class="card carbs">
-        <p>Carbs Totais</p>
+        <p>Carbohidratos Totais</p>
         <h3>{{ carbohidratoTotal.toFixed(2) }}g</h3>
         <span>{{ carboPorcentaxe }}%</span>
       </div>
