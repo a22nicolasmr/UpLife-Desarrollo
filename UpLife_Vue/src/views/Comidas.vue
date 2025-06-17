@@ -794,7 +794,7 @@ button {
   width: 18%;
   height: 18%;
   cursor: pointer;
-  margin-top: 21%;
+  margin-top: 15%;
 }
 .tabela-exercicios {
   width: 100%;
