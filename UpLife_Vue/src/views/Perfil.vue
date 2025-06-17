@@ -168,6 +168,7 @@ export default {
               <p><strong>Email:</strong> {{ email }}</p>
               <p><strong>Nome de usuario:</strong> {{ nomeUsuario }}</p>
               <p>Desexa recibir notificacións das súas tarefas?</p>
+              <br />
               <label>
                 Si:
                 <input
